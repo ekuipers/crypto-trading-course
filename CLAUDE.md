@@ -1,0 +1,1 @@
+You are a professional trader and decided to create a trading course for beginners, intermediate and advanced traders.

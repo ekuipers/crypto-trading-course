@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Trading — Micro-Learning Program</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#141a24; --panel2:#1b2330; --line:#27303f;
+    --text:#e6edf3; --muted:#8b98a9; --accent:#f7931a; --accent2:#3fb950;
+    --blue:#58a6ff; --red:#f85149; --radius:14px;
+    --banner-grad:linear-gradient(120deg,#0c1322 0%,#13233c 52%,#3a2a14 100%);
+  }
+  [data-theme="dark"]{
+    --bg:#0b0e14; --panel:#141a24; --panel2:#1b2330; --line:#27303f;
+    --text:#e6edf3; --muted:#8b98a9; --accent:#f7931a; --accent2:#3fb950;
+    --blue:#58a6ff; --red:#f85149;
+    --banner-grad:linear-gradient(120deg,#0c1322 0%,#13233c 52%,#3a2a14 100%);
+  }
+  [data-theme="light"]{
+    --bg:#f4f6fb; --panel:#ffffff; --panel2:#eef1f7; --line:#d8dee9;
+    --text:#1b2330; --muted:#5b6675; --accent:#e8820e; --accent2:#1a9e4b;
+    --blue:#2563eb; --red:#dc2626;
+    --banner-grad:linear-gradient(120deg,#172033 0%,#243349 52%,#5b4420 100%);
+  }
+  [data-theme="ocean"]{
+    --bg:#071726; --panel:#0d2233; --panel2:#123048; --line:#1d4257;
+    --text:#e3f1fb; --muted:#8fb0c4; --accent:#38bdf8; --accent2:#22d3ee;
+    --blue:#60a5fa; --red:#fb7185;
+    --banner-grad:linear-gradient(120deg,#041320 0%,#072c44 55%,#0a4a5c 100%);
+  }
+  [data-theme="forest"]{
+    --bg:#0a140f; --panel:#10211a; --panel2:#163024; --line:#244536;
+    --text:#e6f3ea; --muted:#94b3a2; --accent:#4ade80; --accent2:#a3e635;
+    --blue:#34d399; --red:#f87171;
+    --banner-grad:linear-gradient(120deg,#06130d 0%,#0c2a1c 55%,#1a3a24 100%);
+  }
+  [data-theme="grape"]{
+    --bg:#140c1f; --panel:#1e1330; --panel2:#291a40; --line:#3a2a52;
+    --text:#f1e9fb; --muted:#a996c0; --accent:#c084fc; --accent2:#f0abfc;
+    --blue:#a78bfa; --red:#fb7185;
+    --banner-grad:linear-gradient(120deg,#0f0820 0%,#241140 55%,#3a1a3f 100%);
+  }
+  body{transition:background .3s,color .3s}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;font-size:16px}
+  a{color:var(--blue)}
+  header.top{position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+    background:var(--banner-grad)}
+  .banner-art{position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:.55;pointer-events:none}
+  .topbar{position:relative;z-index:3;border-bottom:1px solid rgba(255,255,255,.10);
+    background:rgba(0,0,0,.22)}
+  .topbar-inner{max-width:920px;margin:0 auto;padding:8px 18px;display:flex;align-items:center;
+    justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .tb-label{font-size:.74rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#cbd5e1}
+  .themes{display:flex;align-items:center;gap:9px}
+  .themes .tname{font-size:.78rem;color:#cbd5e1;min-width:62px;text-align:right}
+  .swatch{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.35);
+    padding:0;transition:transform .15s,border-color .15s;position:relative}
+  .swatch:hover{transform:scale(1.15)}
+  .swatch.active{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.25)}
+  .swatch.active::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;
+    font-size:.7rem;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.9)}
+  .banner-inner{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:30px 18px 32px;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:26px;flex-wrap:wrap}
+  .banner-text{max-width:760px;min-width:260px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.5px;
+    text-transform:uppercase;font-size:.82rem;color:var(--accent)}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 10px var(--accent2)}
+  header.top h1{margin:4px 0 4px;font-size:1.45rem;line-height:1.08;letter-spacing:-.6px}
+  header.top h1 span{background:linear-gradient(90deg,var(--accent),#ffd27a);-webkit-background-clip:text;
+    background-clip:text;-webkit-text-fill-color:transparent}
+  header.top p{margin:0;color:#aeb9c7;font-size:.9rem;line-height:1.35}
+  .banner-stats{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .banner-stats span{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+    border-radius:99px;padding:3px 9px;font-size:.72rem;color:#cfd8e3}
+  .levelpick{background:rgba(10,14,22,.56);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);
+ border-radius:12px;padding:8px 10px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.25);white-space:nowrap}
+ .levelpick .lvl-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:700}
+ .level-select{appearance:none;-webkit-appearance:none;border:1px solid var(--accent);background:var(--accent);color:#000;
+ border-radius:9px;padding:7px 28px 7px 10px;font-weight:800;font-size:.86rem;cursor:pointer;
+ background-image:linear-gradient(45deg,transparent 50%,#000 50%),linear-gradient(135deg,#000 50%,transparent 50%);
+ background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+ .levelpick .lvl-desc{display:none}
+ .levelpick .levels{display:flex;gap:5px}
+ .levelpick .levels button{border:1px solid var(--accent);background:rgba(255,255,255,.07);color:var(--accent);padding:7px 12px;border-radius:9px;cursor:pointer;font-size:.82rem;font-weight:700;white-space:nowrap;transition:.15s}
+ .levelpick .levels button:hover{background:rgba(255,255,255,.16)}
+ .levelpick .levels button.active{background:var(--accent);color:#0b0e14;border-color:var(--accent)}
+ @media (max-width:720px){.banner-inner{grid-template-columns:1fr}.levelpick{justify-content:space-between;width:100%}}
+ .wrap{max-width:1120px;margin:0 auto;padding:14px 18px 60px}
+  .progress-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:11px 14px;margin:12px 0;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .bar{flex:1;min-width:180px;height:12px;background:var(--panel2);border-radius:99px;overflow:hidden}
+  .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    transition:width .4s ease}
+  .progress-box b{font-size:1.05rem}
+  .reset{background:none;border:1px solid var(--line);color:var(--muted);padding:6px 12px;
+    border-radius:8px;cursor:pointer;font-size:.8rem}
+  .reset:hover{color:var(--text);border-color:var(--muted)}
+  .track{margin:20px 0 0}
+  .track > h2{display:flex;align-items:center;gap:10px;font-size:1.25rem;margin:0 0 4px;
+    padding-bottom:8px;border-bottom:2px solid var(--line)}
+  .track > h2{border-bottom:none;position:relative}
+  .track > h2::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+    background:linear-gradient(90deg,var(--accent),transparent)}
+  .track .tnum{background:var(--accent);color:#000;font-weight:700;border-radius:8px;
+    width:30px;height:30px;display:grid;place-items:center;font-size:.95rem}
+  .track .ticon{font-size:1.3rem;line-height:1}
+  .track .tsub{color:var(--muted);font-size:.9rem;margin:2px 0 10px}
+  .module{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    margin:10px 0;overflow:hidden}
+  .mhead{display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;user-select:none}
+  .mhead:hover{background:var(--panel2)}
+  .check{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:none;
+    display:grid;place-items:center;font-size:.8rem;color:transparent;transition:.2s}
+  .module.done .check{background:var(--accent2);border-color:var(--accent2);color:#04210f}
+  .mhead .mt{flex:1}
+  .mhead .mt .mtitle{font-weight:600}
+  .mhead .mt .mdur{color:var(--muted);font-size:.8rem}
+  .chev{color:var(--muted);transition:transform .25s}
+  .module.open .chev{transform:rotate(90deg)}
+  .mbody{display:none;padding:2px 16px 16px;border-top:1px solid var(--line)}
+  .module.open .mbody{display:block;animation:fade .3s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1}}
+  .mbody h4{margin:18px 0 4px;font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+  .mbody h4.ex{color:var(--blue)}
+  .mbody h4.do{color:var(--accent2)}
+  .mbody p{margin:6px 0}
+  .mbody ul{margin:6px 0;padding-left:20px}
+  .mbody code{background:var(--panel2);padding:2px 6px;border-radius:5px;font-size:.9em}
+  .callout{background:var(--panel2);border-left:3px solid var(--blue);border-radius:8px;
+    padding:10px 14px;margin:8px 0}
+  .callout.warn{border-left-color:var(--red)}
+  .viz{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px;margin:8px 0}
+  .viz svg{display:block;width:100%;height:auto}
+  .viz figcaption{color:var(--muted);font-size:.8rem;margin-top:6px;text-align:center}
+  .calc{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0}
+  .calc-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:7px 0}
+  .calc-row label{font-size:.9rem;color:var(--text)}
+  .calc-row select,.calc-row input{width:140px;background:var(--panel);color:var(--text);border:1px solid var(--line);
+    border-radius:8px;padding:7px 10px;font-size:.92rem}
+  .calc-out{margin-top:12px;padding:11px 13px;border-radius:8px;background:rgba(247,147,26,.10);
+    border:1px solid var(--accent);font-size:.92rem;line-height:1.5}
+  .calc-out b{color:var(--accent)}
+  .calc .muted{color:var(--muted)}
+  .lesson-link{display:inline-flex;align-items:center;gap:8px;margin:10px 0 2px;color:var(--blue);text-decoration:none;
+ border:1px solid var(--line);background:var(--panel2);border-radius:9px;padding:7px 10px;font-size:.9rem;font-weight:600}
+ .lesson-link:hover{border-color:var(--accent);color:var(--accent)}
+ .lesson-link small{color:var(--muted);font-weight:500}
+ .quiz{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:16px 0 4px}
+  .quiz .q{font-weight:600;margin-bottom:8px}
+  .quiz button{display:block;width:100%;text-align:left;background:var(--panel);color:var(--text);
+    border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin:6px 0;cursor:pointer;font-size:.95rem}
+  .quiz button:hover{border-color:var(--muted)}
+  .quiz button.correct{background:rgba(63,185,80,.15);border-color:var(--accent2)}
+  .quiz button.wrong{background:rgba(248,81,73,.12);border-color:var(--red)}
+  .quiz .fb{margin-top:8px;font-size:.9rem;color:var(--muted);display:none}
+  .lvlbadge{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.4px;
+    text-transform:uppercase;color:var(--bc);border:1px solid var(--bc);border-radius:5px;
+    padding:1px 6px;margin-left:8px;vertical-align:middle}
+  .disclaimer{background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.3);border-radius:var(--radius);
+    padding:10px 14px;margin:12px 0;font-size:.86rem;color:var(--muted)}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;padding:30px 18px 0}
+  .glossary summary{cursor:pointer;font-weight:600;font-size:1.05rem}
+  .glossary{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-top:30px}
+  .glossary dt{font-weight:600;color:var(--accent);margin-top:10px}
+  .glossary dd{margin:2px 0 0;color:var(--muted)}
+</style>
+<script>
+  /* apply saved theme before paint to avoid a flash */
+  (function(){ try{ var t=localStorage.getItem('cryptoCourseTheme_v1')||'dark';
+    document.documentElement.setAttribute('data-theme', t); }catch(e){
+    document.documentElement.setAttribute('data-theme','dark'); } })();
+</script>
+</head>
+<body>
+<header class="top">
+  <svg class="banner-art" viewBox="0 0 920 230" preserveAspectRatio="xMaxYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="up" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#3fb950" stop-opacity="0"/>
+        <stop offset="1" stop-color="#3fb950" stop-opacity=".9"/>
+      </linearGradient>
+      <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3fb950" stop-opacity=".35"/>
+        <stop offset="1" stop-color="#3fb950" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <!-- grid -->
+    <g stroke="#ffffff" stroke-opacity=".05">
+      <line x1="0" y1="58" x2="920" y2="58"/><line x1="0" y1="116" x2="920" y2="116"/><line x1="0" y1="174" x2="920" y2="174"/>
+    </g>
+    <!-- trend area + line -->
+    <path d="M0,185 L120,165 L210,178 L320,130 L430,150 L540,95 L660,120 L770,60 L920,40 L920,230 L0,230 Z" fill="url(#fill)"/>
+    <path d="M0,185 L120,165 L210,178 L320,130 L430,150 L540,95 L660,120 L770,60 L920,40" fill="none" stroke="url(#up)" stroke-width="3"/>
+    <!-- candlesticks -->
+    <g stroke-width="7">
+      <g stroke="#3fb950"><line x1="500" y1="70" x2="500" y2="150"/></g>
+      <rect x="491" y="92" width="18" height="40" fill="#3fb950"/>
+      <g stroke="#f85149"><line x1="560" y1="95" x2="560" y2="175"/></g>
+      <rect x="551" y="120" width="18" height="38" fill="#f85149"/>
+      <g stroke="#3fb950"><line x1="620" y1="60" x2="620" y2="140"/></g>
+      <rect x="611" y="78" width="18" height="46" fill="#3fb950"/>
+      <g stroke="#3fb950"><line x1="700" y1="45" x2="700" y2="120"/></g>
+      <rect x="691" y="60" width="18" height="44" fill="#3fb950"/>
+      <g stroke="#f85149"><line x1="760" y1="40" x2="760" y2="110"/></g>
+      <rect x="751" y="58" width="18" height="34" fill="#f85149"/>
+      <g stroke="#3fb950"><line x1="830" y1="20" x2="830" y2="95"/></g>
+      <rect x="821" y="34" width="18" height="46" fill="#3fb950"/>
+    </g>
+  </svg>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <span class="tb-label">🎨 Theme</span>
+      <div class="themes" id="themes">
+        <span class="tname" id="tname">Dark</span>
+        <button class="swatch" data-theme="dark"   title="Dark"   onclick="setTheme('dark')"   style="background:linear-gradient(135deg,#141a24 50%,#f7931a 50%)"></button>
+        <button class="swatch" data-theme="light"  title="Light"  onclick="setTheme('light')"  style="background:linear-gradient(135deg,#ffffff 50%,#e8820e 50%)"></button>
+        <button class="swatch" data-theme="ocean"  title="Ocean"  onclick="setTheme('ocean')"  style="background:linear-gradient(135deg,#0d2233 50%,#38bdf8 50%)"></button>
+        <button class="swatch" data-theme="forest" title="Forest" onclick="setTheme('forest')" style="background:linear-gradient(135deg,#10211a 50%,#4ade80 50%)"></button>
+        <button class="swatch" data-theme="grape"  title="Grape"  onclick="setTheme('grape')"  style="background:linear-gradient(135deg,#1e1330 50%,#c084fc 50%)"></button>
+      </div>
+    </div>
+  </div>
+  <div class="banner-inner">
+    <div class="banner-text">
+      <div class="brand"><span class="dot"></span> 🪙 Crypto Academy</div>
+      <h1>Crypto Trading <span>Micro-Learning</span></h1>
+      <p>Bite-sized modules from spot basics to leverage and risk management — filtered to your level.</p>
+      <div class="banner-stats">
+        <span>📚 4 tracks</span><span>🔗 33 video-link + reading modules</span><span>✅ progress saved automatically</span>
+      </div>
+    </div>
+    <div class="levelpick">
+      <span class="lvl-title">🎯 Your level</span>
+      <div class="levels" id="levels">
+        <button data-l="1" onclick="setLevel(1)">🟢 Beginner</button>
+        <button data-l="2" onclick="setLevel(2)">🟡 Intermediate</button>
+        <button data-l="3" onclick="setLevel(3)">🔴 Advanced</button>
+      </div>
+      <span class="lvl-desc" id="lvlDesc"></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="disclaimer">
+    <strong>⚠️ Educational only — not financial advice.</strong> Crypto markets are highly volatile and you can lose your entire capital, especially with leverage. Nothing here is a recommendation to buy, sell, or hold any asset. Never trade with money you can't afford to lose. Verify everything yourself before risking real funds.
+  </div>
+
+  <div class="progress-box">
+    <b id="pcount">0 / 0</b>
+    <div class="bar"><i id="pbar"></i></div>
+    <span id="ppct" style="color:var(--muted);min-width:42px">0%</span>
+    <button class="reset" onclick="resetProgress()">Reset progress</button>
+  </div>
+
+  <div id="course"></div>
+
+  <details class="glossary">
+    <summary>📖 Quick glossary</summary>
+    <dl id="glossary"></dl>
+  </details>
+
+  <footer>
+    Crypto Trading Micro-Learning Program · 4 tracks · 33 modules · external video links + reading per module.<br>
+    Work through one track at a time. Don't risk real money until you've completed the Risk &amp; Psychology track.
+  </footer>
+</div>
+
+<script>
+/* ============================ COURSE DATA ============================ */
+const COURSE = [
+{
+  track:"Foundations &amp; Spot Trading",
+  sub:"Wallets, exchanges, orders, and how to actually buy your first coin safely.",
+  modules:[
+  {
+    t:"What crypto trading actually is", d:"10 min",
+    concept:`<p><b>Trading</b> means buying an asset hoping to sell it later at a higher price (or selling first if you expect a drop). <b>Investing</b> is buying to hold for years; <b>trading</b> is shorter-term and more active.</p>
+    <p>Crypto trades 24/7, 365 days a year — there is no closing bell. Prices are set by supply and demand on <b>exchanges</b>, matched through an <b>order book</b>. The two core activities you'll learn:</p>
+    <ul><li><b>Spot trading</b> — you own the actual coin (covered in this track).</li>
+    <li><b>Derivatives / futures</b> — you trade a contract on the price, often with leverage (Track 3).</li></ul>
+    <p>Most beginners blow up accounts by jumping straight to leverage. We start with spot for a reason.</p>`,
+    example:`<p>You buy 0.01 BTC at $60,000 (costing $600). A week later BTC is $66,000, so your 0.01 BTC is worth $660. You sell and realize a <code>+$60</code> profit (+10%). If instead BTC fell to $54,000, your stake is worth $540 — a <code>-$60</code> loss. That's spot: simple ownership, gains and losses move 1:1 with price.</p>`,
+    exercise:`<p>Open a price chart for Bitcoin (e.g. on a free site like TradingView or CoinGecko). Note the price now. Imagine buying $100 worth. Calculate what your $100 would be worth if the price rose 8% — and if it fell 8%. Get comfortable thinking in both directions.</p>`,
+    quiz:{q:"In spot trading, if the price of a coin you own falls 10%, your position value...", a:["Falls 10%","Falls more than 10% because of leverage","Is protected by the exchange","Stays the same until you sell"], correct:0,
+    fb:"Spot moves 1:1 with price — no leverage amplifies it. The loss is real once you're in the position, whether or not you've sold."}
+  },
+  {
+    t:"Wallets: custodial vs self-custody", d:"12 min",
+    concept:`<p>A <b>wallet</b> stores the keys that control your crypto. Two kinds:</p>
+    <ul><li><b>Custodial</b> — an exchange (Coinbase, Binance, Kraken) holds the keys for you. Easy, but "not your keys, not your coins." If the exchange fails or freezes your account, you're exposed.</li>
+    <li><b>Self-custody</b> — you hold the keys yourself (software wallets like MetaMask, or hardware wallets like Ledger/Trezor). Full control, full responsibility.</li></ul>
+    <p>Your <b>seed phrase</b> (12–24 words) <em>is</em> your wallet. Anyone with it owns your funds. Never type it into a website, never store it in a photo or cloud note.</p>`,
+    example:`<p>A trader keeps a small "hot" balance on an exchange for active trading, and moves long-term holdings to a hardware wallet kept offline. When the exchange later pauses withdrawals during volatility, only the small active balance is affected — the bulk is safe in self-custody.</p>`,
+    exercise:`<p>Write down (on paper) the difference between a <b>public address</b> (safe to share, like an email) and a <b>private key / seed phrase</b> (secret, like a password). If you have a wallet, locate where your address is shown — but do NOT view or screenshot your seed phrase on a connected device.</p>`,
+    quiz:{q:"Which of these is safe to share publicly?", a:["Your seed phrase","Your private key","Your public wallet address","Your exchange password"], correct:2,
+    fb:"Your public address is like an email — people use it to send you funds. The seed phrase, private key and password must stay secret."}
+  },
+  {
+    t:"Centralized vs decentralized exchanges", d:"11 min",
+    concept:`<p><b>CEX (centralized exchange)</b> — e.g. Coinbase, Binance, Kraken. A company runs the order book, holds your funds, and requires identity verification (KYC). Deep liquidity, easy fiat on-ramps, beginner-friendly.</p>
+    <p><b>DEX (decentralized exchange)</b> — e.g. Uniswap. Trades happen directly from your self-custody wallet via smart contracts. No sign-up, no KYC, but you pay network "gas" fees and face risks like scam tokens and front-running.</p>
+    <p>Beginners almost always start on a reputable CEX. DEXes matter once you trade newer tokens not listed on big exchanges.</p>`,
+    example:`<p>To buy ETH with a debit card, you'd use a CEX — it converts your dollars and you trade instantly. To swap that ETH for a brand-new token only available on-chain, you'd connect MetaMask to a DEX like Uniswap and approve the swap, paying a gas fee to the network.</p>`,
+    exercise:`<p>List three things you'd want to check before trusting a CEX with your money: e.g. regulatory standing in your country, security/insurance track record, withdrawal reliability, and fees. Research one exchange against this checklist.</p>`,
+    quiz:{q:"A key difference of a DEX vs a CEX is that on a DEX...", a:["You must complete KYC identity checks","Funds trade directly from your own wallet","A company holds your coins","There are never any fees"], correct:1,
+    fb:"On a DEX you keep custody — trades execute from your wallet via smart contracts. You still pay network gas fees."}
+  },
+  {
+    t:"Order types: market, limit & stop", d:"13 min",
+    concept:`<p>Three orders cover most of what you'll do:</p>
+    <ul><li><b>Market order</b> — buy/sell immediately at the best available price. Fast, but you accept whatever price you get (slippage).</li>
+    <li><b>Limit order</b> — buy/sell only at a price you set or better. You control price, but it may never fill.</li>
+    <li><b>Stop order</b> — triggers a market/limit order once price hits a level. Used for <b>stop-losses</b> (cap a loss) and breakout entries.</li></ul>
+    <p>Rule of thumb: use <b>limit</b> orders to enter calmly, <b>market</b> orders when you must act now, and always pair positions with a <b>stop</b>.</p>`,
+    example:`<p>BTC is $60,000. You think it's overpriced short-term and want in at $58,000 — you place a <b>limit buy</b> at $58,000. It fills only if price drops there. After buying, you place a <b>stop-loss</b> at $56,000: if price falls to $56k, a sell triggers automatically, capping your loss instead of hoping it recovers.</p>`,
+    exercise:`<p>On a demo/paper account, place one of each: a limit buy below the current price, and a stop-loss below your entry. Watch how the limit waits to fill and how the stop sits dormant until triggered. (Most exchanges offer a testnet or paper mode.)</p>`,
+    quiz:{q:"You want to guarantee you buy right now and don't care about a few dollars of slippage. Use a...", a:["Limit order","Market order","Stop-limit order","Take-profit order"], correct:1,
+    fb:"A market order executes immediately at the best available price. A limit order might never fill if price moves away."}
+  },
+  {
+    t:"The order book, spread & slippage", d:"11 min",
+    concept:`<p>The <b>order book</b> lists all open buy orders (<b>bids</b>) and sell orders (<b>asks</b>). The highest bid and lowest ask meet in the middle.</p>
+    <ul><li><b>Spread</b> = lowest ask − highest bid. A tight spread means a liquid market; a wide spread is costly.</li>
+    <li><b>Liquidity / depth</b> = how much volume sits near the current price. Thin books move violently.</li>
+    <li><b>Slippage</b> = the difference between the price you expected and the price you actually got, common with large market orders in thin markets.</li></ul>`,
+    example:`<p>Best bid $100.00, best ask $100.10 → spread is $0.10. You market-buy a large amount: the first units fill at $100.10, but you eat through the book up to $100.40 to complete the order. Your average fill is $100.22 — the $0.12 above the ask is slippage.</p>`,
+    exercise:`<p>Open the order book for a major pair (BTC/USDT) and a tiny low-volume altcoin. Compare the spreads. Notice how much thinner the altcoin's depth is — that's why small coins are riskier to trade in size.</p>`,
+    quiz:{q:"Slippage is most likely to hurt you when you...", a:["Place a small limit order in a deep market","Place a large market order in a thin market","Use a stop-loss","Trade a major pair like BTC/USDT"], correct:1,
+    fb:"Large market orders in illiquid (thin) markets walk up the order book, filling at progressively worse prices."}
+  },
+  {
+    t:"Fees: makers, takers & the hidden costs", d:"10 min",
+    concept:`<p>Every trade has costs that quietly eat returns:</p>
+    <ul><li><b>Taker fee</b> — you remove liquidity (market order). Usually higher.</li>
+    <li><b>Maker fee</b> — you add liquidity (resting limit order). Usually lower, sometimes a rebate.</li>
+    <li><b>Spread</b> — an implicit cost on every round trip.</li>
+    <li><b>Withdrawal / network fees</b> — for moving coins off the exchange.</li></ul>
+    <p>For active traders, fees compound fast. A 0.1% fee each way is 0.2% per round trip — trade 100 times and that's ~20% of capital churned in fees alone.</p>`,
+    example:`<p>You trade $1,000 with a 0.1% taker fee. Entry costs $1, exit costs $1 → $2 per round trip. That means the price must move at least 0.2% just for you to break even before any profit. Using limit (maker) orders at 0.04% would cut that to $0.80.</p>`,
+    exercise:`<p>Find your exchange's fee schedule. Calculate the round-trip cost on a $500 trade as both a taker and a maker. Decide which order type you'll default to and why.</p>`,
+    quiz:{q:"Which usually carries the LOWER fee?", a:["Market (taker) order","Limit (maker) order","Both are always identical","Stop orders are free"], correct:1,
+    fb:"Maker orders add liquidity to the book and are typically cheaper, sometimes earning a rebate. Takers pay more for instant execution."}
+  },
+  {
+    t:"Stablecoins & trading pairs", d:"10 min",
+    concept:`<p>A <b>stablecoin</b> (USDT, USDC, DAI) is a crypto pegged ~1:1 to a fiat currency, usually the US dollar. They let you "sit in cash" on-chain without converting back to your bank.</p>
+    <p>A <b>trading pair</b> is what you trade against what, e.g. <code>BTC/USDT</code> = price of BTC in USDT. The second symbol is the <b>quote</b> currency. Pairs like <code>ETH/BTC</code> price ETH in bitcoin terms.</p>
+    <p>Beginners should stick to deep stablecoin pairs (BTC/USDT, ETH/USDC). Note: not all stablecoins are equally safe — some have de-pegged historically.</p>`,
+    example:`<p>You sell BTC for USDT near a top to "lock in" dollars without leaving the exchange. When price dips, you redeploy that USDT into BTC again. You never touched your bank, yet you effectively moved to cash and back.</p>`,
+    exercise:`<p>On your exchange, find three pairs for ETH (e.g. ETH/USDT, ETH/USDC, ETH/BTC). Note how the quoted price changes depending on the quote currency. Identify which has the most volume.</p>`,
+    quiz:{q:"In the pair BTC/USDT, the price tells you...", a:["How many BTC one USDT buys","The price of BTC denominated in USDT","The fee for trading","The leverage applied"], correct:1,
+    fb:"The first symbol is the base, the second is the quote. BTC/USDT = the value of one BTC expressed in USDT."}
+  },
+  {
+    t:"Security: protecting funds & spotting scams", d:"12 min",
+    concept:`<p>In crypto, you are your own bank — and the target of constant scams. Core defenses:</p>
+    <ul><li>Enable <b>2FA</b> with an authenticator app (not SMS, which can be SIM-swapped).</li>
+    <li>Use a <b>hardware wallet</b> for serious holdings.</li>
+    <li>Never share your <b>seed phrase</b> — no legitimate support will ever ask for it.</li>
+    <li>Bookmark exchange URLs to avoid <b>phishing</b> clones.</li>
+    <li>Be skeptical of "guaranteed returns," giveaways, "double your crypto," and DMs from "support."</li></ul>`,
+    example:`<p>A trader gets a DM: "We noticed suspicious activity — verify your wallet here." The link looks almost like the real exchange. Connecting and signing would drain the wallet. Because they bookmarked the real site and know support never DMs first, they ignore it. That habit saved their funds.</p>`,
+    exercise:`<p>Audit your own setup: Is 2FA on an authenticator app enabled? Is your seed phrase stored offline only? Are exchange sites bookmarked? Fix any gap before trading real money.</p>`,
+    quiz:{q:"A 'support agent' DMs you asking for your seed phrase to fix an issue. You should...", a:["Share it — they need it to help","Share only half of it","Never share it; it's always a scam","Share it but change it after"], correct:2,
+    fb:"No legitimate service ever needs your seed phrase. Anyone asking is trying to steal your funds. The phrase can't be 'changed' — it controls the wallet."}
+  }
+  ]
+},
+{
+  track:"Technical Analysis",
+  sub:"Reading charts, indicators, and patterns to time entries and exits.",
+  modules:[
+  {
+    t:"Candlestick anatomy", d:"11 min",
+    viz:`<svg viewBox="0 0 330 165" xmlns="http://www.w3.org/2000/svg"><line x1="110" y1="18" x2="110" y2="52" stroke="#3fb950" stroke-width="2"/><rect x="90" y="52" width="40" height="62" fill="#3fb950"/><line x1="110" y1="114" x2="110" y2="148" stroke="#3fb950" stroke-width="2"/><text x="145" y="28" font-size="11" fill="#8b98a9">High (upper wick)</text><text x="145" y="88" font-size="11" fill="#8b98a9">Body = open → close</text><text x="145" y="146" font-size="11" fill="#8b98a9">Low (lower wick)</text></svg><figcaption>A bullish (green) candle: the body spans open→close; the thin wicks mark the high and low extremes for the period.</figcaption>`,
+    concept:`<p>Each <b>candlestick</b> summarizes price over a chosen period. It has:</p>
+    <ul><li><b>Body</b> — the range between open and close.</li>
+    <li><b>Wicks/shadows</b> — the high and low extremes.</li>
+    <li><b>Colour</b> — green/white = closed higher; red/black = closed lower.</li></ul>
+    <p>A long body shows strong momentum; long wicks show rejection (price pushed there but got rejected). Candlesticks are the alphabet of charts — every pattern is built from them.</p>`,
+    example:`<p>A candle opens at $100, spikes to $108, drops to $99, and closes at $101. The body spans $100→$101 (green), the upper wick reaches $108 (buyers tried higher but got rejected), the lower wick reaches $99. The long upper wick warns that sellers defended $108.</p>`,
+    exercise:`<p>Pick a 1-hour chart. Find one candle with a long upper wick and one with a long lower wick. For each, say out loud what happened: who pushed price, and who won by the close.</p>`,
+    quiz:{q:"A long upper wick on a candle suggests...", a:["Buyers were fully in control","Price was pushed up but sellers rejected it","The market was closed","A guaranteed reversal"], correct:1,
+    fb:"A long upper wick = price reached high but closed well below it, showing sellers rejected the higher prices. It's a warning, not a guarantee."}
+  },
+  {
+    t:"Timeframes & multi-timeframe analysis", d:"10 min",
+    concept:`<p>The same market looks different on a 5-minute vs a daily chart. <b>Higher timeframes</b> (daily, weekly) show the dominant trend and matter most; <b>lower timeframes</b> (5m, 15m) are noisier but help time precise entries.</p>
+    <p><b>Multi-timeframe analysis:</b> decide direction on a higher timeframe, then zoom in to execute. Trading against the higher-timeframe trend is how beginners get chopped up.</p>`,
+    example:`<p>On the daily chart BTC is in a clear uptrend. You drop to the 1-hour to find a pullback to support, then enter long in the direction of the daily trend. The higher timeframe gives the bias; the lower timeframe gives the entry.</p>`,
+    exercise:`<p>Open one asset on three timeframes (daily, 4h, 15m). Write the trend on each (up/down/sideways). Notice whether they agree. Alignment across timeframes is a higher-probability setup.</p>`,
+    quiz:{q:"In multi-timeframe analysis, you generally use the higher timeframe to...", a:["Time the exact entry","Determine the overall trend/bias","Calculate fees","Set your leverage"], correct:1,
+    fb:"Higher timeframes set direction and bias; lower timeframes refine entry timing. Trade with the higher-timeframe trend."}
+  },
+  {
+    t:"Support & resistance", d:"12 min",
+    viz:`<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><line x1="10" y1="40" x2="350" y2="40" stroke="#f85149" stroke-dasharray="5 4"/><line x1="10" y1="120" x2="350" y2="120" stroke="#3fb950" stroke-dasharray="5 4"/><polyline points="20,120 70,46 120,118 175,42 225,122 280,46 330,92" fill="none" stroke="#58a6ff" stroke-width="2"/><text x="14" y="33" font-size="11" fill="#f85149">Resistance</text><text x="14" y="135" font-size="11" fill="#3fb950">Support</text></svg><figcaption>Price oscillates between support (buyers step in) and resistance (sellers cap the move). The more times a level holds, the more it matters — and once broken, roles often flip.</figcaption>`,
+    concept:`<p><b>Support</b> is a price level where buying tends to halt declines; <b>resistance</b> is where selling tends to cap rallies. They form because traders remember these levels and act there.</p>
+    <p>Key ideas: levels are <b>zones, not exact lines</b>; the more times a level is tested, the more significant it is; and once broken, <b>support often flips to resistance</b> (and vice-versa) — called a "role reversal."</p>`,
+    example:`<p>BTC bounces off $58,000 three times — that's support. Eventually it breaks below. On the next rally, $58,000 now acts as resistance and rejects price. Traders who understand role reversal short or take profit there.</p>`,
+    exercise:`<p>On a daily chart, mark two horizontal levels where price clearly reacted multiple times. Watch how price behaves the next time it approaches them. Did support hold, or flip to resistance?</p>`,
+    quiz:{q:"When a support level breaks decisively, it often...", a:["Disappears entirely","Becomes new resistance","Guarantees a crash","Turns into a moving average"], correct:1,
+    fb:"This 'role reversal' is one of the most reliable concepts: broken support frequently becomes resistance on the retest."}
+  },
+  {
+    t:"Trendlines & channels", d:"10 min",
+    concept:`<p>A <b>trendline</b> connects rising lows (uptrend) or falling highs (downtrend) to visualize direction. A <b>channel</b> adds a parallel line on the opposite side, framing where price tends to oscillate.</p>
+    <p>An uptrend = higher highs and higher lows. A downtrend = lower highs and lower lows. When a trendline breaks, the trend may be changing — but wait for confirmation, not the first touch.</p>`,
+    example:`<p>You draw a line under three rising lows. Price keeps bouncing off it — a clean uptrend channel. When a candle finally closes well below the line on rising volume, you treat the uptrend as broken and tighten or exit longs.</p>`,
+    exercise:`<p>Find a trending chart and draw a trendline touching at least two lows (uptrend) or highs (downtrend). The more touches, the more valid. Mark where a break would occur.</p>`,
+    quiz:{q:"An uptrend is defined by a sequence of...", a:["Lower highs and lower lows","Higher highs and higher lows","Equal highs and lows","Random spikes"], correct:1,
+    fb:"Higher highs + higher lows = uptrend. Lower highs + lower lows = downtrend. This structure is the backbone of trend trading."}
+  },
+  {
+    t:"Volume: the fuel behind moves", d:"9 min",
+    concept:`<p><b>Volume</b> is how much was traded in a period. It confirms conviction: a price move on high volume is more trustworthy than one on thin volume.</p>
+    <ul><li>Breakouts on <b>high volume</b> are more likely to hold.</li>
+    <li>Rallies on <b>declining volume</b> may be running out of steam.</li>
+    <li>A volume <b>spike</b> at a level can signal capitulation or a climax.</li></ul>`,
+    example:`<p>Price breaks above resistance at $100. If volume surges, real buyers are stepping in — the breakout has fuel. If volume is weak, it may be a "fakeout" that snaps back below $100, trapping breakout buyers.</p>`,
+    exercise:`<p>Find a breakout on a chart. Check the volume bar at the breakout candle vs the prior average. Did high volume accompany moves that held, and low volume those that failed?</p>`,
+    quiz:{q:"A breakout above resistance is more trustworthy when it happens on...", a:["Very low volume","High/rising volume","No volume data","A weekend only"], correct:1,
+    fb:"Volume confirms conviction. High-volume breakouts have real participation behind them; low-volume breakouts often fail (fakeouts)."}
+  },
+  {
+    t:"Moving averages (SMA & EMA)", d:"11 min",
+    concept:`<p>A <b>moving average</b> smooths price into a line showing the average over N periods. <b>SMA</b> weights all periods equally; <b>EMA</b> weights recent prices more, so it reacts faster.</p>
+    <p>Uses: gauge trend direction (price above a rising MA = bullish bias), act as dynamic support/resistance, and generate <b>crossover</b> signals. Common settings: 20, 50, 200. The 200-day MA is a widely-watched long-term trend line.</p>`,
+    example:`<p>A "golden cross" occurs when the 50-day MA crosses above the 200-day MA — often read as a bullish shift. The opposite, a "death cross," is the 50 dropping below the 200. These are lagging signals but widely followed.</p>`,
+    exercise:`<p>Add the 50 and 200 moving averages to a daily chart. Note whether price is above or below each, and find the most recent crossover. What happened to price afterward?</p>`,
+    quiz:{q:"Compared to an SMA, an EMA of the same length...", a:["Reacts faster to recent price","Ignores recent price","Is always higher","Has no relation to price"], correct:0,
+    fb:"The EMA weights recent prices more heavily, so it turns faster than the equally-weighted SMA."}
+  },
+  {
+    t:"RSI — momentum & exhaustion", d:"11 min",
+    concept:`<p>The <b>Relative Strength Index</b> oscillates 0–100 and measures momentum.</p>
+    <ul><li>Above <b>70</b> = traditionally "overbought" (extended up).</li>
+    <li>Below <b>30</b> = "oversold" (extended down).</li></ul>
+    <p>But beware: in strong trends RSI can stay overbought/oversold for a long time. The most powerful signal is <b>divergence</b> — price makes a new high but RSI makes a lower high, hinting momentum is fading.</p>`,
+    example:`<p>Price prints a higher high at $105 but RSI prints a <em>lower</em> high than it did at the previous peak. That bearish divergence warns the rally is losing momentum, even though price is still rising — a cue to tighten stops or take profit.</p>`,
+    exercise:`<p>Add RSI to a chart. Find one spot where price made a new high but RSI didn't (bearish divergence) or a new low while RSI rose (bullish divergence). See what happened next.</p>`,
+    quiz:{q:"Bearish RSI divergence is when...", a:["Price and RSI both make higher highs","Price makes a higher high but RSI makes a lower high","RSI hits exactly 50","Volume disappears"], correct:1,
+    fb:"Divergence = price and the oscillator disagree. Price higher + RSI lower = fading momentum (bearish divergence)."}
+  },
+  {
+    t:"MACD — trend & momentum combined", d:"10 min",
+    concept:`<p><b>MACD</b> (Moving Average Convergence Divergence) plots the difference between two EMAs (typically 12 and 26), a <b>signal line</b> (9-EMA of that), and a <b>histogram</b> of the gap between them.</p>
+    <ul><li>MACD line crossing <b>above</b> signal = bullish momentum.</li>
+    <li>Crossing <b>below</b> = bearish.</li>
+    <li>Histogram growing = momentum strengthening; shrinking = weakening.</li></ul>
+    <p>Like all indicators, it lags. Best used to confirm, not predict.</p>`,
+    example:`<p>After a downtrend, the MACD line crosses above its signal line and the histogram flips from negative to positive. Combined with price reclaiming support, this confirms momentum is shifting up — a higher-confidence long entry than either signal alone.</p>`,
+    exercise:`<p>Add MACD to a chart. Mark the last two crossovers. Did a bullish cross precede a rise and a bearish cross precede a fall? Note the lag between signal and move.</p>`,
+    quiz:{q:"A bullish MACD signal is generally when...", a:["The MACD line crosses above the signal line","RSI hits 30","Volume drops to zero","Price touches the 200 MA"], correct:0,
+    fb:"MACD line crossing above its signal line indicates strengthening bullish momentum. It's a lagging confirmation tool."}
+  },
+  {
+    t:"Chart patterns", d:"13 min",
+    concept:`<p>Recurring shapes that hint at the next move:</p>
+    <ul><li><b>Triangles</b> (ascending/descending/symmetrical) — consolidation before a breakout.</li>
+    <li><b>Head &amp; shoulders</b> — three peaks, middle highest; a classic reversal pattern.</li>
+    <li><b>Double top / double bottom</b> — two failed attempts at a level, signaling reversal.</li>
+    <li><b>Flags &amp; pennants</b> — brief pauses that often continue the prior trend.</li></ul>
+    <p>Patterns are probabilities, not certainties. Confirm with a breakout candle and volume before acting.</p>`,
+    example:`<p>Price forms two peaks at $100 with a dip between (a double top). When it breaks below the dip's low ("neckline") on strong volume, the pattern triggers; traders measure the height of the pattern and project a similar move downward as a target.</p>`,
+    exercise:`<p>Scan a few charts and identify one triangle and one double top/bottom. Mark the breakout level and where a stop would go. Practice spotting them — no trades yet.</p>`,
+    quiz:{q:"A head and shoulders pattern is typically a...", a:["Continuation pattern","Reversal pattern","Volume indicator","Type of order"], correct:1,
+    fb:"Head & shoulders signals a likely trend reversal once price breaks the neckline, usually confirmed by volume."}
+  },
+  {
+    t:"Candlestick patterns", d:"11 min",
+    concept:`<p>Single or small groups of candles with predictive reputation:</p>
+    <ul><li><b>Doji</b> — open ≈ close; indecision, possible turning point.</li>
+    <li><b>Hammer / pin bar</b> — long lower wick, small body; rejection of lower prices (bullish at support).</li>
+    <li><b>Engulfing</b> — a candle whose body fully engulfs the prior one; momentum shift.</li></ul>
+    <p>Context is everything: a hammer at strong support means far more than one in the middle of nowhere.</p>`,
+    example:`<p>At a tested support level, a candle prints a long lower wick and closes near its open (a hammer) — buyers rejected lower prices. The next candle is a bullish engulfing. Together, at support, that's a high-quality reversal cue.</p>`,
+    exercise:`<p>Find a hammer and a bullish/bearish engulfing candle on a chart. Check whether they appeared at a meaningful level (support/resistance). Note how location changed their reliability.</p>`,
+    quiz:{q:"A hammer candle is most meaningful when it appears...", a:["In the middle of a range with no context","At a tested support level","Only on weekends","After fees are paid"], correct:1,
+    fb:"Candlestick signals depend on context. A hammer at established support is a strong rejection signal; the same candle elsewhere means little."}
+  }
+  ]
+},
+{
+  track:"Futures &amp; Leverage",
+  sub:"Perpetuals, longs/shorts, margin, liquidation, and funding — the high-risk tools.",
+  modules:[
+  {
+    t:"Spot vs derivatives & perpetual futures", d:"11 min",
+    concept:`<p><b>Derivatives</b> let you trade the <em>price</em> of an asset without owning it. In crypto the dominant product is the <b>perpetual future</b> ("perp") — a futures contract with no expiry date.</p>
+    <p>Perps let you go <b>long</b> (profit if price rises) or <b>short</b> (profit if price falls), usually with <b>leverage</b>. They're powerful and dangerous: the same tools that multiply gains multiply losses and can wipe your account in minutes.</p>
+    <p>Do not trade perps until the Risk track is second nature.</p>`,
+    example:`<p>Instead of buying 1 BTC for $60,000 in spot, you open a 1 BTC long perp by posting, say, $6,000 margin at 10x leverage. You gain/lose as if you held a full BTC — but a 10% adverse move ($6,000) wipes your entire margin.</p>`,
+    exercise:`<p>Write the one-sentence difference between spot and a perpetual future in your own words. Then list two reasons perps are riskier than spot.</p>`,
+    quiz:{q:"A perpetual future is distinctive because it...", a:["Expires every Friday","Has no expiry date","Can only go long","Has no fees ever"], correct:1,
+    fb:"Perps never expire — unlike traditional futures. A funding mechanism (covered later) keeps their price tethered to spot."}
+  },
+  {
+    t:"Going long vs going short", d:"9 min",
+    concept:`<p><b>Long</b> = you profit when price rises (buy low, sell high). <b>Short</b> = you profit when price falls (sell high, buy back lower).</p>
+    <p>Shorting lets you make money in down markets — a key advantage of derivatives. But a short's loss is theoretically unlimited (price can rise forever), whereas a long's loss is capped at your investment going to zero.</p>`,
+    example:`<p>You short 1 ETH perp at $3,000. Price falls to $2,700 → you profit $300. But if price rises to $3,300, you lose $300. Because price can keep climbing, an un-stopped short is especially dangerous.</p>`,
+    exercise:`<p>For both a long and a short entered at $100, write your profit/loss if price goes to $120 and to $80. Confirm you understand which direction helps each position.</p>`,
+    quiz:{q:"You open a short position. You profit if the price...", a:["Rises","Falls","Stays flat forever","Is paused"], correct:1,
+    fb:"Shorts profit from falling prices. Their risk is that price can rise indefinitely, so stops are essential."}
+  },
+  {
+    t:"Leverage & margin", d:"12 min",
+    concept:`<p><b>Leverage</b> lets you control a position larger than your cash. <b>Margin</b> is the cash you post as collateral. 10x leverage means $1,000 margin controls a $10,000 position.</p>
+    <p>The trap: leverage multiplies <em>both</em> directions. At 10x, a 10% adverse move = 100% of your margin gone. The higher the leverage, the smaller the move needed to liquidate you.</p>
+    <p><b>Beginners should use little or no leverage.</b> Pros often use 2–5x, not the 50–125x exchanges advertise.</p>`,
+    example:`<p>$500 margin at 20x = $10,000 position. A mere 5% move against you ($500) wipes the whole margin → liquidation. The same $500 in spot would only lose 5% ($25) on that move. Leverage turned a survivable dip into a total loss.</p>`,
+    exercise:`<p>Compute the % adverse move that wipes your margin at 2x, 5x, 10x, and 25x leverage (hint: 100% ÷ leverage). Notice how little room high leverage leaves.</p>`,
+    quiz:{q:"At 10x leverage, roughly what adverse price move wipes your margin?", a:["1%","10%","50%","100%"], correct:1,
+    fb:"100% ÷ 10x ≈ 10%. Higher leverage = smaller cushion. At 25x it's just ~4%."}
+  },
+  {
+    t:"Liquidation & maintenance margin", d:"12 min",
+    concept:`<p>If losses erode your margin past the <b>maintenance margin</b> threshold, the exchange force-closes your position — <b>liquidation</b>. You lose your posted margin (and may pay a liquidation fee).</p>
+    <p>The <b>liquidation price</b> is where this happens. Knowing it before you enter is non-negotiable. The closer your leverage pushes the liquidation price to your entry, the more likely normal volatility takes you out.</p>`,
+    example:`<p>Long BTC at $60,000 with 10x leverage. Your liquidation price sits around $54,000–$54,600. A routine 9–10% dip — common in crypto — liquidates you, even if BTC recovers an hour later. Lower leverage would have moved that liquidation price much further away.</p>`,
+    exercise:`<p>On a demo account, open a small leveraged position and locate the displayed liquidation price. Change the leverage and watch the liquidation price move closer/further. Internalize the relationship.</p>`,
+    quiz:{q:"Liquidation happens when...", a:["You manually close in profit","Losses breach the maintenance margin and the position is force-closed","Funding is paid","The market closes for the day"], correct:1,
+    fb:"Once equity falls below maintenance margin, the exchange liquidates the position. You lose your margin — higher leverage makes it happen sooner."}
+  },
+  {
+    t:"Isolated vs cross margin", d:"10 min",
+    concept:`<p>Two margin modes decide how much of your balance is at risk:</p>
+    <ul><li><b>Isolated margin</b> — only the margin assigned to that trade can be lost. A blow-up is contained to that position.</li>
+    <li><b>Cross margin</b> — your whole account balance backs the position, reducing liquidation risk on that trade but risking everything if it goes badly.</li></ul>
+    <p>Beginners are usually safer with <b>isolated</b> margin, so one bad trade can't drain the account.</p>`,
+    example:`<p>With isolated margin you put $200 on a trade; the worst case is losing that $200. With cross margin, the same trade can pull from your entire $2,000 balance to avoid liquidation — protecting the position but endangering the whole account.</p>`,
+    exercise:`<p>In your exchange's settings, find where margin mode is selected. Decide your default. Write one sentence on why isolated margin limits damage for a learning trader.</p>`,
+    quiz:{q:"Isolated margin's main benefit is that...", a:["It uses your whole balance as collateral","Losses are capped to the margin assigned to that trade","It removes all risk","It guarantees profit"], correct:1,
+    fb:"Isolated margin contains the damage to the amount you assigned, so a single bad trade can't wipe the whole account."}
+  },
+  {
+    t:"Funding rates", d:"11 min",
+    concept:`<p>Since perps never expire, a <b>funding rate</b> keeps their price near spot. Periodically (often every 8 hours) longs and shorts pay each other:</p>
+    <ul><li><b>Positive funding</b> — longs pay shorts (market is long-heavy/bullish).</li>
+    <li><b>Negative funding</b> — shorts pay longs (market is short-heavy/bearish).</li></ul>
+    <p>It's a real, recurring cost on held positions. Very high funding also signals crowded positioning — often a contrarian warning.</p>`,
+    example:`<p>Funding is +0.05% every 8h. Holding a $10,000 long costs $5 each funding window — ~$15/day, ~$450/month just to hold. If funding spikes much higher, it both costs you more and hints the long side is overcrowded and vulnerable to a flush.</p>`,
+    exercise:`<p>Find the current funding rate for the BTC perp on any major exchange. Calculate the daily cost of holding a $5,000 long at that rate. Is the market currently paying longs or shorts?</p>`,
+    quiz:{q:"When the funding rate is strongly positive, it means...", a:["Shorts pay longs","Longs pay shorts","No one pays anything","The exchange pays everyone"], correct:1,
+    fb:"Positive funding = longs pay shorts, typical when the market is crowded long. Persistently high funding can warn of over-leveraged positioning."}
+  },
+  {
+    t:"Sizing leveraged positions safely", d:"13 min",
+    concept:`<p>The pro mindset: <b>leverage is a tool for capital efficiency, not for betting bigger.</b> Decide position size from your <em>risk</em> (stop distance), then use only enough leverage to fund that position — never max leverage to maximize size.</p>
+    <p>Process: (1) pick your entry and stop-loss, (2) risk a fixed small % of account (e.g. 1%) between them, (3) that defines position size, (4) leverage just lets the margin fit. The stop, not the leverage, controls your loss.</p>`,
+    example:`<p>$10,000 account, risking 1% ($100). Entry $60,000, stop $58,800 (a 2% move). Position size = $100 ÷ 2% = $5,000 notional. That needs only modest leverage to post — and your max loss is the planned $100, regardless of the leverage number shown.</p>`,
+    exercise:`<p>Using the formula <code>position size = (account × risk%) ÷ stop distance%</code>, size a trade on a $2,000 account risking 1% with a 4% stop. Note how the leverage figure becomes almost irrelevant once risk is fixed.</p>`,
+    quiz:{q:"The professional approach to leverage is to...", a:["Always use the maximum the exchange allows","Let your stop-loss and risk % define size, using only the leverage needed","Avoid stops to give trades room","Increase leverage after every loss"], correct:1,
+    fb:"Size from risk first; leverage is just what makes the margin fit. Your stop — not the leverage multiplier — caps the loss."}
+  }
+  ]
+},
+{
+  track:"Risk Management &amp; Psychology",
+  sub:"The skills that actually keep traders alive. Master this track before risking real money.",
+  modules:[
+  {
+    t:"The #1 rule: risk per trade", d:"11 min",
+    concept:`<p>The single biggest predictor of survival isn't picking winners — it's <b>limiting losses</b>. The core rule: never risk more than a small fixed % of your account on one trade, typically <b>1–2%</b>.</p>
+    <p>Why? A string of losses is inevitable. At 1% risk, ten straight losers cost ~10%; at 20% risk, two losers nearly halve you. Small, consistent risk keeps you in the game long enough for your edge to play out.</p>`,
+    example:`<p>$5,000 account, 1% rule = $50 max risk per trade. Even a brutal 8-loss streak only draws the account down ~8% — fully recoverable. A trader risking 25% per trade would be down to ~$700 after the same streak. Same trades, opposite outcomes.</p>`,
+    exercise:`<p>Decide your personal risk-per-trade % (1% recommended for beginners). Calculate the dollar amount on your real or hypothetical account size. This number governs every future trade.</p>`,
+    quiz:{q:"A common, conservative maximum risk per trade is...", a:["1–2% of account","10% of account","25% of account","Whatever feels right"], correct:0,
+    fb:"Keeping risk to 1–2% per trade ensures no single trade — or losing streak — can seriously damage your account."}
+  },
+  {
+    t:"Position sizing math", d:"12 min",
+    concept:`<p>Position size connects your risk rule to an actual order size. The formula:</p>
+    <p><code>Position size = (Account × Risk%) ÷ (Entry − Stop distance)</code></p>
+    <p>You decide the dollar risk first, then the distance to your stop determines how many units you can buy. <b>Wider stop → smaller position. Tighter stop → larger position.</b> The risk stays constant either way.</p>`,
+    example:`<p>$10,000 account, 1% risk = $100. Entry $50, stop $45 → stop distance $5. Units = $100 ÷ $5 = 20 units ($1,000 position). If price hits the stop, you lose exactly $100 — your planned 1%. Move the stop to $48 ($2 distance) and you could buy 50 units while still risking only $100.</p>`,
+    exercise:`<p>Size a trade: $3,000 account, 1.5% risk, entry $200, stop $185. Work out the dollar risk, the stop distance, and the number of units. Check that hitting the stop loses exactly your planned risk.</p>`,
+    quiz:{q:"If you widen your stop-loss (place it further away), your position size should...", a:["Get larger","Get smaller","Stay the same","Double"], correct:1,
+    fb:"A wider stop means more loss per unit, so you buy fewer units to keep total dollar risk fixed. Risk stays constant; size flexes."}
+  },
+  {
+    t:"Stop-loss placement", d:"11 min",
+    concept:`<p>A <b>stop-loss</b> is a pre-set exit that caps your loss. The mistake beginners make is placing stops at arbitrary dollar amounts. Instead, place stops where your trade idea is <b>proven wrong</b> — beyond a support level, below a swing low, past a structure break.</p>
+    <p>Then size the position around that stop (previous module). Never widen a stop to avoid being stopped out — that's how small losses become account-enders.</p>`,
+    example:`<p>You go long because price bounced off $58,000 support. The trade is "wrong" if support fails, so the stop goes just below it, ~$57,500. If price breaks there, your reason for the trade is gone — you exit small and move on, rather than hoping.</p>`,
+    exercise:`<p>On a chart, pick a hypothetical long entry at a support bounce. Mark the logical stop (below support). Then mark a "bad" arbitrary stop. Articulate why the structural stop is better.</p>`,
+    quiz:{q:"The best place for a stop-loss is...", a:["A round dollar number you're comfortable losing","Where your trade thesis is proven wrong (e.g. below support)","As far away as possible","You shouldn't use stops"], correct:1,
+    fb:"Stops belong at the level that invalidates your idea. Then you size the position to that stop — not the other way around."}
+  },
+  {
+    t:"Risk/reward & expectancy", d:"12 min",
+    viz:`<svg viewBox="0 0 330 160" xmlns="http://www.w3.org/2000/svg"><line x1="50" y1="25" x2="250" y2="25" stroke="#3fb950" stroke-dasharray="5 4"/><text x="256" y="29" font-size="11" fill="#3fb950">Target +3R</text><line x1="50" y1="100" x2="250" y2="100" stroke="#58a6ff"/><text x="256" y="104" font-size="11" fill="#58a6ff">Entry</text><line x1="50" y1="125" x2="250" y2="125" stroke="#f85149" stroke-dasharray="5 4"/><text x="256" y="129" font-size="11" fill="#f85149">Stop −1R</text><rect x="60" y="25" width="16" height="75" fill="#3fb950" opacity=".45"/><rect x="60" y="100" width="16" height="25" fill="#f85149" opacity=".45"/></svg><figcaption>Risk 1R (entry→stop) to make 3R (entry→target) = a 3:1 trade. With good R:R you can lose more often than you win and still come out ahead.</figcaption>`,
+    concept:`<p><b>Risk/reward (R:R)</b> compares what you risk to what you aim to gain. Risking $100 to make $300 is 1:3. With good R:R you can be wrong often and still profit.</p>
+    <p><b>Expectancy</b> = (Win% × avg win) − (Loss% × avg loss). A positive expectancy system makes money over many trades even with a sub-50% win rate, as long as winners are bigger than losers.</p>`,
+    example:`<p>You win only 40% of trades but each winner makes 3R and each loser costs 1R. Over 10 trades: 4 wins × 3R = +12R; 6 losses × 1R = −6R; net +6R. You're profitable despite losing more often than you win — that's the power of R:R.</p>`,
+    exercise:`<p>Compute expectancy for a system with 45% win rate, average win 2R, average loss 1R, over 20 trades. Is it positive? This is how you judge a strategy, not by win rate alone.</p>`,
+    quiz:{q:"With a 1:3 risk/reward and disciplined stops, you can be profitable even if you...", a:["Win 100% of trades","Lose more trades than you win","Never use a stop","Use maximum leverage"], correct:1,
+    fb:"Good R:R means winners outweigh losers. At 1:3 you only need to win ~26% of the time to break even — win rate isn't everything."}
+  },
+  {
+    t:"Trading psychology: fear & greed", d:"11 min",
+    concept:`<p>Markets are an emotional pressure cooker. Two forces dominate:</p>
+    <ul><li><b>Greed / FOMO</b> — chasing a coin that's already pumped, over-sizing, refusing to take profit.</li>
+    <li><b>Fear</b> — panic-selling the bottom, hesitating on valid setups, moving stops out of fear.</li></ul>
+    <p>The fix isn't to feel nothing — it's to <b>pre-decide</b> your entry, stop, and size while calm, then execute the plan mechanically. A written plan removes in-the-moment emotion.</p>`,
+    example:`<p>A coin rockets 40% in a day. FOMO screams "get in." A disciplined trader checks: is there a valid entry with a sensible stop and good R:R? There isn't — buying now means a far stop and terrible risk. They skip it. The next day it dumps 25%. The plan protected them.</p>`,
+    exercise:`<p>Recall (or imagine) a time emotion drove a money decision. Write what you felt and what a pre-set rule would have done instead. Draft one rule to protect against your biggest emotional trigger.</p>`,
+    quiz:{q:"The most reliable defense against fear and greed is...", a:["Trading bigger to feel in control","Pre-deciding entry, stop and size while calm, then following the plan","Watching the chart constantly","Avoiding stops"], correct:1,
+    fb:"Decisions made calmly and in advance beat decisions made in the heat of a move. A written plan executed mechanically is the antidote."}
+  },
+  {
+    t:"Cognitive biases that cost money", d:"11 min",
+    concept:`<p>Your brain has built-in bugs for trading:</p>
+    <ul><li><b>Confirmation bias</b> — seeking only info that supports your position.</li>
+    <li><b>Loss aversion</b> — holding losers too long, cutting winners too early.</li>
+    <li><b>Recency bias</b> — assuming the latest move continues forever.</li>
+    <li><b>Sunk-cost fallacy</b> — adding to a loser to "average down" out of stubbornness.</li>
+    <li><b>Overconfidence</b> — over-sizing after a few wins.</li></ul>
+    <p>You can't delete biases, but naming them lets you catch them in the act.</p>`,
+    example:`<p>A trader is down on a position and, instead of honoring the stop, buys more to "lower the average" (sunk-cost + loss aversion). The coin keeps falling. What was a 1% planned loss becomes a 15% disaster — a textbook bias spiral.</p>`,
+    exercise:`<p>Pick the two biases you suspect affect you most. Write one concrete rule to counter each (e.g. "I never add to a losing position" counters sunk-cost). Put these in your trading plan.</p>`,
+    quiz:{q:"Adding to a losing position out of stubbornness, hoping to break even, is an example of...", a:["Good risk management","The sunk-cost fallacy / loss aversion","Confirmation that you're right","Proper position sizing"], correct:1,
+    fb:"Averaging down on a loser to avoid admitting a loss is classic sunk-cost/loss aversion — and a fast way to turn small losses into large ones."}
+  },
+  {
+    t:"The trading journal", d:"10 min",
+    concept:`<p>A <b>journal</b> turns random trading into a feedback loop. For every trade, log: date/pair, entry, stop, target, size, R:R, the reason you took it, and — afterward — the result and what you'd do differently.</p>
+    <p>Over time, patterns emerge: which setups actually make money, which time of day you trade worst, whether you follow your rules. You can't improve what you don't measure.</p>`,
+    example:`<p>After 50 logged trades, a trader reviews and finds their breakout trades are net negative but their support-bounce trades are strongly positive. They cut breakouts entirely and focus on what works — a discovery impossible without records.</p>`,
+    exercise:`<p>Create a simple journal (spreadsheet or notebook) with columns: date, pair, direction, entry, stop, target, size, R:R, reason, result, lesson. Commit to logging every trade — including the ones you're embarrassed by.</p>`,
+    quiz:{q:"The main purpose of a trading journal is to...", a:["Brag about wins","Create a feedback loop to find what works and fix mistakes","Calculate taxes only","Replace having a strategy"], correct:1,
+    fb:"A journal reveals which setups and habits make or lose money, turning experience into measurable improvement."}
+  },
+  {
+    t:"Building your trading plan", d:"13 min",
+    concept:`<p>A <b>trading plan</b> is your written rulebook, decided when calm. A solid plan covers:</p>
+    <ul><li><b>Markets &amp; timeframes</b> you trade.</li>
+    <li><b>Setups</b> you take (specific, repeatable conditions).</li>
+    <li><b>Risk per trade</b> and max daily/weekly loss.</li>
+    <li><b>Entry, stop, and target</b> rules.</li>
+    <li><b>Routine</b> — when you review, when you stop trading.</li></ul>
+    <p>If a trade doesn't fit the plan, you don't take it. The plan is what separates trading from gambling.</p>`,
+    example:`<p>A trader's plan: "Trade only BTC/ETH on the 4h chart. Take only support-bounce longs in a daily uptrend, with RSI confirmation. Risk 1% per trade, stop trading after −3% in a day. Minimum 1:2 R:R." Every trade is checked against this. No fit, no trade.</p>`,
+    exercise:`<p>Draft your own one-page trading plan using the five bullets above. Keep it visible while you trade. Revisit and refine it monthly using your journal data. This is your graduation project for the program.</p>`,
+    quiz:{q:"What separates disciplined trading from gambling?", a:["Bigger position sizes","A written plan you follow consistently","Trading more often","Using maximum leverage"], correct:1,
+    fb:"A pre-written plan with defined setups, risk, and rules — followed consistently — is what makes trading a repeatable process rather than a gamble."}
+  }
+  ]
+}
+,
+{
+  track:"Advanced Charting &amp; Market Structure",
+  sub:"How price actually moves — structure, liquidity, and the levels pros watch.",
+  modules:[
+  {
+    t:"Market structure: swings, BOS & CHoCH", d:"12 min", lvl:2,
+    viz:`<svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg"><polyline points="20,125 60,80 95,100 140,55 175,82 225,35 262,68 300,42 332,90 362,112" fill="none" stroke="#3fb950" stroke-width="2.5"/><line x1="262" y1="68" x2="392" y2="68" stroke="#8b98a9" stroke-dasharray="4 4"/><circle cx="332" cy="90" r="4" fill="#f85149"/><text x="248" y="20" font-size="11" fill="#3fb950">HH / HL uptrend</text><text x="300" y="124" font-size="11" fill="#f85149">CHoCH</text></svg><figcaption>Uptrend = higher highs and higher lows. A close below the last higher low flips structure — the first objective warning a trend may be turning.</figcaption>`,
+    concept:`<p><b>Market structure</b> is the sequence of swing highs and lows. An uptrend prints <b>higher highs (HH)</b> and <b>higher lows (HL)</b>; a downtrend the reverse. Two events matter: a <b>Break of Structure (BOS)</b> — price continues the trend by taking out the prior swing — and a <b>Change of Character (CHoCH)</b> — price breaks the most recent swing <em>against</em> the trend, the first sign momentum is shifting.</p>`,
+    example:`<p>BTC makes HHs and HLs for days. Then it closes below the last HL for the first time — a CHoCH. You don't flip short blindly, but you stop buying dips and wait to see if a downtrend structure forms.</p>`,
+    exercise:`<p>On a 4h chart, mark the last 4–5 swing highs and lows. Label each HH/HL or LH/LL. Find the most recent BOS and any CHoCH. Decide what structure says the trend is right now.</p>`,
+    quiz:{q:"A Change of Character (CHoCH) is when price...", a:["Continues making higher highs","Breaks the most recent swing against the prevailing trend","Touches a moving average","Has high volume"], correct:1,
+    fb:"CHoCH = the first structural break against the trend — an early heads-up, not yet a confirmed reversal."}
+  },
+  {
+    t:"Liquidity, order blocks & fair-value gaps", d:"12 min", lvl:3,
+    concept:`<p>Price is drawn to <b>liquidity</b> — clusters of stop orders sitting just beyond obvious highs/lows. "Stop hunts" are price reaching for that liquidity before reversing. An <b>order block</b> is the last opposing candle before a strong move (a zone institutions may defend); a <b>fair-value gap (FVG)</b> is an imbalance — a fast move that leaves a price gap markets often revisit.</p><p>These are modern (sometimes hyped) concepts: useful as <em>where</em> reactions are likely, not magic. Treat them as zones, confirm with structure.</p>`,
+    example:`<p>Price spikes just above an obvious range high, fills resting buy-stops, then snaps back into the range — a textbook liquidity grab that trapped breakout buyers.</p>`,
+    exercise:`<p>Find an obvious double-top or range high. Watch how price behaves when it pokes just beyond it. Did it run the stops and reverse, or break and hold? Note which happened.</p>`,
+    quiz:{q:"A 'liquidity grab' typically refers to price...", a:["Slowly drifting sideways","Spiking past an obvious high/low to trigger stops, then reversing","A funding payment","A type of stablecoin"], correct:1,
+    fb:"Resting stops cluster beyond obvious levels; price often reaches for that liquidity before turning."}
+  },
+  {
+    t:"Fibonacci retracements & extensions", d:"10 min", lvl:2,
+    concept:`<p>After a move, pullbacks often stall at <b>Fibonacci</b> ratios of the prior leg — most-watched are <b>0.5, 0.618 ("golden pocket")</b> and 0.382. <b>Extensions</b> (1.27, 1.618) project profit targets beyond the move. Fib works because so many traders watch it (self-fulfilling), so use it as confluence with structure/support, not alone.</p>`,
+    example:`<p>BTC rallies $50k→$60k then pulls back. You draw the fib from $50k to $60k; the 0.618 sits near $53.8k, which also lines up with prior resistance-turned-support. That confluence is a higher-quality long zone than fib alone.</p>`,
+    exercise:`<p>Draw a fib retracement on a clear swing. Mark the 0.5 and 0.618. Did price react there? Check whether those levels overlapped any horizontal support/resistance.</p>`,
+    quiz:{q:"The Fibonacci 'golden pocket' refers to roughly the...", a:["0.5–0.618 retracement zone","0.1 level","200-day MA","Funding window"], correct:0,
+    fb:"The 0.5–0.618 retracement is the most-watched pullback zone; strongest when it lines up with other levels."}
+  },
+  {
+    t:"VWAP & anchored VWAP", d:"9 min", lvl:2,
+    concept:`<p><b>VWAP</b> (Volume-Weighted Average Price) is the average price weighted by volume — a fair-value line many active traders and desks use. Price above VWAP = buyers in control intraday; below = sellers. <b>Anchored VWAP</b> starts the calc from a chosen event (a major high/low, a news candle) to see who's in profit since then.</p>`,
+    example:`<p>You anchor a VWAP to the last cycle low. Price trading well above it shows the average buyer since the bottom is in profit — context for trend strength and where dips may find support.</p>`,
+    exercise:`<p>Add VWAP to an intraday chart and anchored VWAP from a recent swing high. Note how price interacts with each line as support/resistance.</p>`,
+    quiz:{q:"VWAP represents...", a:["The simple average of closes","The volume-weighted average price","The funding rate","Open interest"], correct:1,
+    fb:"VWAP weights price by volume, giving a fair-value benchmark that institutions and intraday traders watch."}
+  },
+  {
+    t:"Confluence: stacking your edges", d:"10 min", lvl:2,
+    concept:`<p>No single signal is reliable. <b>Confluence</b> means multiple independent factors pointing the same way at the same price — e.g. horizontal support + 0.618 fib + a higher-timeframe HL + a bullish candle + RSI bullish divergence. The more (independent) reasons align, the higher the probability and the tighter, more logical your stop.</p>`,
+    example:`<p>A long where support, fib, structure, and a reversal candle all coincide at one price is an A+ setup. A long off a single RSI reading in no-man's-land is a coin flip. Same account, very different expectancy.</p>`,
+    exercise:`<p>Define your personal "A+ checklist" of 3–4 factors that must align before you take a trade. Score your next few hypothetical setups against it.</p>`,
+    quiz:{q:"Confluence improves a setup because...", a:["It guarantees a win","Several independent factors agreeing raises probability","It removes the need for a stop","It increases leverage"], correct:1,
+    fb:"Independent factors aligning at one level raises the odds and gives a logical place for your stop — though never a guarantee."}
+  }
+  ]
+}
+,
+{
+  track:"Strategies &amp; Playbooks",
+  sub:"Complete, rule-based setups — entry, stop, target, and management. Tools become an edge.",
+  modules:[
+  {
+    t:"What makes a tradeable edge", d:"10 min", lvl:2,
+    concept:`<p>An <b>edge</b> is a repeatable set of conditions with <b>positive expectancy</b> over many trades — not a single good call. A real playbook specifies: the market/timeframe, the exact entry trigger, where the stop goes (invalidation), the target/management, and when the setup does <em>not</em> apply. If you can't write it as rules someone else could follow, it isn't a strategy yet.</p>`,
+    example:`<p>"I buy when it dips" is not an edge. "In a daily uptrend, I buy the first pullback to rising 20-EMA that prints a bullish engulfing, stop below the swing low, target 2R" is — it's testable and repeatable.</p>`,
+    exercise:`<p>Take any idea you have and force it into five lines: market/timeframe, entry trigger, stop, target/management, and a "skip if" condition. If you can't, it needs more definition.</p>`,
+    quiz:{q:"A genuine trading edge is best defined as...", a:["A strong gut feeling","Repeatable rules with positive expectancy over many trades","Winning your last trade","Using more leverage"], correct:1,
+    fb:"Edge = a written, repeatable rule set that's net-profitable across a large sample — not any single outcome."}
+  },
+  {
+    t:"Playbook 1 — Trend pullback", d:"12 min", lvl:2,
+    concept:`<p>The bread-and-butter setup. <b>Context:</b> clear uptrend (HH/HL) on your higher timeframe. <b>Entry:</b> wait for a pullback to a confluence zone (rising MA, prior support, fib 0.5–0.618) and a reversal trigger (bullish engulfing / reclaim). <b>Stop:</b> below the pullback swing low. <b>Target:</b> prior high then trail. Trade <em>with</em> the trend — highest-probability, beginner-friendly.</p>`,
+    example:`<p>ETH daily uptrend; on the 4h it pulls back to the 20-EMA which overlaps the 0.5 fib, prints a bullish engulfing. Long, stop under the low (1R = 2%), first target the prior high (~2.4R), trail the rest.</p>`,
+    exercise:`<p>Find a current uptrend and mark exactly where a trend-pullback entry, stop, and first target would be. Use the Position-size calculator in the Tools track to size it at 1% risk.</p>`,
+    quiz:{q:"The trend-pullback playbook enters...", a:["Against the higher-timeframe trend","On a pullback in the direction of the established trend","Only at all-time highs","Randomly"], correct:1,
+    fb:"You buy dips within an uptrend (or sell rallies in a downtrend) — trading with the dominant trend, not against it."}
+  },
+  {
+    t:"Playbook 2 — Range reversal", d:"11 min", lvl:2,
+    concept:`<p>For sideways markets. <b>Context:</b> price oscillating between a clear horizontal support and resistance (no trend). <b>Entry:</b> at the range edge with a rejection candle (fade the edge). <b>Stop:</b> just beyond the range boundary. <b>Target:</b> the opposite edge / mid-range. Avoid the middle of the range (no edge). Stand aside once the range breaks with volume.</p>`,
+    example:`<p>BTC chops between $58k support and $62k resistance for a week. Near $58k a hammer prints → long, stop $57.3k, target $61.8k. If price closes firmly below $58k on volume, the range is broken — cancel the idea.</p>`,
+    exercise:`<p>Identify a current ranging pair. Mark the buy zone, sell zone, and the invalidation (range break). Note why mid-range trades are low quality.</p>`,
+    quiz:{q:"In the range-reversal playbook you should avoid...", a:["Trading the range edges","Trading the middle of the range","Using a stop","Marking support"], correct:1,
+    fb:"Edges offer defined risk and reward; the middle of a range is a coin flip with poor R:R."}
+  },
+  {
+    t:"Playbook 3 — Breakout & retest", d:"12 min", lvl:3,
+    concept:`<p>For momentum. <b>Context:</b> price coiling under a clear level / pattern. <b>Entry:</b> rather than chasing the first breakout (often a fakeout), wait for the breakout, then a <b>retest</b> of the broken level holding as new support, with volume confirmation. <b>Stop:</b> back inside the prior range. <b>Target:</b> measured move (pattern height). Patience on the retest filters out most fakeouts.</p>`,
+    example:`<p>BTC breaks $62k resistance on strong volume, pulls back to $62k which now holds as support (role reversal), then pushes up. Enter on the retest hold, stop below $61.3k, target the measured move.</p>`,
+    exercise:`<p>Find a recent breakout. Did it retest the level before continuing, or run away? Mark where a breakout-retest entry and stop would have gone, and whether volume confirmed.</p>`,
+    quiz:{q:"The breakout-retest playbook mainly reduces the risk of...", a:["Paying fees","Buying a fakeout/false breakout","Funding costs","Slippage"], correct:1,
+    fb:"Waiting for the level to be retested and hold filters out many false breakouts that snap back."}
+  },
+  {
+    t:"Backtesting a strategy", d:"13 min", lvl:3,
+    concept:`<p>Before risking money, prove the edge exists. <b>Backtesting</b> = applying your exact rules to historical charts and logging the results. Track over a meaningful sample (50–100+ trades): win rate, average R, <b>expectancy</b>, max drawdown, and whether you could actually follow the rules. A setup that "looks good" often has negative expectancy once measured.</p><p>Then <b>forward-test</b> on demo before going live.</p>`,
+    example:`<p>You backtest the trend-pullback rules over 80 past setups: 47% win rate, +1.9R average winner, −1R losers → positive expectancy with a 14% max drawdown. Now it's worth forward-testing on demo.</p>`,
+    exercise:`<p>Use the backtest tab in the journal spreadsheet (in the Tools track) to log 30+ historical setups for one playbook. Compute expectancy. Keep it only if positive after costs.</p>`,
+    quiz:{q:"The main goal of backtesting is to...", a:["Predict the exact next move","Measure whether a rule set has positive expectancy over many trades","Increase leverage","Avoid journaling"], correct:1,
+    fb:"Backtesting estimates expectancy and drawdown across a sample so you trade tested edges, not hunches."}
+  }
+  ]
+}
+,
+{
+  track:"Crypto Market Structure &amp; Sentiment",
+  sub:"The crypto-native edges generic TA misses: derivatives data, cycles, and on-chain flows.",
+  modules:[
+  {
+    t:"Funding rates as a sentiment signal", d:"11 min", lvl:2,
+    concept:`<p>Beyond being a cost (Futures track), <b>funding</b> reveals positioning. Persistently high positive funding = crowd aggressively long (leverage stacked on one side) — a contrarian warning a long-squeeze could flush the market. Deeply negative funding = crowd short, fuel for a short-squeeze. Extreme funding rarely lasts.</p>`,
+    example:`<p>After a vertical rally, BTC funding spikes to multi-month highs — everyone's leveraged long. Soon a sharp dip liquidates those longs (a long-squeeze), then funding resets. Crowded positioning preceded the flush.</p>`,
+    exercise:`<p>Check current BTC perp funding on a data site (Coinglass or your exchange). Is the crowd net long or short? Compare today's funding to the last month's range.</p>`,
+    quiz:{q:"Persistently high positive funding suggests...", a:["The crowd is heavily short","The crowd is heavily long — a contrarian caution","No leverage in the market","The exchange is paying traders"], correct:1,
+    fb:"High positive funding = crowded longs paying shorts; over-leveraged positioning that can unwind violently."}
+  },
+  {
+    t:"Open interest & long/short ratio", d:"11 min", lvl:3,
+    concept:`<p><b>Open interest (OI)</b> = total outstanding derivative contracts. Rising price + rising OI = new money backing the move (healthy). Rising price + falling OI = short-covering (weaker). A sharp OI drop = positions closed/liquidated. The <b>long/short ratio</b> shows crowd skew. Read these together with price, never alone.</p>`,
+    example:`<p>Price grinds up but OI keeps falling — the rally is mostly shorts covering, not fresh buyers. You treat the move with more suspicion and tighten targets.</p>`,
+    exercise:`<p>On Coinglass, look at BTC price vs OI over the last week. Find one move where OI rose with price and one where it fell. Interpret the difference.</p>`,
+    quiz:{q:"Rising price together with rising open interest usually signals...", a:["Short covering","Fresh money/conviction behind the move","An imminent crash","Lower volatility"], correct:1,
+    fb:"New contracts opening as price rises means new capital is backing the trend — generally healthier than a falling-OI move."}
+  },
+  {
+    t:"Liquidation cascades & stop clusters", d:"11 min", lvl:3,
+    concept:`<p>Leverage concentrates liquidation prices at predictable levels (just past round numbers and obvious highs/lows). When price hits them, forced closures push price further, triggering more liquidations — a <b>cascade</b>. This is why crypto wicks violently into obvious levels then reverses: the move was hunting leverage, not fundamentals.</p>`,
+    example:`<p>Heatmaps show dense long-liquidation levels at $58k. Price knifes to $57.8k, liquidations cascade, then it V-reverses back to $60k within an hour — classic leverage flush.</p>`,
+    exercise:`<p>Look at a liquidation heatmap (Coinglass). Note where the biggest clusters sit relative to price. Recall the last time price spiked into an obvious level and reversed — likely a cascade.</p>`,
+    quiz:{q:"A liquidation cascade happens because...", a:["Funding is paid","Forced closures push price further, triggering more liquidations","Volume disappears","Stablecoins de-peg"], correct:1,
+    fb:"Each forced liquidation moves price toward the next cluster, snowballing — the engine behind violent crypto wicks."}
+  },
+  {
+    t:"BTC dominance, alt seasons & cycles", d:"12 min", lvl:2,
+    concept:`<p><b>BTC dominance</b> = Bitcoin's share of total crypto market cap. Falling dominance while total cap holds/rises often marks money rotating into alts (an "alt season"); rising dominance in fear means capital flees to BTC. Crypto also moves in broad <b>cycles</b> (euphoria → capitulation → accumulation). Knowing the regime tells you whether to lean aggressive or defensive.</p>`,
+    example:`<p>BTC goes sideways after a big run while alts rip 30–80% — dominance falls, an alt-season signature. Later, fear hits: alts bleed faster than BTC and dominance climbs as money hides in Bitcoin.</p>`,
+    exercise:`<p>Pull up the BTC dominance chart (TradingView: BTC.D). Is it rising or falling now? What does that imply about BTC vs alt risk today?</p>`,
+    quiz:{q:"Falling BTC dominance (with total cap stable/up) often indicates...", a:["Money rotating into altcoins","A stablecoin de-peg","Lower funding","Higher fees"], correct:0,
+    fb:"When capital rotates from BTC into alts, Bitcoin's share of total cap falls — the classic alt-season tell."}
+  },
+  {
+    t:"The halving cycle & macro drivers", d:"11 min", lvl:2,
+    concept:`<p>Bitcoin's <b>halving</b> (~every 4 years) cuts new supply issuance in half and has historically framed multi-year cycles — though past performance is not a guarantee and each cycle differs. Crypto is also increasingly driven by <b>macro</b>: US dollar strength (DXY), interest rates, overall liquidity, and ETF/institutional flows. In risk-off macro, even great setups face headwinds.</p>`,
+    example:`<p>Rates rising and DXY strong = liquidity tightening; crypto often struggles regardless of charts. When the Fed signals easing and ETF inflows turn positive, the same setups work far better.</p>`,
+    exercise:`<p>Note where we are relative to the last halving and the current macro backdrop (rates rising or falling?). Decide whether the regime favours aggression or caution.</p>`,
+    quiz:{q:"The Bitcoin halving primarily...", a:["Doubles the supply issuance","Cuts new BTC issuance in half (~every 4 years)","Sets the funding rate","Is a type of order"], correct:1,
+    fb:"The halving halves miner block rewards roughly every four years, reducing new supply — a key cycle anchor (not a guarantee)."}
+  },
+  {
+    t:"On-chain & stablecoin flows (basics)", d:"11 min", lvl:3,
+    concept:`<p><b>On-chain</b> data is crypto's superpower — the ledger is public. Useful basics: <b>exchange flows</b> (coins moving <em>to</em> exchanges can signal intent to sell; <em>off</em> exchanges = accumulation/self-custody), <b>stablecoin supply</b> (growing stablecoin reserves = dry powder waiting to buy), and large-holder ("whale") movements. Treat as context, not precise timing.</p>`,
+    example:`<p>Stablecoin supply on exchanges climbs for weeks while BTC chops — buying power is building. A later breakout has fuel behind it. Conversely, big inflows of BTC to exchanges can precede selling pressure.</p>`,
+    exercise:`<p>On a free on-chain dashboard (e.g. CryptoQuant/Glassnode free tier), find exchange net-flow for BTC. Are coins flowing onto or off exchanges recently? What might that imply?</p>`,
+    quiz:{q:"Large amounts of coins moving ONTO exchanges can hint at...", a:["Intent to sell / added supply","Guaranteed price rise","Lower volatility","A halving"], correct:0,
+    fb:"Coins moving to exchanges often precedes selling; coins leaving (to self-custody) suggests accumulation. Context, not certainty."}
+  }
+  ]
+}
+,
+{
+  track:"Portfolio Risk &amp; Execution",
+  sub:"Beyond the single trade: total exposure, scaling, smart orders, and surviving drawdowns.",
+  modules:[
+  {
+    t:"Portfolio heat & correlation", d:"12 min", lvl:2,
+    concept:`<p>Risking 1% per trade means little if you hold ten correlated longs — that's effectively one big bet. <b>Portfolio heat</b> = the sum of risk across all open positions; cap it (e.g. max 3–5% total at risk). And remember <b>correlation</b>: most alts are leveraged Bitcoin beta, so five alt longs ≈ one large, highly-correlated long. True diversification in crypto is limited.</p>`,
+    example:`<p>You have five 1%-risk longs on different alts — feels diversified. BTC dumps 8%; all five hit stops together for a 5% account hit in minutes. They were one correlated bet, not five independent ones.</p>`,
+    exercise:`<p>Set a personal max total portfolio heat (e.g. 4%). For your next set of ideas, add up the risk and check correlation — would they all lose together if BTC dropped?</p>`,
+    quiz:{q:"Holding several highly-correlated alt longs means your real risk is...", a:["Much lower than per-trade risk","Closer to one large concentrated bet","Always zero","Unrelated to BTC"], correct:1,
+    fb:"Correlated positions move together, so total (portfolio) risk can be far higher than the per-trade number suggests."}
+  },
+  {
+    t:"Scaling in and out", d:"11 min", lvl:3,
+    concept:`<p>You don't have to enter or exit all at once. <b>Scaling in</b> = building a position in tranches (e.g. across a support zone) to improve average entry and reduce timing risk. <b>Scaling out</b> = taking partial profit at targets (e.g. sell ⅓ at 1.5R, move stop to breakeven, let the rest run). Done with rules it smooths results; done emotionally it just churns fees — so pre-define the tranches.</p>`,
+    example:`<p>Plan: ⅓ at 1.5R, ⅓ at 3R, trail the last ⅓ behind structure, stop to breakeven after the first take-profit. You lock in gains, remove risk, and keep upside — all decided in advance.</p>`,
+    exercise:`<p>For a hypothetical trade, write a scale-out plan: where you take partials, when you move the stop to breakeven, and how you trail the remainder.</p>`,
+    quiz:{q:"Scaling out of a winner lets you...", a:["Remove the stop entirely","Lock in partial profit while keeping upside, by rule","Increase leverage automatically","Avoid all fees"], correct:1,
+    fb:"Pre-planned partials bank profit and reduce risk (e.g. stop to breakeven) while leaving a runner for the big move."}
+  },
+  {
+    t:"Advanced order types: OCO, bracket & trailing", d:"10 min", lvl:2,
+    concept:`<p>Automate discipline. <b>OCO (one-cancels-the-other)</b> places a take-profit and a stop together — one fills, the other cancels. A <b>bracket order</b> wraps an entry with both a stop and target up front. A <b>trailing stop</b> follows price by a set distance to lock in gains as a trend runs. These remove the need to babysit charts and stop emotion from creeping in.</p>`,
+    example:`<p>You enter long and immediately set an OCO: target +3R, stop −1R. You walk away. Whichever hits first executes and cancels the other — no staring at the screen, no second-guessing.</p>`,
+    exercise:`<p>On your exchange, locate OCO/bracket and trailing-stop options. Practise placing a bracket on a demo trade so the stop and target are set the moment you enter.</p>`,
+    quiz:{q:"An OCO order is useful because...", a:["It removes your stop","Take-profit and stop are linked — one fills, the other cancels","It guarantees profit","It lowers fees to zero"], correct:1,
+    fb:"OCO pairs your exit orders so you set target and stop together and never end up with a dangling, unprotected order."}
+  },
+  {
+    t:"Drawdown math & risk of ruin", d:"12 min", lvl:3,
+    concept:`<p>Losses compound asymmetrically: a 50% drawdown needs a <b>100%</b> gain to recover; 80% down needs 400%. That's why capping risk matters. <b>Risk of ruin</b> is the probability a losing streak wipes you out — it rises fast with bigger per-trade risk and worse win rates. Small fixed risk keeps risk of ruin near zero and recovery realistic.</p>`,
+    example:`<p>Down 20% you need +25% to get back — doable. Let it reach −50% (over-leveraged) and you need +100% just to break even. The hole's exit gets exponentially steeper, so you defend against deep drawdowns up front.</p>`,
+    exercise:`<p>Compute the gain needed to recover from −10%, −25%, and −50% drawdowns. Set a personal max drawdown rule (e.g. stop and review at −15%).</p>`,
+    quiz:{q:"Recovering from a 50% account drawdown requires a gain of...", a:["50%","75%","100%","25%"], correct:2,
+    fb:"Half your capital lost means the remaining half must double (+100%) to break even — why deep drawdowns are so dangerous."}
+  },
+  {
+    t:"Operational security deep-dive", d:"12 min", lvl:0,
+    concept:`<p>Not losing funds <em>is</em> return. Build layered defenses: a <b>hardware wallet</b> for long-term holdings (keys never touch the internet); a hot/cold split (only active trading capital on exchanges); <b>authenticator-app 2FA</b> (never SMS); a unique password manager entry per exchange; and regularly <b>revoke stale token approvals</b> (e.g. via revoke.cash) so old DeFi permissions can't drain you. Beware bridges and unaudited contracts.</p>`,
+    example:`<p>A trader keeps 90% in cold storage, 10% on exchanges, revokes unused approvals monthly, and bookmarks every site. When a phishing wave hits and an old approval is exploited elsewhere, their exposure is near zero — the cold majority is untouchable.</p>`,
+    exercise:`<p>Run a security audit: hardware wallet for savings? hot/cold split defined? app-based 2FA everywhere? approvals reviewed/revoked? Fix the weakest link today.</p>`,
+    quiz:{q:"Which is the strongest practice for long-term holdings?", a:["Keep everything on one exchange","Hardware wallet with keys kept offline","SMS 2FA only","Screenshot your seed phrase"], correct:1,
+    fb:"Cold storage keeps private keys off the internet, immune to exchange failures and most remote attacks."}
+  }
+  ]
+}
+,
+{
+  track:"Practice, Tools &amp; Capstone",
+  sub:"Where knowledge becomes skill: honest expectations, live calculators, a journal, and your final plan.",
+  modules:[
+  {
+    t:"The reality of trading (read this first)", d:"9 min", lvl:0,
+    concept:`<p>An honest baseline the hype skips: <b>most retail traders lose money</b>, especially with leverage. Profitable trading is a skill that takes <b>months to years</b>, not a weekend. There are no signal groups, gurus, or bots that reliably print money — if it sounds guaranteed, it's a scam. Your early goal is not profit; it's <b>survival and process</b>: protect capital, follow rules, and improve. Expecting realistic outcomes is itself an edge, because it keeps you from over-betting.</p>`,
+    example:`<p>Two beginners start with $1,000. One expects to "turn it into $10k fast," over-leverages, and is wiped out in a month. The other treats year one as paid tuition, risks 1%, journals everything, and is still trading — and learning — twelve months later. Only one has a future in this.</p>`,
+    exercise:`<p>Write down your honest reason for trading and a realistic 12-month goal framed around <em>process</em> (e.g. "follow my plan on 100 trades," not "make $X"). Revisit it whenever you feel FOMO.</p>`,
+    quiz:{q:"A realistic primary goal for your first year of trading is to...", a:["Get rich quickly","Survive, protect capital, and master your process","Use maximum leverage","Find a signals group"], correct:1,
+    fb:"Survival and process come first. Consistency and capital preservation are what make eventual profitability possible."}
+  },
+  {
+    t:"Your demo-trading protocol", d:"11 min", lvl:0,
+    concept:`<p>Knowledge ≠ skill. Before real money, run a structured demo phase: pick <b>one</b> playbook, trade it on a demo/paper account, and <b>log 50–100 trades</b> in your journal. Graduation criteria: you follow your rules without deviation, your sample shows positive expectancy, and you've survived a losing streak without tilting. Then start live with the <em>smallest</em> size and scale only as results justify it.</p>`,
+    example:`<p>A trader paper-trades the trend-pullback playbook for 60 trades, hits +0.3R expectancy while actually following the rules, then goes live risking 0.5% — tiny size — for another 30 trades before stepping up. No leap straight to big real-money bets.</p>`,
+    exercise:`<p>Open a demo account on your exchange. Commit to a number (say 50 trades) of one playbook before risking real capital. Track every one in the journal.</p>`,
+    quiz:{q:"Before trading real money, you should first...", a:["Use maximum leverage to learn fast","Demo/paper trade one playbook for a meaningful sample and follow your rules","Copy a signals group","Skip practice if you understand the theory"], correct:1,
+    fb:"A disciplined demo phase builds rule-following and proves expectancy before a cent is at risk."}
+  },
+  {
+    t:"Tool — Position-size calculator", d:"Tool", lvl:0, novideo:true, tool:"position",
+    concept:`<p>Size every trade from <b>risk first</b>. Enter your account, the % you'll risk (1% recommended), and your entry and stop. The calculator returns the exact position size so that hitting your stop loses precisely your planned risk — never more.</p>`,
+    exercise:`<p>Plug in your real account size and a setup you're watching. Use the position size it returns for your next (demo) trade.</p>`
+  },
+  {
+    t:"Tool — Risk/reward calculator", d:"Tool", lvl:0, novideo:true, tool:"rr",
+    concept:`<p>Enter your entry, stop, and target to see the reward-to-risk ratio and the <b>break-even win rate</b> it implies. Use it to reject low-quality trades: if a setup can't offer at least ~2:1, it usually isn't worth the risk.</p>`,
+    exercise:`<p>Test a few setups. Notice how a 3:1 trade only needs to win ~25% of the time to break even — that's why R:R matters more than being "right."</p>`
+  },
+  {
+    t:"Tool — Liquidation-price calculator", d:"Tool", lvl:0, novideo:true, tool:"liq",
+    concept:`<p>For leveraged positions: enter direction, entry, leverage, and maintenance margin to see your approximate liquidation price and how small a move would wipe you out. Watch how higher leverage drags the liquidation price terrifyingly close to entry. <span class="muted">Approximate (isolated margin); always confirm on your exchange.</span></p>`,
+    exercise:`<p>Set entry $60,000 and compare the liquidation distance at 2x, 10x, and 25x. Decide the maximum leverage you'd ever realistically use.</p>`
+  },
+  {
+    t:"Trading journal & backtest template", d:"10 min", lvl:0, novideo:true,
+    concept:`<p>This is the most valuable tool in the course. The spreadsheet has a <b>Trade Log</b> (auto-calculates R-multiple, win rate, and expectancy) and a <b>Backtest</b> tab for proving a playbook on historical data. Log <em>every</em> trade — entry, stop, target, size, reason, result, and a one-line lesson — then review weekly to find what actually makes you money.</p>
+    <p>📥 <a href="trading-journal.xlsx" download><b>Download the journal &amp; backtest spreadsheet</b></a> (keep it in the same folder as this course).</p>`,
+    exercise:`<p>Download the template and log your last 5 (real or demo) trades tonight. Each Sunday, review: which setup performed best, and did you follow your rules?</p>`,
+    quiz:{q:"The single biggest reason to keep a trading journal is to...", a:["Show off winners","Turn experience into measurable feedback so you can improve","Calculate taxes","Replace your trading plan"], correct:1,
+    fb:"Logged, reviewed trades reveal which setups and habits make or lose money — the engine of real improvement."}
+  },
+  {
+    t:"Capstone — build & pressure-test your plan", d:"20 min", lvl:0, novideo:true,
+    concept:`<p>Your graduation project. Produce a one-page <b>trading plan</b> that ties the whole course together, then stress-test it. A complete plan states: the markets/timeframes you trade; your chosen playbook(s) with exact entry/stop/target rules; risk per trade and max portfolio heat; daily/weekly loss limits; your security setup; and your routine (when you trade, journal, and review).</p>
+    <p><b>Pressure test it</b> against these questions: What's my edge, in one sentence? Where am I wrong (invalidation)? What's the worst losing streak I can survive at this risk? What will make me <em>stop</em> trading for the day? If you can answer all four crisply, you're ready to demo it seriously.</p>`,
+    exercise:`<p>Write your one-page plan now (use the Building Your Trading Plan module as the skeleton and the calculators for your risk numbers). Then answer the four pressure-test questions in writing. Revisit and refine monthly using your journal data.</p>`,
+    quiz:{q:"A finished trading plan must, above all, define...", a:["Which influencers to follow","Your setups, risk limits, invalidation, and routine — as written rules","A profit guarantee","The maximum leverage available"], correct:1,
+    fb:"A plan is a written rulebook: specific setups, risk caps, where you're wrong, and your routine. That's what makes trading repeatable."}
+  }
+  ]
+}
+];
+
+const GLOSSARY = [
+  ["Spot","Buying/selling the actual asset, with ownership and 1:1 price exposure."],
+  ["Perpetual future (perp)","A derivative contract with no expiry that tracks spot price via funding."],
+  ["Leverage","Borrowed exposure that multiplies both gains and losses (e.g. 10x)."],
+  ["Margin","Collateral you post to open a leveraged position."],
+  ["Liquidation","Forced closure of a position when losses breach maintenance margin."],
+  ["Funding rate","Recurring payment between longs and shorts that keeps perps near spot."],
+  ["Stop-loss","A pre-set order that exits a trade to cap losses."],
+  ["Risk/reward (R:R)","Ratio of potential loss to potential gain on a trade."],
+  ["Support / Resistance","Price zones where buying (support) or selling (resistance) tends to react."],
+  ["Slippage","Difference between expected and actual fill price, worst in thin markets."],
+  ["Maker / Taker","Maker adds liquidity (limit order, lower fee); taker removes it (market order)."],
+  ["Stablecoin","Crypto pegged ~1:1 to a fiat currency, used as on-chain cash."],
+  ["Seed phrase","12–24 words that control a self-custody wallet. Keep it secret and offline."],
+  ["RSI","Momentum oscillator (0–100); >70 overbought, <30 oversold; watch for divergence."],
+  ["Market structure","The sequence of swing highs/lows defining trend; BOS = break of structure, CHoCH = change of character."],
+  ["Open interest (OI)","Total outstanding derivative contracts; rising OI with price = new money behind the move."],
+  ["VWAP","Volume-weighted average price — a fair-value benchmark watched by intraday traders and desks."],
+  ["Fibonacci","Retracement ratios (0.5, 0.618) where pullbacks often stall; extensions (1.27, 1.618) project targets."],
+  ["Expectancy","Average profit per trade = (Win% × avg win) − (Loss% × avg loss); positive = a real edge."],
+  ["Drawdown","Decline from an equity peak; a 50% drawdown needs a 100% gain to recover."],
+  ["Risk of ruin","Probability a losing streak wipes out your account; rises sharply with bigger per-trade risk."],
+  ["Portfolio heat","Total risk across all open positions; cap it (e.g. 3–5%), especially with correlated alts."],
+  ["BTC dominance","Bitcoin's share of total crypto market cap; falling dominance often signals an alt season."],
+  ["Liquidation cascade","Forced closures pushing price into more liquidations — the engine behind violent crypto wicks."],
+  ["Backtesting","Applying exact rules to historical data to estimate expectancy and drawdown before risking money."],
+  ["Order block / FVG","A zone left by a strong move (order block) or a price imbalance (fair-value gap) markets often revisit."],
+];
+
+const TRACK_ICON = ["🏦","📊","⚡","🛡️","🧭","🎯","🔭","♟️","🎓"];
+
+/* Per-track video context: search seed + a recommended expert channel */
+const TRACK_META = [
+  { ctx:"crypto trading for beginners explained", channel:"Crypto Casey / 99Bitcoins" },
+  { ctx:"crypto technical analysis tutorial",     channel:"Rayner Teo" },
+  { ctx:"crypto futures leverage explained",      channel:"Coin Bureau" },
+  { ctx:"trading risk management psychology",     channel:"Rayner Teo" },
+  { ctx:"crypto market structure smart money concepts", channel:"Rayner Teo" },
+  { ctx:"crypto trading strategy backtest setup",        channel:"Coin Bureau / Rayner Teo" },
+  { ctx:"crypto on-chain funding rate open interest analysis", channel:"Coin Bureau" },
+  { ctx:"portfolio risk management correlation drawdown trading", channel:"Rayner Teo" },
+  { ctx:"how to practice trading demo journal plan",     channel:"Rayner Teo" },
+];
+const YT = q => "https://www.youtube.com/results?search_query=" + encodeURIComponent(q);
+
+/* ===================== LEVELS ===================== */
+/* Level per module, in render order (track by track). 1=Beginner 2=Intermediate 3=Advanced */
+const LEVELS = [
+  /* Foundations */    1,1,1,1,2,2,1,1,
+  /* Tech analysis */  1,2,1,2,2,2,2,3,3,3,
+  /* Futures */        2,2,2,3,3,3,3,
+  /* Risk & psych */   1,2,2,3,1,2,1,3
+];
+const LEVEL_NAMES = {0:"All levels", 1:"Beginner", 2:"Intermediate", 3:"Advanced"};
+const LEVEL_DESC = {
+  1:"Start here — core foundations to understand and trade crypto safely.",
+  2:"Build real skill — indicators, futures basics, and position sizing.",
+  3:"Sharpen your edge — advanced TA, leverage mechanics, expectancy & planning."
+};
+const LBADGE = {0:"#58a6ff", 1:"#3fb950", 2:"#d29922", 3:"#f85149"};
+const LKEY = "cryptoCourseLevel_v1";
+let currentLevel = 1;
+try{ currentLevel = +(localStorage.getItem(LKEY)) || 1; }catch(e){}
+
+/* ============================ RENDER ============================ */
+const courseEl = document.getElementById('course');
+let totalModules = 0, idCounter = 0;
+const moduleIds = [];
+
+COURSE.forEach((track, ti) => {
+  const tEl = document.createElement('section');
+  tEl.className = 'track';
+  tEl.innerHTML = `<h2><span class="tnum">${ti+1}</span> <span class="ticon">${TRACK_ICON[ti]||''}</span> ${track.track}</h2><div class="tsub">${track.sub}</div>`;
+  track.modules.forEach((m) => {
+    const gi = totalModules;
+    const id = 'm'+(idCounter++);
+    moduleIds.push(id);
+    totalModules++;
+    const lvl = (m.lvl != null) ? m.lvl : (LEVELS[gi] || 1);
+    const badge = `<span class="lvlbadge" style="--bc:${LBADGE[lvl]}">${LEVEL_NAMES[lvl]}</span>`;
+    const mod = document.createElement('div');
+    mod.className = 'module';
+    mod.dataset.id = id;
+    mod.dataset.level = lvl;
+    const optsHtml = m.quiz ? m.quiz.a.map((opt,i)=>`<button onclick="answer(this,${i},${m.quiz.correct})">${opt}</button>`).join('') : '';
+    const meta = TRACK_META[ti];
+    const cleanTitle = m.t.replace(/<[^>]+>/g,'').replace(/&amp;/g,'and');
+    const vQuery = cleanTitle + ' ' + meta.ctx;
+    const videoCard = `
+      <a class="video" href="${YT(vQuery)}" target="_blank" rel="noopener">
+        <div class="thumb">
+          <span class="vtag">▶ VIDEO LESSON</span>
+          <div class="play"></div>
+          <div class="vlabel">Watch: ${cleanTitle}</div>
+        </div>
+        <div class="vmeta"><span>Curated video lessons · recommended channel: <b>${meta.channel}</b></span><span class="ext">Opens YouTube ↗</span></div>
+      </a>`;
+    const sec = [];
+    if(!m.novideo) sec.push(videoCard);
+    if(m.concept)  sec.push(`<h4>Concept</h4>${m.concept}`);
+    if(m.viz)      sec.push(`<h4 class="ex">📈 Visual</h4><figure class="viz">${m.viz}</figure>`);
+    if(m.example)  sec.push(`<h4 class="ex">Worked example</h4>${m.example}`);
+    if(m.tool)     sec.push(renderTool(m.tool, id));
+    if(m.exercise) sec.push(`<h4 class="do">Your turn</h4>${m.exercise}`);
+    if(m.quiz)     sec.push(`<div class="quiz"><div class="q">Quick check: ${m.quiz.q}</div>${optsHtml}<div class="fb">${m.quiz.fb}</div></div>`);
+    sec.push(`<div style="margin-top:14px"><button class="reset" style="border-color:var(--accent2);color:var(--accent2)" onclick="markDone('${id}',this)">Mark module complete →</button></div>`);
+    const metaLine = m.novideo ? `⏱ ${m.d}` : `⏱ ${m.d} · 🔗 video link + reading`;
+    mod.innerHTML = `
+      <div class="mhead" onclick="toggle('${id}')">
+        <div class="check">✓</div>
+        <div class="mt"><div class="mtitle">${m.t}${badge}</div><div class="mdur">${metaLine}</div></div>
+        <div class="chev">▶</div>
+      </div>
+      <div class="mbody">${sec.join('')}</div>`;
+    tEl.appendChild(mod);
+  });
+  courseEl.appendChild(tEl);
+});
+
+const gEl = document.getElementById('glossary');
+GLOSSARY.forEach(([t,d])=>{ gEl.innerHTML += `<dt>${t}</dt><dd>${d}</dd>`; });
+
+/* ===================== CALCULATORS ===================== */
+function $val(id){ const e=document.getElementById(id); return e?parseFloat(e.value):NaN; }
+function crow(label,id,val,step){ return `<div class="calc-row"><label>${label}</label><input id="${id}" type="number" value="${val}" step="${step||'any'}"></div>`; }
+function renderTool(kind,id){
+  let body='';
+  if(kind==='position'){
+    body = crow('Account size ($)',id+'_acct',5000)+crow('Risk per trade (%)',id+'_risk',1)
+      +crow('Entry price ($)',id+'_entry',60000)+crow('Stop price ($)',id+'_stop',58800);
+  } else if(kind==='rr'){
+    body = crow('Entry price ($)',id+'_e',60000)+crow('Stop price ($)',id+'_s',58800)+crow('Target price ($)',id+'_t',63600);
+  } else if(kind==='liq'){
+    body = `<div class="calc-row"><label>Direction</label><select id="${id}_dir"><option value="long">Long</option><option value="short">Short</option></select></div>`
+      +crow('Entry price ($)',id+'_e',60000)+crow('Leverage (x)',id+'_lev',10)+crow('Maintenance margin (%)',id+'_mmr',0.5);
+  }
+  const titles={position:'📐 Position-size calculator',rr:'⚖️ Risk / reward calculator',liq:'💥 Liquidation-price calculator (approx.)'};
+  return `<h4 class="do">${titles[kind]}</h4><div class="calc" data-fn="calc_${kind}" data-mid="${id}" oninput="calc_${kind}('${id}')">${body}<div class="calc-out" id="${id}_out"></div></div>`;
+}
+function calc_position(id){
+  const out=document.getElementById(id+'_out'); if(!out)return;
+  const a=$val(id+'_acct'),r=$val(id+'_risk'),e=$val(id+'_entry'),s=$val(id+'_stop');
+  if([a,r,e,s].some(isNaN)||e===s||e<=0){ out.innerHTML='<span class="muted">Enter valid numbers (entry ≠ stop).</span>'; return; }
+  const riskUsd=a*r/100, dist=Math.abs(e-s), units=riskUsd/dist, notional=units*e;
+  out.innerHTML=`Risk amount: <b>$${riskUsd.toFixed(2)}</b> · stop distance <b>${(dist/e*100).toFixed(2)}%</b><br>Buy <b>${units.toFixed(4)}</b> units ≈ <b>$${notional.toFixed(0)}</b> position. Hitting the stop loses exactly your $${riskUsd.toFixed(2)}.`;
+}
+function calc_rr(id){
+  const out=document.getElementById(id+'_out'); if(!out)return;
+  const e=$val(id+'_e'),s=$val(id+'_s'),t=$val(id+'_t');
+  if([e,s,t].some(isNaN)||e===s){ out.innerHTML='<span class="muted">Enter valid numbers.</span>'; return; }
+  const risk=Math.abs(e-s), reward=Math.abs(t-e), rr=reward/risk, be=100/(1+rr);
+  out.innerHTML=`Reward : risk = <b>${rr.toFixed(2)} : 1</b><br>Break-even win rate ≈ <b>${be.toFixed(1)}%</b> — you can lose ${(100-be).toFixed(1)}% of trades and still break even.`;
+}
+function calc_liq(id){
+  const out=document.getElementById(id+'_out'); if(!out)return;
+  const dir=(document.getElementById(id+'_dir')||{}).value||'long';
+  const e=$val(id+'_e'),lev=$val(id+'_lev'),mmr=$val(id+'_mmr')/100;
+  if([e,lev].some(isNaN)||lev<=0||e<=0){ out.innerHTML='<span class="muted">Enter valid numbers.</span>'; return; }
+  const liq = dir==='long' ? e*(1-1/lev+mmr) : e*(1+1/lev-mmr);
+  const move=Math.abs(liq-e)/e*100;
+  out.innerHTML=`Approx. liquidation price: <b>$${liq.toFixed(2)}</b><br>Only a <b>${move.toFixed(2)}%</b> move against you. <span class="muted">Approximate (isolated margin); exchanges vary.</span>`;
+}
+function initCalcs(){ document.querySelectorAll('.calc').forEach(c=>{ const f=window[c.dataset.fn]; if(f) f(c.dataset.mid); }); }
+
+/* ============================ STATE ============================ */
+const KEY = 'cryptoCourseProgress_v1';
+function load(){ try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};} }
+function save(s){ try{localStorage.setItem(KEY, JSON.stringify(s));}catch(e){} }
+
+function applyState(){
+  const s = load();
+  let done = 0, visTotal = 0;
+  moduleIds.forEach(id=>{
+    const el = document.querySelector(`.module[data-id="${id}"]`);
+    if(s[id]) el.classList.add('done'); else el.classList.remove('done');
+    const lv = +el.dataset.level;
+    if(lv === currentLevel || lv === 0){ visTotal++; if(s[id]) done++; }
+  });
+  const pct = visTotal? Math.round(done/visTotal*100):0;
+  document.getElementById('pcount').textContent = `${done} / ${visTotal} · ${LEVEL_NAMES[currentLevel]}`;
+  document.getElementById('pbar').style.width = pct+'%';
+  document.getElementById('ppct').textContent = pct+'%';
+}
+const THEME_KEY = "cryptoCourseTheme_v1";
+const THEME_NAMES = {dark:"Dark", light:"Light", ocean:"Ocean", forest:"Forest", grape:"Grape"};
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem(THEME_KEY, t); }catch(e){}
+  document.querySelectorAll('#themes .swatch').forEach(s=>s.classList.toggle('active', s.dataset.theme===t));
+  const n=document.getElementById('tname'); if(n) n.textContent = THEME_NAMES[t]||t;
+}
+function setLevel(l){ currentLevel = l; try{localStorage.setItem(LKEY, l);}catch(e){} applyLevel(); }
+function applyLevel(){
+  document.querySelectorAll('#levels button').forEach(b=>
+    b.classList.toggle('active', +b.dataset.l === currentLevel));
+  document.getElementById('lvlDesc').textContent = LEVEL_DESC[currentLevel];
+  document.querySelectorAll('.module').forEach(el=>{
+    const lv = +el.dataset.level;
+    const show = (lv === currentLevel || lv === 0);
+    el.style.display = show ? '' : 'none';
+    if(!show) el.classList.remove('open');
+  });
+  document.querySelectorAll('.track').forEach(t=>{
+    const anyVisible = [...t.querySelectorAll('.module')].some(m=>m.style.display !== 'none');
+    t.style.display = anyVisible ? '' : 'none';
+  });
+  applyState();
+}
+function toggle(id){ document.querySelector(`.module[data-id="${id}"]`).classList.toggle('open'); }
+function markDone(id,btn){
+  const s = load(); s[id]=true; save(s); applyState();
+  btn.textContent = '✓ Completed';
+  btn.style.opacity = .6;
+}
+function answer(btn, choice, correct){
+  const quiz = btn.parentElement;
+  if(quiz.dataset.answered) return;
+  quiz.dataset.answered = '1';
+  const buttons = quiz.querySelectorAll('button');
+  buttons[correct].classList.add('correct');
+  if(choice!==correct) btn.classList.add('wrong');
+  quiz.querySelector('.fb').style.display='block';
+}
+function resetProgress(){
+  if(confirm('Reset all module progress?')){ save({}); applyState();
+    document.querySelectorAll('.quiz').forEach(q=>{ delete q.dataset.answered;
+      q.querySelectorAll('button').forEach(b=>b.classList.remove('correct','wrong'));
+      q.querySelector('.fb').style.display='none'; });
+  }
+}
+setTheme(document.documentElement.getAttribute('data-theme') || 'dark');
+applyLevel();
+initCalcs();
+</script>
+</body>
+</html>
