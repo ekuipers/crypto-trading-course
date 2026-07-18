@@ -251,7 +251,7 @@
   </div>
   <div class="banner-inner">
     <div class="banner-text">
-      <div class="brand"><span class="dot"></span> <img src="favicon.svg" alt="CryptoPro Training logo" style="width:20px;height:20px;vertical-align:-4px"> Crypto Academy</div>
+      <div class="brand"><span class="dot"></span> <img src="favicon.svg" alt="CryptoPro Training logo" style="width:22px;height:22px;border-radius:6px;vertical-align:-5px"> CryptoPro Training</div>
       <p>Crypto Trading Micro-Learning — bite-sized modules from spot basics to leverage and risk management, filtered to your level.</p>
       <div class="banner-stats">
         <span id="statTracks">📚 … tracks</span><span id="statModules">🔗 … video-link + reading modules</span><span>✅ progress saved automatically</span>
@@ -290,9 +290,10 @@
   </details>
 
   <footer>
+    <img src="favicon.svg" alt="" style="width:16px;height:16px;border-radius:3px;vertical-align:-3px;margin-right:6px">
     CryptoPro Training · <span id="statFooter">… tracks · … modules</span> · external video links + reading per module.<br>
     Work through one track at a time. Don't risk real money until you've completed the Risk &amp; Psychology track.<br>
-    <span id="courseVersion"></span>
+    Created by Erik Kuipers · <span id="courseVersion"></span>
   </footer>
 </div>
 
@@ -1117,7 +1118,7 @@ GLOSSARY.forEach(([t,d])=>{ gEl.innerHTML += `<dt>${t}</dt><dd>${d}</dd>`; });
 document.getElementById('statTracks').textContent = `📚 ${COURSE.length} tracks`;
 document.getElementById('statModules').textContent = `🔗 ${totalModules} video-link + reading modules`;
 document.getElementById('statFooter').textContent = `${COURSE.length} tracks · ${totalModules} modules`;
-const COURSE_VERSION = "1.41.0";
+const COURSE_VERSION = "1.41.1";
 document.getElementById('courseVersion').textContent = `v${COURSE_VERSION}`;
 
 /* ===================== CALCULATORS ===================== */

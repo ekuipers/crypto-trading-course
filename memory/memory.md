@@ -6,6 +6,34 @@ Note: `CLAUDE.md` referenced a prior `v1.35.1` bug-fix entry, but this file was 
 start of this session (2026-07-18) — no earlier history survived. Versioning restarts here at
 v1.36.0 and this file is now the source of truth going forward.
 
+## v1.41.1 — 2026-07-18 — Cross-suite title-bar/footer branding consistency
+
+**Driven by:** a CryptoPro Suite workflow-rules audit (rules 7 + 17: consistent title-bar/footer
+design, favicon-as-logo at a consistent size, same font, across all sub-projects).
+
+### Changes
+
+- The `.brand` eyebrow label inside the hero banner read "Crypto Academy" instead of "CryptoPro
+  Training" — a naming inconsistency versus the page's own `<title>`, the `.page-title` `<h1>` (added
+  in v1.41.0), and every other sub-project's header/logo text. Fixed to "CryptoPro Training".
+- `.brand` favicon icon bumped 20px → 22px with `border-radius:6px` added, matching the icon
+  treatment now used in CryptoPro Suite's and CryptoPro Trader's headers.
+- Footer previously had no favicon logo and no creator credit (rule 3/10 gap). Added a 16px favicon
+  icon and a "Created by Erik Kuipers ·" line before the version span.
+- Left the overall page structure untouched: this is a hero/marketing-style course landing page (large
+  `.page-title` heading + decorative banner), not a slim persistent utility header bar like the other
+  three sub-projects, and the multi-line footer (module stats + risk disclaimer + version) can't be
+  collapsed to a single-line height without cutting the risk warning. Forcing pixel-identical bar
+  heights here would mean gutting a working, appropriate design for this page's genre — left as a
+  documented, intentional exception rather than attempted.
+- Font-family was already the canonical stack shared by every sub-project
+  (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`) — no change
+  needed.
+- `COURSE_VERSION` bumped 1.41.0 → 1.41.1.
+
+**Verified:** grep-confirmed no remaining "Crypto Academy" references in the live HTML/JS (only this
+changelog's historical entries below still mention it, left as-is since it's a record of past state).
+
 ## v1.41.0 — 2026-07-18 — Site title moved out of the banner
 
 **Roadmap item implemented:** "The Title of the web app sits still in the banner. Move it to the top
