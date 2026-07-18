@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Crypto Trading — Micro-Learning Program</title>
 <style>
   :root{
@@ -226,7 +229,7 @@
   </div>
   <div class="banner-inner">
     <div class="banner-text">
-      <div class="brand"><span class="dot"></span> 🪙 Crypto Academy</div>
+      <div class="brand"><span class="dot"></span> <img src="favicon.svg" alt="CryptoPro Training logo" style="width:20px;height:20px;vertical-align:-4px"> Crypto Academy</div>
       <h1>Crypto Trading <span>Micro-Learning</span></h1>
       <p>Bite-sized modules from spot basics to leverage and risk management — filtered to your level.</p>
       <div class="banner-stats">
@@ -1085,7 +1088,7 @@ GLOSSARY.forEach(([t,d])=>{ gEl.innerHTML += `<dt>${t}</dt><dd>${d}</dd>`; });
 document.getElementById('statTracks').textContent = `📚 ${COURSE.length} tracks`;
 document.getElementById('statModules').textContent = `🔗 ${totalModules} video-link + reading modules`;
 document.getElementById('statFooter').textContent = `${COURSE.length} tracks · ${totalModules} modules`;
-const COURSE_VERSION = "1.36.0";
+const COURSE_VERSION = "1.37.0";
 document.getElementById('courseVersion').textContent = `v${COURSE_VERSION}`;
 
 /* ===================== CALCULATORS ===================== */

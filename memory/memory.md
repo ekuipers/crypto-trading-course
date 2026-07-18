@@ -6,6 +6,31 @@ Note: `CLAUDE.md` referenced a prior `v1.35.1` bug-fix entry, but this file was 
 start of this session (2026-07-18) — no earlier history survived. Versioning restarts here at
 v1.36.0 and this file is now the source of truth going forward.
 
+## v1.37.0 — 2026-07-18 — Site favicon & logo
+
+**Task:** Create a favicon based on the site's theme and use it as the site logo (workflow rule #10).
+
+### Changes
+
+- **`docs/favicon.svg` (new):** hand-built 64×64 SVG icon matching the site theme — dark navy
+  gradient rounded square (`#1b2330` → `#0b0e14`, border `#27303f`), three rising candlesticks in
+  the site's green/red (`#3fb950`/`#f85149`), a translucent green trend line, and a Bitcoin-orange
+  (`#f7931a`) badge with a hand-drawn ₿ path (drawn as strokes, not text, so it renders in any
+  rasterizer without font dependencies).
+- **`docs/favicon.ico`, `docs/favicon-32.png`, `docs/favicon-192.png`, `docs/apple-touch-icon.png`
+  (new):** raster fallbacks rendered from the SVG via cairosvg (ImageMagick's SVG renderer produced
+  artifacts; cairosvg output was verified visually).
+- **`docs/index.html` + `docs/crypto-trading-course.html`:** added `<link rel="icon">` (SVG + ICO)
+  and `<link rel="apple-touch-icon">` tags in `<head>`.
+- **`docs/crypto-trading-course.html`:** header brand now uses the favicon as the site logo
+  (replaced the 🪙 emoji with an inline `<img src="favicon.svg">`).
+- **Version bump:** `COURSE_VERSION` 1.36.0 → 1.37.0 (footer updates automatically).
+
+### Verification
+
+- Rendered the icon at 180px and inspected it visually — candles, trend line, and ₿ badge all crisp.
+- Grepped both HTML files to confirm favicon links present and no duplicate tags.
+
 ## v1.36.0 — 2026-07-18 — Roadmap rescan: content expansion + bug fixes
 
 **Roadmap item implemented:** "Add more details to the existing modules and add new modules where
