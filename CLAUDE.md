@@ -24,7 +24,7 @@ Creator: Erik Kuipers
 
 ## Roadmap
 
-_No open roadmap items. Completed items are logged in `memory.md` (see v1.40.0)._
+_No open roadmap items. Completed items are logged in `memory.md` (see v1.41.0)._
 
 ## Bugs
 

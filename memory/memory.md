@@ -6,6 +6,34 @@ Note: `CLAUDE.md` referenced a prior `v1.35.1` bug-fix entry, but this file was 
 start of this session (2026-07-18) — no earlier history survived. Versioning restarts here at
 v1.36.0 and this file is now the source of truth going forward.
 
+## v1.41.0 — 2026-07-18 — Site title moved out of the banner
+
+**Roadmap item implemented:** "The Title of the web app sits still in the banner. Move it to the top
+left of the page." (Follow-up to v1.39.0: the title text/size was fixed, but it was still living
+inside `<header class="top">` — the decorative banner element — not actually outside/above it.)
+
+### Changes
+
+- Added `.page-title`, a new element rendered as the **first child of `<body>`**, before
+  `<header class="top">` entirely, so the title now sits on the plain page background rather than
+  the banner gradient/art. Moved the `<h1>CryptoPro <span>Training</span></h1>` markup there from
+  inside `.banner-inner > .banner-text`.
+- Moved the corresponding CSS (`font-size:2.9rem`, the gradient `span`, and the 720px mobile
+  fallback) from `header.top h1` to `.page-title h1` / `.page-title` selectors.
+- The banner itself keeps its small "🪙 Crypto Academy" brand kicker, the descriptive tagline
+  paragraph, and the stats row — just without the big duplicate title.
+- Version bump: `COURSE_VERSION` 1.40.0 → 1.41.0.
+
+### Verification
+
+- `node --check` on the extracted `<script>` block — syntax OK.
+- Loaded the actual rendered file with `jsdom` (`runScripts:'dangerously'`) and asserted:
+  `.page-title` exists and is `document.body.firstElementChild`; `header.top` does **not** contain it
+  (`header.contains(pageTitle) === false`) and no longer contains any `<h1>`; `.page-title` precedes
+  `header.top` in document order; the h1's computed font-size is `2.9rem` and text reads
+  "CryptoPro Training"; `document.title` unchanged; module/track counts unchanged (67/9) confirming
+  no regression elsewhere on the page.
+
 ## v1.40.0 — 2026-07-18 — All-levels filter + theme bar as top row
 
 **Roadmap items implemented:**
