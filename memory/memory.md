@@ -6,6 +6,36 @@ Note: `CLAUDE.md` referenced a prior `v1.35.1` bug-fix entry, but this file was 
 start of this session (2026-07-18) — no earlier history survived. Versioning restarts here at
 v1.36.0 and this file is now the source of truth going forward.
 
+## v1.38.0 — 2026-07-18 — Quiz score mini dashboard
+
+**Roadmap item implemented:** "Add a mini dashboard at the top of the page on top of the banner,
+which shows the score of correctly answered and failed questions."
+
+### Changes
+
+- **New `.quizbar`** layered on the banner (same treatment as the existing theme `.topbar`, stacked
+  above it) showing live counts: ✅ correct, ❌ incorrect, 🎯 accuracy %, and total answered.
+- **Quiz results now persist** in `localStorage` (`cryptoCourseQuizState_v1`, keyed by module id,
+  storing `{chosen, correct}` per quiz) instead of only living in the DOM for the current page load.
+  `applyQuizState()` restores the correct/wrong highlighting and locks already-answered quizzes on
+  every load, and `updateQuizDashboard()` recomputes the bar from that same stored state.
+- **`answer()`** now takes the module id, records the first result per quiz (subsequent clicks after
+  an answer is locked are ignored, so re-clicking can't inflate the score), and refreshes the bar.
+- **`resetProgress()`** now also clears the quiz state and dashboard alongside module completion, since
+  "Reset progress" should mean a full reset.
+- Version bump: `COURSE_VERSION` 1.37.0 → 1.38.0.
+
+### Verification
+
+- `node --check` on the extracted `<script>` block — syntax OK.
+- Copied the exact `loadQuiz`/`saveQuiz`/`updateQuizDashboard`/`applyQuizState`/`answer` function
+  bodies into a standalone Node harness with a minimal fake DOM/localStorage and asserted: answering
+  one quiz correctly and one incorrectly yields 1/1/50%; re-clicking an already-answered quiz does not
+  double-count; a simulated page reload (fresh DOM elements, same stored state) restores the correct
+  totals plus the correct/wrong button highlighting and re-locks the quiz; reset zeroes everything.
+  All assertions passed. (Full browser install via Playwright was judged disproportionate for this
+  static-site change; the harness exercises the real, unmodified function bodies.)
+
 ## v1.37.0 — 2026-07-18 — Site favicon & logo
 
 **Task:** Create a favicon based on the site's theme and use it as the site logo (workflow rule #10).

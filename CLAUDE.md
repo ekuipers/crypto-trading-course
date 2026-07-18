@@ -22,7 +22,7 @@ Creator: Erik Kuipers
 13. HTML pages should be located in the /docs folder.
 
 ## Roadmap
-_No open roadmap items. Completed items are logged in `memory.md` (see v1.36.0)._
+_No open roadmap items. Completed items are logged in `memory.md` (see v1.38.0)._
 
 ## Bugs
 

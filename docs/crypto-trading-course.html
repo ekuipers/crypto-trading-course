@@ -93,6 +93,14 @@
  .levelpick .levels button.active{background:var(--accent);color:#0b0e14;border-color:var(--accent)}
  @media (max-width:720px){.banner-inner{grid-template-columns:1fr}.levelpick{justify-content:space-between;width:100%}}
  .wrap{max-width:1120px;margin:0 auto;padding:14px 18px 60px}
+  .quizbar{position:relative;z-index:4;background:rgba(0,0,0,.28);border-bottom:1px solid rgba(255,255,255,.10);
+    padding:7px 18px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:center;
+    font-size:.8rem;color:#cfd8e3}
+  .quizbar .qb-label{font-weight:700;text-transform:uppercase;letter-spacing:.6px;font-size:.68rem;color:#9fb0c2}
+  .quizbar b{color:#fff}
+  .quizbar .qb-acc{color:var(--accent2)}
+  .quizbar .qb-muted{color:#8b98a9}
+  [data-theme="light"] .quizbar{background:rgba(20,26,36,.85);color:#e8edf5}
   .progress-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
     padding:11px 14px;margin:12px 0;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
   .bar{flex:1;min-width:180px;height:12px;background:var(--panel2);border-radius:99px;overflow:hidden}
@@ -214,6 +222,13 @@
       <rect x="821" y="34" width="18" height="46" fill="#3fb950"/>
     </g>
   </svg>
+  <div class="quizbar" id="quizbar">
+    <span class="qb-label">🧠 Quiz score</span>
+    <span>✅ <b id="quizCorrect">0</b> correct</span>
+    <span>❌ <b id="quizWrong">0</b> incorrect</span>
+    <span class="qb-acc">🎯 <b id="quizAcc">—</b> accuracy</span>
+    <span class="qb-muted"><b id="quizTotal">0</b> answered</span>
+  </div>
   <div class="topbar">
     <div class="topbar-inner">
       <span class="tb-label">🎨 Theme</span>
@@ -1046,7 +1061,7 @@ COURSE.forEach((track, ti) => {
     mod.className = 'module';
     mod.dataset.id = id;
     mod.dataset.level = lvl;
-    const optsHtml = m.quiz ? m.quiz.a.map((opt,i)=>`<button onclick="answer(this,${i},${m.quiz.correct})">${opt}</button>`).join('') : '';
+    const optsHtml = m.quiz ? m.quiz.a.map((opt,i)=>`<button onclick="answer(this,${i},${m.quiz.correct},'${id}')">${opt}</button>`).join('') : '';
     const meta = TRACK_META[ti];
     const cleanTitle = m.t.replace(/<[^>]+>/g,'').replace(/&amp;/g,'and');
     const vQuery = cleanTitle + ' ' + meta.ctx;
@@ -1088,7 +1103,7 @@ GLOSSARY.forEach(([t,d])=>{ gEl.innerHTML += `<dt>${t}</dt><dd>${d}</dd>`; });
 document.getElementById('statTracks').textContent = `📚 ${COURSE.length} tracks`;
 document.getElementById('statModules').textContent = `🔗 ${totalModules} video-link + reading modules`;
 document.getElementById('statFooter').textContent = `${COURSE.length} tracks · ${totalModules} modules`;
-const COURSE_VERSION = "1.37.0";
+const COURSE_VERSION = "1.38.0";
 document.getElementById('courseVersion').textContent = `v${COURSE_VERSION}`;
 
 /* ===================== CALCULATORS ===================== */
@@ -1183,7 +1198,38 @@ function markDone(id,btn){
   btn.textContent = '✓ Completed';
   btn.style.opacity = .6;
 }
-function answer(btn, choice, correct){
+
+/* ===================== QUIZ SCORE ===================== */
+/* Persists per-module quiz results so the mini dashboard (and each quiz's
+   answered state) survives page reloads instead of resetting every visit. */
+const QUIZ_KEY = 'cryptoCourseQuizState_v1';
+function loadQuiz(){ try{return JSON.parse(localStorage.getItem(QUIZ_KEY))||{};}catch(e){return {};} }
+function saveQuiz(s){ try{localStorage.setItem(QUIZ_KEY, JSON.stringify(s));}catch(e){} }
+function updateQuizDashboard(qs){
+  qs = qs || loadQuiz();
+  const results = Object.values(qs);
+  const correctCount = results.filter(r=>r.chosen===r.correct).length;
+  const total = results.length;
+  document.getElementById('quizCorrect').textContent = correctCount;
+  document.getElementById('quizWrong').textContent = total - correctCount;
+  document.getElementById('quizTotal').textContent = total;
+  document.getElementById('quizAcc').textContent = total ? Math.round(correctCount/total*100)+'%' : '—';
+}
+function applyQuizState(){
+  const qs = loadQuiz();
+  document.querySelectorAll('.module').forEach(mod=>{
+    const rec = qs[mod.dataset.id];
+    const quizEl = mod.querySelector('.quiz');
+    if(!rec || !quizEl) return;
+    quizEl.dataset.answered = '1';
+    const buttons = quizEl.querySelectorAll('button');
+    if(buttons[rec.correct]) buttons[rec.correct].classList.add('correct');
+    if(rec.chosen !== rec.correct && buttons[rec.chosen]) buttons[rec.chosen].classList.add('wrong');
+    const fb = quizEl.querySelector('.fb'); if(fb) fb.style.display='block';
+  });
+  updateQuizDashboard(qs);
+}
+function answer(btn, choice, correct, id){
   const quiz = btn.parentElement;
   if(quiz.dataset.answered) return;
   quiz.dataset.answered = '1';
@@ -1191,17 +1237,22 @@ function answer(btn, choice, correct){
   buttons[correct].classList.add('correct');
   if(choice!==correct) btn.classList.add('wrong');
   quiz.querySelector('.fb').style.display='block';
+  const qs = loadQuiz();
+  if(!(id in qs)){ qs[id] = {chosen:choice, correct:correct}; saveQuiz(qs); }
+  updateQuizDashboard(qs);
 }
 function resetProgress(){
-  if(confirm('Reset all module progress?')){ save({}); applyState();
+  if(confirm('Reset all module progress and quiz score?')){ save({}); saveQuiz({}); applyState();
     document.querySelectorAll('.quiz').forEach(q=>{ delete q.dataset.answered;
       q.querySelectorAll('button').forEach(b=>b.classList.remove('correct','wrong'));
       q.querySelector('.fb').style.display='none'; });
+    updateQuizDashboard({});
   }
 }
 setTheme(document.documentElement.getAttribute('data-theme') || 'dark');
 applyLevel();
 initCalcs();
+applyQuizState();
 </script>
 </body>
 </html>
