@@ -230,7 +230,7 @@
       <h1>Crypto Trading <span>Micro-Learning</span></h1>
       <p>Bite-sized modules from spot basics to leverage and risk management — filtered to your level.</p>
       <div class="banner-stats">
-        <span>📚 4 tracks</span><span>🔗 33 video-link + reading modules</span><span>✅ progress saved automatically</span>
+        <span id="statTracks">📚 … tracks</span><span id="statModules">🔗 … video-link + reading modules</span><span>✅ progress saved automatically</span>
       </div>
     </div>
     <div class="levelpick">
@@ -265,8 +265,9 @@
   </details>
 
   <footer>
-    Crypto Trading Micro-Learning Program · 4 tracks · 33 modules · external video links + reading per module.<br>
-    Work through one track at a time. Don't risk real money until you've completed the Risk &amp; Psychology track.
+    Crypto Trading Micro-Learning Program · <span id="statFooter">… tracks · … modules</span> · external video links + reading per module.<br>
+    Work through one track at a time. Don't risk real money until you've completed the Risk &amp; Psychology track.<br>
+    <span id="courseVersion"></span>
   </footer>
 </div>
 
@@ -278,7 +279,7 @@ const COURSE = [
   sub:"Wallets, exchanges, orders, and how to actually buy your first coin safely.",
   modules:[
   {
-    t:"What crypto trading actually is", d:"10 min",
+    t:"What crypto trading actually is", d:"10 min", lvl:1,
     concept:`<p><b>Trading</b> means buying an asset hoping to sell it later at a higher price (or selling first if you expect a drop). <b>Investing</b> is buying to hold for years; <b>trading</b> is shorter-term and more active.</p>
     <p>Crypto trades 24/7, 365 days a year — there is no closing bell. Prices are set by supply and demand on <b>exchanges</b>, matched through an <b>order book</b>. The two core activities you'll learn:</p>
     <ul><li><b>Spot trading</b> — you own the actual coin (covered in this track).</li>
@@ -290,7 +291,7 @@ const COURSE = [
     fb:"Spot moves 1:1 with price — no leverage amplifies it. The loss is real once you're in the position, whether or not you've sold."}
   },
   {
-    t:"Wallets: custodial vs self-custody", d:"12 min",
+    t:"Wallets: custodial vs self-custody", d:"12 min", lvl:1,
     concept:`<p>A <b>wallet</b> stores the keys that control your crypto. Two kinds:</p>
     <ul><li><b>Custodial</b> — an exchange (Coinbase, Binance, Kraken) holds the keys for you. Easy, but "not your keys, not your coins." If the exchange fails or freezes your account, you're exposed.</li>
     <li><b>Self-custody</b> — you hold the keys yourself (software wallets like MetaMask, or hardware wallets like Ledger/Trezor). Full control, full responsibility.</li></ul>
@@ -301,7 +302,7 @@ const COURSE = [
     fb:"Your public address is like an email — people use it to send you funds. The seed phrase, private key and password must stay secret."}
   },
   {
-    t:"Centralized vs decentralized exchanges", d:"11 min",
+    t:"Centralized vs decentralized exchanges", d:"11 min", lvl:1,
     concept:`<p><b>CEX (centralized exchange)</b> — e.g. Coinbase, Binance, Kraken. A company runs the order book, holds your funds, and requires identity verification (KYC). Deep liquidity, easy fiat on-ramps, beginner-friendly.</p>
     <p><b>DEX (decentralized exchange)</b> — e.g. Uniswap. Trades happen directly from your self-custody wallet via smart contracts. No sign-up, no KYC, but you pay network "gas" fees and face risks like scam tokens and front-running.</p>
     <p>Beginners almost always start on a reputable CEX. DEXes matter once you trade newer tokens not listed on big exchanges.</p>`,
@@ -311,7 +312,7 @@ const COURSE = [
     fb:"On a DEX you keep custody — trades execute from your wallet via smart contracts. You still pay network gas fees."}
   },
   {
-    t:"Order types: market, limit & stop", d:"13 min",
+    t:"Order types: market, limit & stop", d:"13 min", lvl:1,
     concept:`<p>Three orders cover most of what you'll do:</p>
     <ul><li><b>Market order</b> — buy/sell immediately at the best available price. Fast, but you accept whatever price you get (slippage).</li>
     <li><b>Limit order</b> — buy/sell only at a price you set or better. You control price, but it may never fill.</li>
@@ -323,7 +324,7 @@ const COURSE = [
     fb:"A market order executes immediately at the best available price. A limit order might never fill if price moves away."}
   },
   {
-    t:"The order book, spread & slippage", d:"11 min",
+    t:"The order book, spread & slippage", d:"11 min", lvl:2,
     concept:`<p>The <b>order book</b> lists all open buy orders (<b>bids</b>) and sell orders (<b>asks</b>). The highest bid and lowest ask meet in the middle.</p>
     <ul><li><b>Spread</b> = lowest ask − highest bid. A tight spread means a liquid market; a wide spread is costly.</li>
     <li><b>Liquidity / depth</b> = how much volume sits near the current price. Thin books move violently.</li>
@@ -334,7 +335,7 @@ const COURSE = [
     fb:"Large market orders in illiquid (thin) markets walk up the order book, filling at progressively worse prices."}
   },
   {
-    t:"Fees: makers, takers & the hidden costs", d:"10 min",
+    t:"Fees: makers, takers & the hidden costs", d:"10 min", lvl:2,
     concept:`<p>Every trade has costs that quietly eat returns:</p>
     <ul><li><b>Taker fee</b> — you remove liquidity (market order). Usually higher.</li>
     <li><b>Maker fee</b> — you add liquidity (resting limit order). Usually lower, sometimes a rebate.</li>
@@ -347,7 +348,7 @@ const COURSE = [
     fb:"Maker orders add liquidity to the book and are typically cheaper, sometimes earning a rebate. Takers pay more for instant execution."}
   },
   {
-    t:"Stablecoins & trading pairs", d:"10 min",
+    t:"Stablecoins & trading pairs", d:"10 min", lvl:1,
     concept:`<p>A <b>stablecoin</b> (USDT, USDC, DAI) is a crypto pegged ~1:1 to a fiat currency, usually the US dollar. They let you "sit in cash" on-chain without converting back to your bank.</p>
     <p>A <b>trading pair</b> is what you trade against what, e.g. <code>BTC/USDT</code> = price of BTC in USDT. The second symbol is the <b>quote</b> currency. Pairs like <code>ETH/BTC</code> price ETH in bitcoin terms.</p>
     <p>Beginners should stick to deep stablecoin pairs (BTC/USDT, ETH/USDC). Note: not all stablecoins are equally safe — some have de-pegged historically.</p>`,
@@ -357,7 +358,16 @@ const COURSE = [
     fb:"The first symbol is the base, the second is the quote. BTC/USDT = the value of one BTC expressed in USDT."}
   },
   {
-    t:"Security: protecting funds & spotting scams", d:"12 min",
+    t:"Dollar-cost averaging (DCA)", d:"9 min", lvl:1,
+    concept:`<p><b>Dollar-cost averaging</b> means buying a fixed dollar amount at regular intervals (e.g. $100 every week) regardless of price, instead of trying to time a single "perfect" entry. It doesn't require charts, indicators, or predicting anything — it's the lowest-effort way to build a long-term position in an asset you believe in.</p>
+    <p>DCA smooths your <b>average cost basis</b>: you naturally buy more units when price is low and fewer when it's high. It won't beat a perfect lump-sum entry at the exact bottom, but it removes the risk of dumping all your capital in right before a drop — which is the far more common outcome for beginners guessing tops and bottoms.</p>`,
+    example:`<p>You invest $100/week into BTC for 4 weeks at prices $60,000, $50,000, $55,000, and $45,000. You buy 0.00167, 0.002, 0.00182, and 0.00222 BTC each week — 0.00771 BTC total for $400 spent. Your average cost is $400 ÷ 0.00771 ≈ $51,880 per BTC — better than three of the four individual prices, because you automatically bought more when it was cheap.</p>`,
+    exercise:`<p>Look up an asset's closing price on the same day for each of the last 4 weeks. Simulate investing a fixed $50/week. Compute how many units you'd own and your average cost basis. Compare it to just buying everything on week 1.</p>`,
+    quiz:{q:"The main benefit of DCA over a single lump-sum buy is that it...", a:["Guarantees a higher return every time","Removes the need to time entries and buys more units when price is low","Eliminates all risk of loss","Only works with stablecoins"], correct:1,
+    fb:"DCA doesn't guarantee a better outcome than a lucky lump-sum entry, but it removes timing risk and automatically buys more when price dips."}
+  },
+  {
+    t:"Security: protecting funds & spotting scams", d:"12 min", lvl:1,
     concept:`<p>In crypto, you are your own bank — and the target of constant scams. Core defenses:</p>
     <ul><li>Enable <b>2FA</b> with an authenticator app (not SMS, which can be SIM-swapped).</li>
     <li>Use a <b>hardware wallet</b> for serious holdings.</li>
@@ -376,7 +386,7 @@ const COURSE = [
   sub:"Reading charts, indicators, and patterns to time entries and exits.",
   modules:[
   {
-    t:"Candlestick anatomy", d:"11 min",
+    t:"Candlestick anatomy", d:"11 min", lvl:1,
     viz:`<svg viewBox="0 0 330 165" xmlns="http://www.w3.org/2000/svg"><line x1="110" y1="18" x2="110" y2="52" stroke="#3fb950" stroke-width="2"/><rect x="90" y="52" width="40" height="62" fill="#3fb950"/><line x1="110" y1="114" x2="110" y2="148" stroke="#3fb950" stroke-width="2"/><text x="145" y="28" font-size="11" fill="#8b98a9">High (upper wick)</text><text x="145" y="88" font-size="11" fill="#8b98a9">Body = open → close</text><text x="145" y="146" font-size="11" fill="#8b98a9">Low (lower wick)</text></svg><figcaption>A bullish (green) candle: the body spans open→close; the thin wicks mark the high and low extremes for the period.</figcaption>`,
     concept:`<p>Each <b>candlestick</b> summarizes price over a chosen period. It has:</p>
     <ul><li><b>Body</b> — the range between open and close.</li>
@@ -389,7 +399,7 @@ const COURSE = [
     fb:"A long upper wick = price reached high but closed well below it, showing sellers rejected the higher prices. It's a warning, not a guarantee."}
   },
   {
-    t:"Timeframes & multi-timeframe analysis", d:"10 min",
+    t:"Timeframes & multi-timeframe analysis", d:"10 min", lvl:2,
     concept:`<p>The same market looks different on a 5-minute vs a daily chart. <b>Higher timeframes</b> (daily, weekly) show the dominant trend and matter most; <b>lower timeframes</b> (5m, 15m) are noisier but help time precise entries.</p>
     <p><b>Multi-timeframe analysis:</b> decide direction on a higher timeframe, then zoom in to execute. Trading against the higher-timeframe trend is how beginners get chopped up.</p>`,
     example:`<p>On the daily chart BTC is in a clear uptrend. You drop to the 1-hour to find a pullback to support, then enter long in the direction of the daily trend. The higher timeframe gives the bias; the lower timeframe gives the entry.</p>`,
@@ -398,7 +408,7 @@ const COURSE = [
     fb:"Higher timeframes set direction and bias; lower timeframes refine entry timing. Trade with the higher-timeframe trend."}
   },
   {
-    t:"Support & resistance", d:"12 min",
+    t:"Support & resistance", d:"12 min", lvl:1,
     viz:`<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><line x1="10" y1="40" x2="350" y2="40" stroke="#f85149" stroke-dasharray="5 4"/><line x1="10" y1="120" x2="350" y2="120" stroke="#3fb950" stroke-dasharray="5 4"/><polyline points="20,120 70,46 120,118 175,42 225,122 280,46 330,92" fill="none" stroke="#58a6ff" stroke-width="2"/><text x="14" y="33" font-size="11" fill="#f85149">Resistance</text><text x="14" y="135" font-size="11" fill="#3fb950">Support</text></svg><figcaption>Price oscillates between support (buyers step in) and resistance (sellers cap the move). The more times a level holds, the more it matters — and once broken, roles often flip.</figcaption>`,
     concept:`<p><b>Support</b> is a price level where buying tends to halt declines; <b>resistance</b> is where selling tends to cap rallies. They form because traders remember these levels and act there.</p>
     <p>Key ideas: levels are <b>zones, not exact lines</b>; the more times a level is tested, the more significant it is; and once broken, <b>support often flips to resistance</b> (and vice-versa) — called a "role reversal."</p>`,
@@ -408,7 +418,7 @@ const COURSE = [
     fb:"This 'role reversal' is one of the most reliable concepts: broken support frequently becomes resistance on the retest."}
   },
   {
-    t:"Trendlines & channels", d:"10 min",
+    t:"Trendlines & channels", d:"10 min", lvl:2,
     concept:`<p>A <b>trendline</b> connects rising lows (uptrend) or falling highs (downtrend) to visualize direction. A <b>channel</b> adds a parallel line on the opposite side, framing where price tends to oscillate.</p>
     <p>An uptrend = higher highs and higher lows. A downtrend = lower highs and lower lows. When a trendline breaks, the trend may be changing — but wait for confirmation, not the first touch.</p>`,
     example:`<p>You draw a line under three rising lows. Price keeps bouncing off it — a clean uptrend channel. When a candle finally closes well below the line on rising volume, you treat the uptrend as broken and tighten or exit longs.</p>`,
@@ -417,7 +427,7 @@ const COURSE = [
     fb:"Higher highs + higher lows = uptrend. Lower highs + lower lows = downtrend. This structure is the backbone of trend trading."}
   },
   {
-    t:"Volume: the fuel behind moves", d:"9 min",
+    t:"Volume: the fuel behind moves", d:"9 min", lvl:2,
     concept:`<p><b>Volume</b> is how much was traded in a period. It confirms conviction: a price move on high volume is more trustworthy than one on thin volume.</p>
     <ul><li>Breakouts on <b>high volume</b> are more likely to hold.</li>
     <li>Rallies on <b>declining volume</b> may be running out of steam.</li>
@@ -428,7 +438,7 @@ const COURSE = [
     fb:"Volume confirms conviction. High-volume breakouts have real participation behind them; low-volume breakouts often fail (fakeouts)."}
   },
   {
-    t:"Moving averages (SMA & EMA)", d:"11 min",
+    t:"Moving averages (SMA & EMA)", d:"11 min", lvl:2,
     concept:`<p>A <b>moving average</b> smooths price into a line showing the average over N periods. <b>SMA</b> weights all periods equally; <b>EMA</b> weights recent prices more, so it reacts faster.</p>
     <p>Uses: gauge trend direction (price above a rising MA = bullish bias), act as dynamic support/resistance, and generate <b>crossover</b> signals. Common settings: 20, 50, 200. The 200-day MA is a widely-watched long-term trend line.</p>`,
     example:`<p>A "golden cross" occurs when the 50-day MA crosses above the 200-day MA — often read as a bullish shift. The opposite, a "death cross," is the 50 dropping below the 200. These are lagging signals but widely followed.</p>`,
@@ -437,7 +447,7 @@ const COURSE = [
     fb:"The EMA weights recent prices more heavily, so it turns faster than the equally-weighted SMA."}
   },
   {
-    t:"RSI — momentum & exhaustion", d:"11 min",
+    t:"RSI — momentum & exhaustion", d:"11 min", lvl:2,
     concept:`<p>The <b>Relative Strength Index</b> oscillates 0–100 and measures momentum.</p>
     <ul><li>Above <b>70</b> = traditionally "overbought" (extended up).</li>
     <li>Below <b>30</b> = "oversold" (extended down).</li></ul>
@@ -448,7 +458,7 @@ const COURSE = [
     fb:"Divergence = price and the oscillator disagree. Price higher + RSI lower = fading momentum (bearish divergence)."}
   },
   {
-    t:"MACD — trend & momentum combined", d:"10 min",
+    t:"MACD — trend & momentum combined", d:"10 min", lvl:3,
     concept:`<p><b>MACD</b> (Moving Average Convergence Divergence) plots the difference between two EMAs (typically 12 and 26), a <b>signal line</b> (9-EMA of that), and a <b>histogram</b> of the gap between them.</p>
     <ul><li>MACD line crossing <b>above</b> signal = bullish momentum.</li>
     <li>Crossing <b>below</b> = bearish.</li>
@@ -460,7 +470,18 @@ const COURSE = [
     fb:"MACD line crossing above its signal line indicates strengthening bullish momentum. It's a lagging confirmation tool."}
   },
   {
-    t:"Chart patterns", d:"13 min",
+    t:"Bollinger Bands & volatility", d:"10 min", lvl:2,
+    concept:`<p><b>Bollinger Bands</b> plot a moving average (typically 20-period) with an upper and lower band a set number of standard deviations away. They expand when volatility rises and contract when it falls — the bands measure volatility directly, unlike RSI/MACD which measure momentum.</p>
+    <ul><li>A tight, narrow band ("<b>the squeeze</b>") often precedes an explosive move, up or down.</li>
+    <li>Price touching the upper band isn't automatically "sell" — in strong trends price can "walk the band."</li>
+    <li>A move outside the bands followed by a close back inside can signal exhaustion.</li></ul>`,
+    example:`<p>BTC trades in a tight range for weeks and the bands squeeze into a narrow channel. Volume then surges and price explodes out of the squeeze — the low-volatility period was the market coiling before the move, not a reason to stop watching it.</p>`,
+    exercise:`<p>Add Bollinger Bands to a chart. Find one period where the bands squeezed tight, and note what happened to price afterward. Then find a strong trend and see whether price "walked the band" rather than reversing at it.</p>`,
+    quiz:{q:"A tight Bollinger Band squeeze typically signals...", a:["Guaranteed reversal","Lower volatility that often precedes a big move","The end of all volatility forever","A funding payment"], correct:1,
+    fb:"Bollinger Bands measure volatility. A squeeze means volatility is compressed — historically often the calm before an expansion, not a signal of direction."}
+  },
+  {
+    t:"Chart patterns", d:"13 min", lvl:3,
     concept:`<p>Recurring shapes that hint at the next move:</p>
     <ul><li><b>Triangles</b> (ascending/descending/symmetrical) — consolidation before a breakout.</li>
     <li><b>Head &amp; shoulders</b> — three peaks, middle highest; a classic reversal pattern.</li>
@@ -473,7 +494,7 @@ const COURSE = [
     fb:"Head & shoulders signals a likely trend reversal once price breaks the neckline, usually confirmed by volume."}
   },
   {
-    t:"Candlestick patterns", d:"11 min",
+    t:"Candlestick patterns", d:"11 min", lvl:3,
     concept:`<p>Single or small groups of candles with predictive reputation:</p>
     <ul><li><b>Doji</b> — open ≈ close; indecision, possible turning point.</li>
     <li><b>Hammer / pin bar</b> — long lower wick, small body; rejection of lower prices (bullish at support).</li>
@@ -491,7 +512,7 @@ const COURSE = [
   sub:"Perpetuals, longs/shorts, margin, liquidation, and funding — the high-risk tools.",
   modules:[
   {
-    t:"Spot vs derivatives & perpetual futures", d:"11 min",
+    t:"Spot vs derivatives & perpetual futures", d:"11 min", lvl:2,
     concept:`<p><b>Derivatives</b> let you trade the <em>price</em> of an asset without owning it. In crypto the dominant product is the <b>perpetual future</b> ("perp") — a futures contract with no expiry date.</p>
     <p>Perps let you go <b>long</b> (profit if price rises) or <b>short</b> (profit if price falls), usually with <b>leverage</b>. They're powerful and dangerous: the same tools that multiply gains multiply losses and can wipe your account in minutes.</p>
     <p>Do not trade perps until the Risk track is second nature.</p>`,
@@ -501,7 +522,7 @@ const COURSE = [
     fb:"Perps never expire — unlike traditional futures. A funding mechanism (covered later) keeps their price tethered to spot."}
   },
   {
-    t:"Going long vs going short", d:"9 min",
+    t:"Going long vs going short", d:"9 min", lvl:2,
     concept:`<p><b>Long</b> = you profit when price rises (buy low, sell high). <b>Short</b> = you profit when price falls (sell high, buy back lower).</p>
     <p>Shorting lets you make money in down markets — a key advantage of derivatives. But a short's loss is theoretically unlimited (price can rise forever), whereas a long's loss is capped at your investment going to zero.</p>`,
     example:`<p>You short 1 ETH perp at $3,000. Price falls to $2,700 → you profit $300. But if price rises to $3,300, you lose $300. Because price can keep climbing, an un-stopped short is especially dangerous.</p>`,
@@ -510,7 +531,7 @@ const COURSE = [
     fb:"Shorts profit from falling prices. Their risk is that price can rise indefinitely, so stops are essential."}
   },
   {
-    t:"Leverage & margin", d:"12 min",
+    t:"Leverage & margin", d:"12 min", lvl:2,
     concept:`<p><b>Leverage</b> lets you control a position larger than your cash. <b>Margin</b> is the cash you post as collateral. 10x leverage means $1,000 margin controls a $10,000 position.</p>
     <p>The trap: leverage multiplies <em>both</em> directions. At 10x, a 10% adverse move = 100% of your margin gone. The higher the leverage, the smaller the move needed to liquidate you.</p>
     <p><b>Beginners should use little or no leverage.</b> Pros often use 2–5x, not the 50–125x exchanges advertise.</p>`,
@@ -520,7 +541,7 @@ const COURSE = [
     fb:"100% ÷ 10x ≈ 10%. Higher leverage = smaller cushion. At 25x it's just ~4%."}
   },
   {
-    t:"Liquidation & maintenance margin", d:"12 min",
+    t:"Liquidation & maintenance margin", d:"12 min", lvl:3,
     concept:`<p>If losses erode your margin past the <b>maintenance margin</b> threshold, the exchange force-closes your position — <b>liquidation</b>. You lose your posted margin (and may pay a liquidation fee).</p>
     <p>The <b>liquidation price</b> is where this happens. Knowing it before you enter is non-negotiable. The closer your leverage pushes the liquidation price to your entry, the more likely normal volatility takes you out.</p>`,
     example:`<p>Long BTC at $60,000 with 10x leverage. Your liquidation price sits around $54,000–$54,600. A routine 9–10% dip — common in crypto — liquidates you, even if BTC recovers an hour later. Lower leverage would have moved that liquidation price much further away.</p>`,
@@ -529,7 +550,7 @@ const COURSE = [
     fb:"Once equity falls below maintenance margin, the exchange liquidates the position. You lose your margin — higher leverage makes it happen sooner."}
   },
   {
-    t:"Isolated vs cross margin", d:"10 min",
+    t:"Isolated vs cross margin", d:"10 min", lvl:3,
     concept:`<p>Two margin modes decide how much of your balance is at risk:</p>
     <ul><li><b>Isolated margin</b> — only the margin assigned to that trade can be lost. A blow-up is contained to that position.</li>
     <li><b>Cross margin</b> — your whole account balance backs the position, reducing liquidation risk on that trade but risking everything if it goes badly.</li></ul>
@@ -540,7 +561,7 @@ const COURSE = [
     fb:"Isolated margin contains the damage to the amount you assigned, so a single bad trade can't wipe the whole account."}
   },
   {
-    t:"Funding rates", d:"11 min",
+    t:"Funding rates", d:"11 min", lvl:3,
     concept:`<p>Since perps never expire, a <b>funding rate</b> keeps their price near spot. Periodically (often every 8 hours) longs and shorts pay each other:</p>
     <ul><li><b>Positive funding</b> — longs pay shorts (market is long-heavy/bullish).</li>
     <li><b>Negative funding</b> — shorts pay longs (market is short-heavy/bearish).</li></ul>
@@ -551,13 +572,22 @@ const COURSE = [
     fb:"Positive funding = longs pay shorts, typical when the market is crowded long. Persistently high funding can warn of over-leveraged positioning."}
   },
   {
-    t:"Sizing leveraged positions safely", d:"13 min",
+    t:"Sizing leveraged positions safely", d:"13 min", lvl:3,
     concept:`<p>The pro mindset: <b>leverage is a tool for capital efficiency, not for betting bigger.</b> Decide position size from your <em>risk</em> (stop distance), then use only enough leverage to fund that position — never max leverage to maximize size.</p>
     <p>Process: (1) pick your entry and stop-loss, (2) risk a fixed small % of account (e.g. 1%) between them, (3) that defines position size, (4) leverage just lets the margin fit. The stop, not the leverage, controls your loss.</p>`,
     example:`<p>$10,000 account, risking 1% ($100). Entry $60,000, stop $58,800 (a 2% move). Position size = $100 ÷ 2% = $5,000 notional. That needs only modest leverage to post — and your max loss is the planned $100, regardless of the leverage number shown.</p>`,
     exercise:`<p>Using the formula <code>position size = (account × risk%) ÷ stop distance%</code>, size a trade on a $2,000 account risking 1% with a 4% stop. Note how the leverage figure becomes almost irrelevant once risk is fixed.</p>`,
     quiz:{q:"The professional approach to leverage is to...", a:["Always use the maximum the exchange allows","Let your stop-loss and risk % define size, using only the leverage needed","Avoid stops to give trades room","Increase leverage after every loss"], correct:1,
     fb:"Size from risk first; leverage is just what makes the margin fit. Your stop — not the leverage multiplier — caps the loss."}
+  },
+  {
+    t:"Hedging with derivatives", d:"11 min", lvl:3,
+    concept:`<p><b>Hedging</b> means opening a position that offsets risk in another position, rather than betting on direction. The classic crypto hedge: you hold spot coins long-term but expect short-term weakness, so you open a <b>short perp</b> against part of your holding — spot losses are offset by short gains (and vice versa) while you keep the underlying asset.</p>
+    <p>Hedging isn't free: you still pay funding, fees, and it caps your upside during the hedge. It's a tool for managing risk around specific events (e.g. before a major macro release), not a way to avoid ever taking a view.</p>`,
+    example:`<p>You hold 1 BTC bought at $40,000, now worth $60,000. A major regulatory announcement is due and you don't want to sell (tax reasons, long-term conviction) but fear a short-term drop. You short 0.5 BTC perp. If price drops 10%, your spot loses $3,000 but the short gains ~$3,000 — your net exposure for that half is neutralized until you close the hedge.</p>`,
+    exercise:`<p>Imagine holding 1 ETH you don't want to sell, ahead of a risky event. Write out how much you'd short to hedge 50% of the position, and calculate the net P/L of the combined position if price fell 15% and if it rose 15%.</p>`,
+    quiz:{q:"Hedging a spot holding with a short perp mainly...", a:["Guarantees a profit no matter what happens","Offsets directional risk without selling the underlying asset","Removes all fees and funding costs","Only works for stablecoins"], correct:1,
+    fb:"A short hedge offsets losses (and gains) on the spot side while you keep holding the asset — it manages risk, it doesn't eliminate cost or guarantee profit."}
   }
   ]
 },
@@ -566,7 +596,7 @@ const COURSE = [
   sub:"The skills that actually keep traders alive. Master this track before risking real money.",
   modules:[
   {
-    t:"The #1 rule: risk per trade", d:"11 min",
+    t:"The #1 rule: risk per trade", d:"11 min", lvl:1,
     concept:`<p>The single biggest predictor of survival isn't picking winners — it's <b>limiting losses</b>. The core rule: never risk more than a small fixed % of your account on one trade, typically <b>1–2%</b>.</p>
     <p>Why? A string of losses is inevitable. At 1% risk, ten straight losers cost ~10%; at 20% risk, two losers nearly halve you. Small, consistent risk keeps you in the game long enough for your edge to play out.</p>`,
     example:`<p>$5,000 account, 1% rule = $50 max risk per trade. Even a brutal 8-loss streak only draws the account down ~8% — fully recoverable. A trader risking 25% per trade would be down to ~$700 after the same streak. Same trades, opposite outcomes.</p>`,
@@ -575,7 +605,7 @@ const COURSE = [
     fb:"Keeping risk to 1–2% per trade ensures no single trade — or losing streak — can seriously damage your account."}
   },
   {
-    t:"Position sizing math", d:"12 min",
+    t:"Position sizing math", d:"12 min", lvl:2,
     concept:`<p>Position size connects your risk rule to an actual order size. The formula:</p>
     <p><code>Position size = (Account × Risk%) ÷ (Entry − Stop distance)</code></p>
     <p>You decide the dollar risk first, then the distance to your stop determines how many units you can buy. <b>Wider stop → smaller position. Tighter stop → larger position.</b> The risk stays constant either way.</p>`,
@@ -585,7 +615,7 @@ const COURSE = [
     fb:"A wider stop means more loss per unit, so you buy fewer units to keep total dollar risk fixed. Risk stays constant; size flexes."}
   },
   {
-    t:"Stop-loss placement", d:"11 min",
+    t:"Stop-loss placement", d:"11 min", lvl:2,
     concept:`<p>A <b>stop-loss</b> is a pre-set exit that caps your loss. The mistake beginners make is placing stops at arbitrary dollar amounts. Instead, place stops where your trade idea is <b>proven wrong</b> — beyond a support level, below a swing low, past a structure break.</p>
     <p>Then size the position around that stop (previous module). Never widen a stop to avoid being stopped out — that's how small losses become account-enders.</p>`,
     example:`<p>You go long because price bounced off $58,000 support. The trade is "wrong" if support fails, so the stop goes just below it, ~$57,500. If price breaks there, your reason for the trade is gone — you exit small and move on, rather than hoping.</p>`,
@@ -594,7 +624,7 @@ const COURSE = [
     fb:"Stops belong at the level that invalidates your idea. Then you size the position to that stop — not the other way around."}
   },
   {
-    t:"Risk/reward & expectancy", d:"12 min",
+    t:"Risk/reward & expectancy", d:"12 min", lvl:3,
     viz:`<svg viewBox="0 0 330 160" xmlns="http://www.w3.org/2000/svg"><line x1="50" y1="25" x2="250" y2="25" stroke="#3fb950" stroke-dasharray="5 4"/><text x="256" y="29" font-size="11" fill="#3fb950">Target +3R</text><line x1="50" y1="100" x2="250" y2="100" stroke="#58a6ff"/><text x="256" y="104" font-size="11" fill="#58a6ff">Entry</text><line x1="50" y1="125" x2="250" y2="125" stroke="#f85149" stroke-dasharray="5 4"/><text x="256" y="129" font-size="11" fill="#f85149">Stop −1R</text><rect x="60" y="25" width="16" height="75" fill="#3fb950" opacity=".45"/><rect x="60" y="100" width="16" height="25" fill="#f85149" opacity=".45"/></svg><figcaption>Risk 1R (entry→stop) to make 3R (entry→target) = a 3:1 trade. With good R:R you can lose more often than you win and still come out ahead.</figcaption>`,
     concept:`<p><b>Risk/reward (R:R)</b> compares what you risk to what you aim to gain. Risking $100 to make $300 is 1:3. With good R:R you can be wrong often and still profit.</p>
     <p><b>Expectancy</b> = (Win% × avg win) − (Loss% × avg loss). A positive expectancy system makes money over many trades even with a sub-50% win rate, as long as winners are bigger than losers.</p>`,
@@ -604,7 +634,7 @@ const COURSE = [
     fb:"Good R:R means winners outweigh losers. At 1:3 you only need to win ~26% of the time to break even — win rate isn't everything."}
   },
   {
-    t:"Trading psychology: fear & greed", d:"11 min",
+    t:"Trading psychology: fear & greed", d:"11 min", lvl:1,
     concept:`<p>Markets are an emotional pressure cooker. Two forces dominate:</p>
     <ul><li><b>Greed / FOMO</b> — chasing a coin that's already pumped, over-sizing, refusing to take profit.</li>
     <li><b>Fear</b> — panic-selling the bottom, hesitating on valid setups, moving stops out of fear.</li></ul>
@@ -615,7 +645,7 @@ const COURSE = [
     fb:"Decisions made calmly and in advance beat decisions made in the heat of a move. A written plan executed mechanically is the antidote."}
   },
   {
-    t:"Cognitive biases that cost money", d:"11 min",
+    t:"Cognitive biases that cost money", d:"11 min", lvl:2,
     concept:`<p>Your brain has built-in bugs for trading:</p>
     <ul><li><b>Confirmation bias</b> — seeking only info that supports your position.</li>
     <li><b>Loss aversion</b> — holding losers too long, cutting winners too early.</li>
@@ -629,7 +659,7 @@ const COURSE = [
     fb:"Averaging down on a loser to avoid admitting a loss is classic sunk-cost/loss aversion — and a fast way to turn small losses into large ones."}
   },
   {
-    t:"The trading journal", d:"10 min",
+    t:"The trading journal", d:"10 min", lvl:1,
     concept:`<p>A <b>journal</b> turns random trading into a feedback loop. For every trade, log: date/pair, entry, stop, target, size, R:R, the reason you took it, and — afterward — the result and what you'd do differently.</p>
     <p>Over time, patterns emerge: which setups actually make money, which time of day you trade worst, whether you follow your rules. You can't improve what you don't measure.</p>`,
     example:`<p>After 50 logged trades, a trader reviews and finds their breakout trades are net negative but their support-bounce trades are strongly positive. They cut breakouts entirely and focus on what works — a discovery impossible without records.</p>`,
@@ -638,7 +668,7 @@ const COURSE = [
     fb:"A journal reveals which setups and habits make or lose money, turning experience into measurable improvement."}
   },
   {
-    t:"Building your trading plan", d:"13 min",
+    t:"Building your trading plan", d:"13 min", lvl:3,
     concept:`<p>A <b>trading plan</b> is your written rulebook, decided when calm. A solid plan covers:</p>
     <ul><li><b>Markets &amp; timeframes</b> you trade.</li>
     <li><b>Setups</b> you take (specific, repeatable conditions).</li>
@@ -698,6 +728,14 @@ const COURSE = [
     exercise:`<p>Define your personal "A+ checklist" of 3–4 factors that must align before you take a trade. Score your next few hypothetical setups against it.</p>`,
     quiz:{q:"Confluence improves a setup because...", a:["It guarantees a win","Several independent factors agreeing raises probability","It removes the need for a stop","It increases leverage"], correct:1,
     fb:"Independent factors aligning at one level raises the odds and gives a logical place for your stop — though never a guarantee."}
+  },
+  {
+    t:"Volume profile & point of control", d:"11 min", lvl:3,
+    concept:`<p>A <b>volume profile</b> plots traded volume horizontally by <em>price</em> rather than by time, revealing where the market spent the most (and least) volume. The <b>Point of Control (POC)</b> is the single price level with the highest traded volume — a magnet price often revisits. <b>High-volume nodes (HVN)</b> mark accepted "fair value" areas that can act as support/resistance; <b>low-volume nodes (LVN)</b> are prices the market moved through quickly, which price tends to cross rapidly again if revisited.</p>`,
+    example:`<p>A volume profile over the last month shows a thick HVN around $58,000 (heavy consolidation, the POC) and a thin LVN between $61,000–$62,500 (a fast rally straight through). When price later pulls back into that LVN, it slices through quickly rather than stalling — exactly like the first time.</p>`,
+    exercise:`<p>Add a volume profile (fixed range) to a recent multi-week chart. Identify the POC and one clear low-volume node. Note how price behaved the next time it revisited each.</p>`,
+    quiz:{q:"The Point of Control (POC) on a volume profile is...", a:["The price with the least traded volume","The single price level with the most traded volume","The current funding rate","The 200-day moving average"], correct:1,
+    fb:"POC marks the price where the most volume traded — a level the market often treats as fair value and revisits."}
   }
   ]
 }
@@ -745,6 +783,14 @@ const COURSE = [
     exercise:`<p>Use the backtest tab in the journal spreadsheet (in the Tools track) to log 30+ historical setups for one playbook. Compute expectancy. Keep it only if positive after costs.</p>`,
     quiz:{q:"The main goal of backtesting is to...", a:["Predict the exact next move","Measure whether a rule set has positive expectancy over many trades","Increase leverage","Avoid journaling"], correct:1,
     fb:"Backtesting estimates expectancy and drawdown across a sample so you trade tested edges, not hunches."}
+  },
+  {
+    t:"Playbook 4 — DCA & accumulation", d:"10 min", lvl:1,
+    concept:`<p>Not every strategy requires chart-reading. <b>Context:</b> you have long-term conviction in a major asset (BTC/ETH) and don't want to actively trade it. <b>Entry:</b> a fixed amount at a fixed interval (e.g. weekly), regardless of price — optionally increasing the amount when price is well below a long-term moving average ("value DCA"). <b>Stop:</b> none in the trading sense — the "risk control" is only ever committing money you can leave untouched for years. <b>Exit/management:</b> pause or reduce buys during clear euphoria (e.g. extreme funding, parabolic price), resume during fear.</p>`,
+    example:`<p>Instead of guessing tops, a trader buys $50 of BTC every Monday for two years, doubling the buy to $100 on weeks price closes below the 200-day MA. They never catch the exact bottom, but their average cost stays well below the cycle peak, and they never had to make an active timing decision.</p>`,
+    exercise:`<p>Design your own DCA rule: the asset, the interval, the base amount, and one condition (if any) that would make you increase or pause it. Write it as a rule someone else could follow mechanically.</p>`,
+    quiz:{q:"In the DCA/accumulation playbook, the main form of risk control is...", a:["A tight stop-loss below every buy","Only ever investing money you won't need for years, with fixed regular buys","Maximum leverage on every purchase","Timing the exact bottom before buying"], correct:1,
+    fb:"DCA replaces per-trade stops with a simpler safeguard: fixed, small, regular amounts of money you can genuinely afford to leave untouched long-term."}
   }
   ]
 }
@@ -800,6 +846,15 @@ const COURSE = [
     exercise:`<p>On a free on-chain dashboard (e.g. CryptoQuant/Glassnode free tier), find exchange net-flow for BTC. Are coins flowing onto or off exchanges recently? What might that imply?</p>`,
     quiz:{q:"Large amounts of coins moving ONTO exchanges can hint at...", a:["Intent to sell / added supply","Guaranteed price rise","Lower volatility","A halving"], correct:0,
     fb:"Coins moving to exchanges often precedes selling; coins leaving (to self-custody) suggests accumulation. Context, not certainty."}
+  },
+  {
+    t:"The Fear & Greed Index & social sentiment", d:"9 min", lvl:1,
+    concept:`<p>The <b>Crypto Fear &amp; Greed Index</b> blends volatility, momentum, social media activity, dominance, and search trends into a single 0–100 score: near 0 = "extreme fear," near 100 = "extreme greed." It's a crowd-sentiment gauge, not a trade signal by itself — but extremes are useful <b>contrarian context</b>: markets historically bottom amid extreme fear and top amid extreme greed, even though "extreme" can persist longer than expected.</p>
+    <p>Broader <b>social sentiment</b> (trending hashtags, influencer hype, search volume spikes) tends to peak <em>after</em> a move has already happened — by the time an asset is mainstream news, much of the easy move is often behind it.</p>`,
+    example:`<p>The index sits at "extreme fear" (a low single-digit reading) during a brutal multi-week decline, right as headlines call crypto "dead." Historically that combination — extreme fear plus dead-asset headlines — has marked more cycle lows than highs. It's not a buy signal alone, but it argues against panic-selling into the same fear everyone else feels.</p>`,
+    exercise:`<p>Check today's Fear &amp; Greed reading. Is it near an extreme? Note today's date and score, and revisit it in a month to see how price behaved from that reading.</p>`,
+    quiz:{q:"Extreme 'greed' readings on sentiment indexes are most useful as...", a:["A precise timestamp to sell immediately","Contrarian context that crowd euphoria is elevated — not a standalone signal","A guarantee of an imminent crash","A measure of exchange fees"], correct:1,
+    fb:"Sentiment extremes are context, not timing tools — euphoria can run further than seems rational, but historically it's a caution flag, not a green light."}
   }
   ]
 }
@@ -933,6 +988,11 @@ const GLOSSARY = [
   ["Liquidation cascade","Forced closures pushing price into more liquidations — the engine behind violent crypto wicks."],
   ["Backtesting","Applying exact rules to historical data to estimate expectancy and drawdown before risking money."],
   ["Order block / FVG","A zone left by a strong move (order block) or a price imbalance (fair-value gap) markets often revisit."],
+  ["Dollar-cost averaging (DCA)","Investing a fixed amount at regular intervals regardless of price, to remove timing risk and smooth the average entry."],
+  ["Bollinger Bands","A moving average with upper/lower bands set by standard deviation; bands widen with volatility and squeeze before big moves."],
+  ["Hedging","Opening an offsetting position (e.g. a short perp against spot holdings) to reduce directional risk without selling the underlying asset."],
+  ["Volume profile / POC","Volume plotted by price instead of time; the Point of Control (POC) is the price with the most traded volume, often revisited."],
+  ["Fear & Greed Index","A 0–100 sentiment gauge blending volatility, momentum, and social data; extremes are contrarian context, not a standalone signal."],
 ];
 
 const TRACK_ICON = ["🏦","📊","⚡","🛡️","🧭","🎯","🔭","♟️","🎓"];
@@ -952,13 +1012,7 @@ const TRACK_META = [
 const YT = q => "https://www.youtube.com/results?search_query=" + encodeURIComponent(q);
 
 /* ===================== LEVELS ===================== */
-/* Level per module, in render order (track by track). 1=Beginner 2=Intermediate 3=Advanced */
-const LEVELS = [
-  /* Foundations */    1,1,1,1,2,2,1,1,
-  /* Tech analysis */  1,2,1,2,2,2,2,3,3,3,
-  /* Futures */        2,2,2,3,3,3,3,
-  /* Risk & psych */   1,2,2,3,1,2,1,3
-];
+/* Every module declares its own lvl (1=Beginner 2=Intermediate 3=Advanced, 0=All levels). */
 const LEVEL_NAMES = {0:"All levels", 1:"Beginner", 2:"Intermediate", 3:"Advanced"};
 const LEVEL_DESC = {
   1:"Start here — core foundations to understand and trade crypto safely.",
@@ -980,11 +1034,10 @@ COURSE.forEach((track, ti) => {
   tEl.className = 'track';
   tEl.innerHTML = `<h2><span class="tnum">${ti+1}</span> <span class="ticon">${TRACK_ICON[ti]||''}</span> ${track.track}</h2><div class="tsub">${track.sub}</div>`;
   track.modules.forEach((m) => {
-    const gi = totalModules;
     const id = 'm'+(idCounter++);
     moduleIds.push(id);
     totalModules++;
-    const lvl = (m.lvl != null) ? m.lvl : (LEVELS[gi] || 1);
+    const lvl = (m.lvl != null) ? m.lvl : 1;
     const badge = `<span class="lvlbadge" style="--bc:${LBADGE[lvl]}">${LEVEL_NAMES[lvl]}</span>`;
     const mod = document.createElement('div');
     mod.className = 'module';
@@ -1027,6 +1080,13 @@ COURSE.forEach((track, ti) => {
 
 const gEl = document.getElementById('glossary');
 GLOSSARY.forEach(([t,d])=>{ gEl.innerHTML += `<dt>${t}</dt><dd>${d}</dd>`; });
+
+/* Track/module counts are derived from COURSE so this can never go stale again */
+document.getElementById('statTracks').textContent = `📚 ${COURSE.length} tracks`;
+document.getElementById('statModules').textContent = `🔗 ${totalModules} video-link + reading modules`;
+document.getElementById('statFooter').textContent = `${COURSE.length} tracks · ${totalModules} modules`;
+const COURSE_VERSION = "1.36.0";
+document.getElementById('courseVersion').textContent = `v${COURSE_VERSION}`;
 
 /* ===================== CALCULATORS ===================== */
 function $val(id){ const e=document.getElementById(id); return e?parseFloat(e.value):NaN; }
