@@ -12,3 +12,15 @@ export function loadCourseScript() {
   el.src = '/js/course.js';
   document.body.appendChild(el);
 }
+
+// Loads src/js/auth.js (Suite SSO account button + sign-in modal) as a
+// classic, non-module script, same mechanism as loadCourseScript() above.
+let authStarted = false;
+
+export function loadAuthScript() {
+  if (authStarted) return;
+  authStarted = true;
+  const el = document.createElement('script');
+  el.src = '/js/auth.js';
+  document.body.appendChild(el);
+}

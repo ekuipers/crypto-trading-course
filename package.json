@@ -14,7 +14,8 @@
     "build": "npm --prefix client install && npm --prefix client run build"
   },
   "dependencies": {
-    "express": "^4.22.2"
+    "express": "^4.22.2",
+    "pg": "^8.22.0"
   },
   "author": "Erik Kuipers",
   "license": "UNLICENSED",

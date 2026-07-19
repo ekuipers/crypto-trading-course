@@ -166,4 +166,41 @@
   .glossary summary{cursor:pointer;font-weight:600;font-size:1.05rem}
   .glossary{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-top:30px}
   .glossary dt{font-weight:600;color:var(--accent);margin-top:10px}
+
+  /* ---------- Account / sign-in modal (Suite SSO) ---------- */
+  .small{font-size:.82rem;color:var(--muted)}
+  .acct-btn{display:inline-flex;align-items:center;gap:6px;max-width:160px;border:1px solid var(--accent);
+    background:transparent;color:var(--accent);padding:5px 10px;border-radius:8px;cursor:pointer;
+    font-size:.78rem;font-weight:700;white-space:nowrap}
+  .acct-btn:hover{background:rgba(127,127,127,.12)}
+  .acct-name{max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .acct-avatar-fallback{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;
+    border-radius:50%;flex-shrink:0;background:var(--accent);color:#0b0e14;font-size:11px;font-weight:700}
+  .acct-avatar-lg{width:48px;height:48px;font-size:20px}
+  .acct-card{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .acct-card-name{font-weight:700;font-size:15px;color:var(--text)}
+
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9990;display:none;
+    align-items:center;justify-content:center;padding:18px}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:0 24px 80px rgba(0,0,0,.55);overflow:hidden}
+  .modal-header{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;
+    justify-content:space-between;align-items:center;gap:12px}
+  .modal-title{font-size:16px;font-weight:700;color:var(--text)}
+  .modal-body{padding:18px}
+  .modal-footer{padding:16px 18px;border-top:1px solid var(--line);display:flex;
+    justify-content:flex-end;gap:10px;flex-wrap:wrap}
+  .modal button{border:1px solid var(--line);background:var(--panel2);color:var(--text);
+    padding:7px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit}
+  .modal button:hover{background:var(--line)}
+  .modal button:disabled{opacity:.6;cursor:default}
+  .modal button.primary{background:var(--accent);border-color:var(--accent);color:#0b0e14}
+  .modal button.danger{background:rgba(248,81,73,.12);border-color:rgba(248,81,73,.35);color:var(--red)}
+  .auth-field{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);margin-bottom:10px}
+  .auth-field input{color:var(--text);background:var(--panel2);border:1px solid var(--line);
+    border-radius:6px;padding:7px 9px;font-size:13px;font-family:inherit}
+  .auth-err{color:var(--red);font-size:11px;min-height:14px;margin-bottom:10px}
+  .totp-secret{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;letter-spacing:.08em;
+    background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:10px;
+    text-align:center;margin:10px 0;word-break:break-all}
   .glossary dd{margin:2px 0 0;color:var(--muted)}

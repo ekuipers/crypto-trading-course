@@ -51,6 +51,8 @@ export default function Header() {
           </div>
           <span className="lvl-desc" id="lvlDesc"></span>
         </div>
+
+        <button id="accountBtn" className="acct-btn" title="Sign in">👤 Sign in</button>
       </div>
     </header>
   );

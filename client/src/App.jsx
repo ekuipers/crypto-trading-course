@@ -2,14 +2,17 @@ import { useEffect } from 'react';
 import Header from './components/Header.jsx';
 import PageIntro from './components/PageIntro.jsx';
 import Footer from './components/Footer.jsx';
-import { loadCourseScript } from './scriptLoader.js';
+import AuthModal from './components/AuthModal.jsx';
+import { loadCourseScript, loadAuthScript } from './scriptLoader.js';
 
 export default function App() {
   // Runs once, after React's first commit — guaranteeing #course/#glossary/
-  // the progress-box are already in the DOM before course.js (which queries
-  // them synchronously, no DOMContentLoaded wrapper) starts running.
+  // the progress-box (and #accountBtn/#authModalBackdrop) are already in the
+  // DOM before course.js/auth.js (which query them synchronously, no
+  // DOMContentLoaded wrapper) start running.
   useEffect(() => {
     loadCourseScript();
+    loadAuthScript();
   }, []);
 
   return (
@@ -37,6 +40,7 @@ export default function App() {
         </details>
       </div>
       <Footer />
+      <AuthModal />
     </>
   );
 }

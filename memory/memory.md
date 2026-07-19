@@ -2,6 +2,48 @@
 
 Running log of changes to the Crypto Trading Micro-Learning course, per the workflow rules in `CLAUDE.md`.
 
+## v2.0.2 — 2026-07-19 — Suite TO DO item 1: SSO with CryptoPro Charts/Suite
+
+**Task:** explicit user request ("implement one roadmap item from the Suite project" → chose "SSO across
+all projects" over smaller alternatives — email-in-profile, test 2FA, social login). This project had no
+auth code at all; CryptoPro Charts and CryptoPro Suite already share one Postgres accounts/sessions
+database with username/password login + optional TOTP 2FA. Ported that exact pattern here (and,
+identically, into CryptoPro Trader — see that project's own `memory.md` for its side of this change).
+
+**Change:** added `src/auth.js`, `src/db.js` (accounts/sessions tables only), `src/totp.js` (all
+near-verbatim ports from CryptoPro Charts). `server.js` gained `app.set('trust proxy', 1)`, a CSRF
+Origin/Referer host-check middleware, `express.json()`, `installAuthRoutes(app)`, and `db.init()`. Added
+`pg` to `package.json` and a new `.env.example`. Client: a `👤 Sign in` button in `Header.jsx`, a new
+`AuthModal.jsx` component (this project had no existing modal system to plug into, unlike Trader — added
+the same `#authModalBackdrop`/`#authModalBody` shell pattern), a `loadAuthScript()` added to
+`scriptLoader.js` (mirroring the existing `loadCourseScript()`) called from `App.jsx`'s `useEffect`, a new
+`src/js/auth.js` classic script (ported from Charts' client auth.js, adapted to `style.display`
+modal-toggling instead of Charts' `showModal()/closeModal()` helpers), and a new `.modal-backdrop`/
+`.acct-*`/`.auth-*` CSS block appended to `src/css/course.css` (this project had no prior modal CSS at
+all). Course progress itself is untouched — still plain browser `localStorage`, independent of sign-in
+state.
+
+**`db.js`'s `CONN_VARS` priority:** `DBCRYPTOCHARTS_POSTGRES_URL[_NON_POOLING]` (the suite's shared-DB
+identifier) first, then generic `POSTGRES_URL`/`DATABASE_URL`. **Not done yet — a manual, outside-of-code
+step:** this project has no Postgres env vars configured anywhere yet; the deployed environment needs
+`DBCRYPTOCHARTS_POSTGRES_URL[_NON_POOLING]` added, pointed at the same Supabase project Charts uses, or
+sign-in here will just 503 until then.
+
+**Security review:** ran the security-reviewer agent over both projects' new auth files together (identical
+code). Found and fixed: (1) **CRITICAL** — `GET /api/me` had no try/catch around `parseCookies()`'s
+`decodeURIComponent()`, so one malformed cookie crashed the whole Node process via an unhandled promise
+rejection — fixed by wrapping the per-cookie decode in its own try/catch, skipping just the bad cookie.
+(2) Login leaked a timing side-channel for username enumeration — fixed by always paying the same scrypt
+cost against a fixed dummy salt/hash when the account doesn't exist. (3) TOTP code comparison used `===`
+instead of `crypto.timingSafeEqual` — fixed. Flagged but not fixed (inherited from the already-deployed
+Charts/Suite pattern): the in-memory rate limiter doesn't survive across Vercel serverless instances, and
+the CSRF check fails open when a request has neither Origin nor Referer header (reachable only on
+login/register, which don't require an existing session cookie).
+
+**Verified:** `node --check` on every new/changed `.js` file; `node -e "import('./server.js')"` boots
+clean with the DB gracefully disabled; `npm --prefix client run build` succeeds. No existing test suite in
+this project to re-run.
+
 ## v2.0.1 — 2026-07-19 — Roadmap: suite-wide workflow-rules verification pass
 
 **Task:** "rescan roadmap." Own Roadmap/Bugs were empty. The only open item across the whole suite was

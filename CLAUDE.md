@@ -20,6 +20,7 @@ Creator: Erik Kuipers
 - `client/` is its own npm project — root `npm run build` runs `npm --prefix client install && npm --prefix client run build` (same pattern as CryptoPro Trader).
 - No longer on GitHub Pages (static-only; `.github/workflows/static.yml` removed 2026-07-19) — needs a Node host (Vercel, matching Trader/Charts); **linking a new Vercel project is a manual step, not yet done.**
 - Header/footer redesigned to the Suite's slim utility-bar convention (Suite CLAUDE.md rule 17) — supersedes the v1.41.1 "intentional exception" that kept the old hero-banner header. Browser click-through **not yet verified**.
+- **Auth / SSO (2026-07-19):** `src/auth.js` + `src/db.js` + `src/totp.js` (ported from CryptoPro Charts/Suite) add a `👤 Sign in` header button — username/password + optional TOTP 2FA, accounts/sessions in Postgres, shared with the rest of the suite once `DBCRYPTOCHARTS_POSTGRES_URL[_NON_POOLING]` is set (see `.env.example`; not configured yet). Client: `AuthModal.jsx` + `src/js/auth.js` (classic script via `scriptLoader.js`'s `loadAuthScript()`). Course progress stays in `localStorage`, independent of sign-in.
 
 ## Roadmap
 
