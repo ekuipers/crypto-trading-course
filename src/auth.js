@@ -156,6 +156,13 @@ export function installAuthRoutes(app) {
   });
 
   app.post('/api/auth/register', async (req, res) => {
+    // Bug (Suite list, 2026-07-20): with no Postgres connection string
+    // configured, getPool() throws synchronously inside db.createAccount(),
+    // landing in the catch below and returning the misleading "database
+    // error, please retry" — indistinguishable from a real transient
+    // failure. Fail fast with a distinct, honest message instead (mirrors
+    // CryptoPro Suite's own auth.js, which already guards this).
+    if (!db.dbEnabled()) return res.status(503).json({ error: 'Accounts are unavailable right now — please retry later.' });
     // 8 attempts / hour / IP — generous for real users, blunts automated account creation.
     if (rateLimited(`register:${clientIp(req)}`, 8, 60 * 60 * 1000)) {
       return res.status(429).json({ error: 'Too many attempts — please try again later.' });
@@ -187,6 +194,8 @@ export function installAuthRoutes(app) {
   });
 
   app.post('/api/auth/login', async (req, res) => {
+    // See the matching guard in /api/auth/register above.
+    if (!db.dbEnabled()) return res.status(503).json({ error: 'Accounts are unavailable right now — please retry later.' });
     // 10 attempts / 15 min / IP — blunts password-guessing without punishing
     // a real user who mistypes a couple of times.
     if (rateLimited(`login:${clientIp(req)}`, 10, 15 * 60 * 1000)) {

@@ -1,10 +1,11 @@
-// Title/tagline/stats/quiz-score readout — previously the hero banner's
-// content, now a plain page intro above the course list. IDs are set by
+// Tagline/stats/quiz-score readout — previously the hero banner's content,
+// now a plain page intro above the course list. The title itself lives only
+// in the sticky Header wordmark (Suite roadmap 2026-07-20: the body used to
+// repeat "CryptoPro Training" a second time here). IDs are set by
 // src/js/course.js (statTracks/statModules/quizCorrect/etc.) — keep as-is.
 export default function PageIntro() {
   return (
     <div className="page-intro">
-      <h1>CryptoPro <span>Training</span></h1>
       <p>Crypto Trading Micro-Learning — bite-sized modules from spot basics to leverage and risk management, filtered to your level.</p>
       <div className="banner-stats">
         <span id="statTracks">📚 … tracks</span>

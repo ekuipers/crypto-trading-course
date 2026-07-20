@@ -2,6 +2,38 @@
 
 Running log of changes to the Crypto Trading Micro-Learning course, per the workflow rules in `CLAUDE.md`.
 
+## v2.0.4 — 2026-07-20 — Roadmap rescan: duplicate title removed, sign-in error message fixed
+
+**Task:** "rescan roadmap." Suite `CLAUDE.md` had two open items against this project: a roadmap item
+("remove the duplicate CryptoPro Training title from the html body") and a bug ("sign-in doesn't work —
+database error, please retry").
+
+**Roadmap — duplicate title.** `client/src/components/PageIntro.jsx` had its own `<h1>CryptoPro
+<span>Training</span></h1>` directly below `Header.jsx`'s sticky `.site-header` wordmark, which already
+shows the exact same title — a leftover from the pre-2026-07-18 hero-banner design that the React
+conversion carried over unnoticed. Removed the `<h1>` and its two now-dead CSS rules
+(`src/css/course.css`). `npm --prefix client run build` succeeds; the tagline/stats/quiz-score readout
+below it are unchanged.
+
+**Bug — sign-in "database error."** Root-caused, not fully fixed (the actual cause is outside this
+repo's code). `src/db.js`'s `normalizeSsl(null)` throws a `TypeError` (`Cannot read properties of null
+(reading 'includes')`) when `connString()` finds no Postgres env var set at all — confirmed by direct
+repro. That throw happens synchronously inside `getPool()`, which `register`/`login`'s try/catch turns
+into exactly the reported "Sign-in failed — database error, please retry." This matches the still-open
+manual TO DO in `CryptoPro Suite/CLAUDE.md`: this project's deployed (Vercel) environment was never
+confirmed to have `DBCRYPTOCHARTS_POSTGRES_URL[_NON_POOLING]` set, unlike Charts/Trader. Added the same
+`db.dbEnabled()` guard `CryptoPro Suite/src/auth.js` already had to `register`/`login` here, so a missing
+connection string now fails fast with a distinct, honest 503 "Accounts are unavailable right now" instead
+of the misleading generic message — makes the real gap diagnosable without needing to read server logs.
+**Still needs a human:** confirm/set the Vercel env var; this repo's code cannot verify or fix that itself.
+
+**Also (Suite-side, not this repo):** Suite's landing page was linking to this project's *old* GitHub
+Pages URL (`ekuipers.github.io/crypto-pro-training/crypto-trading-course.html`), deleted during the
+2026-07-18 conversion and confirmed 404 — repointed to the live `crypto-pro-training.vercel.app` and
+added to the SSO auto-sign-in host list. See `CryptoPro Suite/memory/memory.md`.
+
+**Verified:** `node --check src/auth.js`, `npm --prefix client run build`.
+
 ## v2.0.3 — 2026-07-20 — Roadmap: cross-project auto sign-in (SSO ticket handoff)
 
 **Task:** "rescan roadmap," run from CryptoPro Trader with write access to all 4 suite repos. Suite roadmap
