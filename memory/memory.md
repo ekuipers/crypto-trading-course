@@ -2,6 +2,30 @@
 
 Running log of changes to the Crypto Trading Micro-Learning course, per the workflow rules in `CLAUDE.md`.
 
+## v2.0.5 — 2026-07-21 — Roadmap: header logo shrunk to match the footer
+
+**Task:** "run the last roadmap item also for projects Charts and Training," follow-up to the same fix
+already applied in CryptoPro Trader. Suite roadmap item: "In every project use the same height, font and
+colors for the project logo in the header as in the footer." Trader was given three options (grow the
+footer up, shrink the header down, or unify only icon radius + color) and chose shrinking the header down
+to the existing footer style — applied the identical choice here, since Training's `Header.jsx`/`Footer.jsx`
+already carry an explicit comment claiming parity with Trader's convention that wasn't actually true yet.
+
+**Change:** `client/src/components/Footer.jsx` — footer's plain "CryptoPro Training" text gained the
+missing `<span className="brand-cp">CryptoPro</span>` color split (previously uncolored, unlike the
+header). `src/css/course.css` — `.brand` (header) shrunk from `gap:10px`/`font-size:17px`/
+`font-weight:850`/`letter-spacing:-.2px` to `gap:6px`/`font-size:13px`/`font-weight:700` (letter-spacing
+dropped), matching `.site-footer .footer-name` exactly; `.brand img` shrunk from `22px`/`border-radius:6px`
+to `18px`/`border-radius:4px`, matching `.site-footer .footer-logo-icon`; `.brand .brand-cp{color:
+var(--accent)}` unscoped to a plain `.brand-cp` selector so the same class colors "CryptoPro" in both the
+header and the newly-added footer span.
+
+**`COURSE_VERSION`** (`src/js/course.js`) bumped 2.0.2 → 2.0.5 — also corrects drift: the last two
+changelog entries (v2.0.3, v2.0.4) bumped this file's own version header but never updated the constant the
+footer actually reads, so the live footer had been showing a stale version for two releases.
+
+**Verified:** `npm --prefix client run build` — succeeds, 31 modules, no JSX/CSS errors.
+
 ## v2.0.4 — 2026-07-20 — Roadmap rescan: duplicate title removed, sign-in error message fixed
 
 **Task:** "rescan roadmap." Suite `CLAUDE.md` had two open items against this project: a roadmap item

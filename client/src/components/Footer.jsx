@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="site-footer">
       <span className="footer-name">
         <img src="/favicon.svg" alt="" className="footer-logo-icon" />
-        CryptoPro Training
+        <span className="brand-cp">CryptoPro</span> Training
       </span>
       <span className="footer-sep">·</span>
       <span id="statFooter">… tracks · … modules</span>
