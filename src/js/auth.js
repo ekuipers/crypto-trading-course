@@ -245,14 +245,35 @@ function openAccountModal(user) {
       </div>
     </div>
     <p class="small">This account is shared across every CryptoPro Suite app.</p>
+    <div class="auth-field"><label>Notification email</label><input id="authNotifyEmail" type="email" placeholder="you@example.com" value="${authEsc(user.notificationEmail || '')}"></div>
+    <div class="auth-err" id="authNotifyEmailMsg"></div>
     `,
-    `<button id="authChangePwBtn">Change password</button>
+    `<button id="authNotifyEmailSaveBtn">Save email</button>
+     <button id="authChangePwBtn">Change password</button>
      <button id="authTotpBtn">${user.totpEnabled ? 'Disable 2FA' : 'Enable 2FA'}</button>
      <button onclick="closeAuthModal()">Close</button>
      <button class="danger" id="authLogoutBtn">Sign out</button>`,
   );
   document.getElementById('authChangePwBtn').addEventListener('click', openChangePasswordModal);
   document.getElementById('authTotpBtn').addEventListener('click', () => (user.totpEnabled ? openDisableTotpModal() : openSetupTotpModal()));
+  document.getElementById('authNotifyEmailSaveBtn').addEventListener('click', async () => {
+    const msgEl = document.getElementById('authNotifyEmailMsg');
+    const email = document.getElementById('authNotifyEmail').value.trim();
+    msgEl.style.color = '';
+    msgEl.textContent = 'Saving…';
+    try {
+      const r = await fetch('/api/auth/notification-email', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) { msgEl.textContent = data.error || 'Could not save email.'; return; }
+      user.notificationEmail = data.notificationEmail;
+      if (_authCurrentUser) _authCurrentUser.notificationEmail = data.notificationEmail;
+      msgEl.style.color = 'var(--accent2)';
+      msgEl.textContent = 'Saved.';
+    } catch { msgEl.textContent = 'Network error — try again.'; }
+  });
   document.getElementById('authLogoutBtn').addEventListener('click', async () => {
     try { await fetch('/api/auth/logout', { method: 'POST' }); } catch {}
     window.location.reload();

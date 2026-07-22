@@ -2,6 +2,25 @@
 
 Running log of changes to the Crypto Trading Micro-Learning course, per the workflow rules in `CLAUDE.md`.
 
+## v2.0.7 — 2026-07-22 — Roadmap: notification email on the account profile
+
+**Task:** "rescan roadmap," run from CryptoPro Trader with write access to all sub-repos. Suite roadmap item
+1: "Add the option for the user to add an email address to their profile to receive notifications. Save it
+in the accounts table in the database." Implemented identically across all 4 suite projects since the
+accounts table is shared (Suite workflow rule 18).
+
+**Change:** `src/db.js` — `alter table accounts add column if not exists notification_email text` (same
+idempotent pattern as `totp_secret`), `toAccount()` maps it, new `updateNotificationEmail(uid, email)`.
+`src/auth.js` — new authenticated `POST /api/auth/notification-email` route (regex-validated, empty body
+clears the field); `publicUser()` now includes `notificationEmail`. `src/js/auth.js`'s `openAccountModal()`
+gained a "Notification email" input + inline "Save email" button that posts to the new route and updates
+local state on success. No email is actually sent anywhere yet — this only captures and persists the
+address (no SMTP provider configured anywhere in the suite).
+
+**Verified:** `node --check` passed on all three files. **Not verified: an actual browser save round-trip**
+— no running dev server with a live DB connection was exercised this session. Full cross-project writeup:
+Suite's `memory/memory.md` v2026-07-22.7.
+
 ## v2.0.6 — 2026-07-21 — Roadmap: progress/settings sync to Postgres (Suite roadmap)
 
 **Task:** "rescan roadmap," run from CryptoPro Trader with write access to all sub-repos. Suite roadmap
