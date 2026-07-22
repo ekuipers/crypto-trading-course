@@ -87,7 +87,7 @@ of the misleading generic message — makes the real gap diagnosable without nee
 **Still needs a human:** confirm/set the Vercel env var; this repo's code cannot verify or fix that itself.
 
 **Also (Suite-side, not this repo):** Suite's landing page was linking to this project's *old* GitHub
-Pages URL (`ekuipers.github.io/crypto-pro-training/crypto-trading-course.html`), deleted during the
+Pages URL (`[username].github.io/crypto-pro-training/crypto-trading-course.html`), deleted during the
 2026-07-18 conversion and confirmed 404 — repointed to the live `crypto-pro-training.vercel.app` and
 added to the SSO auto-sign-in host list. See `CryptoPro Suite/memory/memory.md`.
 
@@ -161,7 +161,7 @@ findings logged in `CryptoPro Suite/memory/memory.md`.
 
 **Gaps found and fixed here:**
 - Rule 3 (donation link in footer): `client/src/components/Footer.jsx` had title/creator/version but no
-  donation link. Added a `☕ Donate` link to `https://buymeacoffee.com/erikkuipers` + a matching
+  donation link. Added a `☕ Donate` link to `https://buymeacoffee.com/[username]` + a matching
   `.footer-donate` style in `src/css/course.css` (amber `#e0b45c`, matching Suite's own donate-link color).
 - Rule 14 ("CryptoPro" a different color than the extension text): `Header.jsx` rendered
   `CryptoPro Training` as one plain text node — no color split. Wrapped `CryptoPro` in a
@@ -213,7 +213,7 @@ needed zero changes beyond the version bump below.
 
 **Hosting:** GitHub Pages (`.github/workflows/static.yml`) removed — it can only serve static files and
 this is now a Node/Express app. **Not yet done:** linking a new Vercel project (or equivalent Node host)
-for live hosting — the old `https://ekuipers.github.io/crypto-pro-training/...` URL will go stale once
+for live hosting — the old `https://[username].github.io/crypto-pro-training/...` URL will go stale once
 this is pushed; Suite's sub-project link needs updating once a new URL exists. `docs/crypto-trading-course.html`
 and `docs/index.html` (the old GH-Pages redirect) were deleted; `docs/` now holds only favicons and
 `trading-journal.xlsx`, same role it plays in Trader.
@@ -256,7 +256,7 @@ design, favicon-as-logo at a consistent size, same font, across all sub-projects
 - `.brand` favicon icon bumped 20px → 22px with `border-radius:6px` added, matching the icon
   treatment now used in CryptoPro Suite's and CryptoPro Trader's headers.
 - Footer previously had no favicon logo and no creator credit (rule 3/10 gap). Added a 16px favicon
-  icon and a "Created by Erik Kuipers ·" line before the version span.
+  icon and a "Created by [name removed] ·" line before the version span.
 - Left the overall page structure untouched: this is a hero/marketing-style course landing page (large
   `.page-title` heading + decorative banner), not a slim persistent utility header bar like the other
   three sub-projects, and the multi-line footer (module stats + risk disclaimer + version) can't be
