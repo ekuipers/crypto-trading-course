@@ -2,6 +2,21 @@
 
 Running log of changes to the Crypto Trading Micro-Learning course, per the workflow rules in `CLAUDE.md`.
 
+## v2.0.8 — 2026-07-23 — Roadmap: donation link swapped from Buy Me a Coffee to Patreon
+
+**Task:** "scan roadmap," run from CryptoPro Trader with write access to all sub-repos. Suite roadmap item 1:
+"Replace the buymeacoffee donation link to Patreon." Suite's own docs already described Patreon as the
+active link, but the footer code across all 4 projects still pointed at `buymeacoffee.com/erikkuipers` —
+implemented the actual code change identically across all 4 projects (shared footer pattern, Suite workflow
+rule 17).
+
+**Change:** `client/src/components/Footer.jsx` — `.footer-donate` link now points to
+`https://patreon.com/vibesoftstudio` with label "♥ Support" (was "☕ Donate"). `#courseVersion` is set
+dynamically by `src/js/course.js`, not hardcoded here, so no version-string edit needed in this file.
+
+**Verified:** static link/label change only; no dev server run this session. Full cross-project writeup:
+Suite's `memory/memory.md` this same date.
+
 ## v2.0.7 — 2026-07-22 — Roadmap: notification email on the account profile
 
 **Task:** "rescan roadmap," run from CryptoPro Trader with write access to all sub-repos. Suite roadmap item
