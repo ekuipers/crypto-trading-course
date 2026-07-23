@@ -16,7 +16,7 @@ export default function Footer() {
       <span className="footer-sep">·</span>
       <span className="footer-studio">
         <img src="/studio-logo.png" alt="" className="footer-logo-icon" />
-        Developer Studio: <strong>SoftVibe Studio</strong>
+        Developer Studio: <strong>VibeSoft Studio</strong>
       </span>
       <span className="footer-sep">·</span>
       <span>Version: <strong id="courseVersion"></strong></span>

@@ -2,6 +2,18 @@
 
 Running log of changes to the Crypto Trading Micro-Learning course, per the workflow rules in `CLAUDE.md`.
 
+## v2.0.10 — 2026-07-23 — Fix: footer Developer Studio name typo ("SoftVibe" → "VibeSoft")
+
+**Task:** user flagged the wrong studio name in the footer, starting from CryptoPro Trader. Suite's shared
+`CLAUDE.md` (source of truth) has always said "VibeSoft Studio", but the name landed transposed in v2.0.9
+below when the Developer Studio footer line was first added.
+
+**Fix:** `client/src/components/Footer.jsx` — corrected the `<strong>` text to "VibeSoft Studio". Also
+corrected the v2.0.9 journal entry, which had the same typo. `#courseVersion` is set dynamically — no
+manual version bump needed.
+
+**Verified:** visual diff against Suite `CLAUDE.md`'s Developer Studio line; no build run (plain-text edit).
+
 ## v2.0.9 — 2026-07-23 — Roadmap: "rescan workflows rules" — Developer Studio logo added to footer
 
 **Task:** "rescan roadmap," run from CryptoPro Trader with write access to all sub-repos. Suite roadmap item 1
@@ -13,7 +25,7 @@ full cross-project detail in Suite's own `memory/memory.md` 2026-07-23 (4).
 
 **Change:** resized the source PNG to a 96×96 `docs/studio-logo.png` (served at `/studio-logo.png` via this
 project's existing `express.static(docs)`, same path convention as `favicon.svg`). `client/src/components/
-Footer.jsx` gained a "Developer Studio: **SoftVibe Studio**" span (logo + text) next to "Creator: Erik
+Footer.jsx` gained a "Developer Studio: **VibeSoft Studio**" span (logo + text) next to "Creator: Erik
 Kuipers", reusing the existing `.footer-logo-icon` (18×18) sizing; added a `.footer-studio` flex-wrapper
 class to `src/css/course.css`. `#courseVersion` is set dynamically, no version-string edit needed here.
 
