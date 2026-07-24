@@ -2,6 +2,28 @@
 
 Running log of changes to the Crypto Trading Micro-Learning course, per the workflow rules in `CLAUDE.md`.
 
+## v2.0.13 — 2026-07-24 — Correction: Suite roadmap items 1+2 were misimplemented (logo doubled, not text; footer touched, not skipped)
+
+**Task:** user flagged that v2.0.11 (below) misread the Suite roadmap and asked to force the correct
+implementation, ignoring the previous commit.
+
+**What was wrong:** Suite roadmap item 1 says "Increase the header **text** ... 2x. Don't touch the footer."
+Item 2 says "Decrease the **logo** size in the footer to half the size." v2.0.11 instead doubled the
+`.brand img`/`.site-footer .footer-logo-icon` **image** (not text) in **both** header and footer — wrong
+element for item 1 and it touched the footer (forbidden), and wrong direction/scope for item 2.
+
+**Fix:** `src/css/course.css`'s `.brand img` (header image) reverted to its original `18×18px`/
+`border-radius:4px`. `.brand` (header text, wraps `.brand-cp` "CryptoPro" + "Training") `font-size` doubled
+`13px→26px`. `.site-footer .footer-logo-icon` (footer image, shared by the site logo and Developer Studio
+logo) set to **half of the original pre-error size**: `9×9px`/`border-radius:2px`. Footer text
+(`.site-footer .footer-name`, a separate rule from `.brand`) untouched. `COURSE_VERSION` JS constant not
+bumped, same precedent as the original (now-corrected) entry — CSS-only changes don't bump it. Same
+correction applied identically across Suite, Trader, Charts, and Mobile's header mockup — full cross-project
+detail in `CryptoPro Suite/memory/memory.md` (2026-07-24, entry "Roadmap items 1+2 corrected").
+
+**Not verified:** no browser check this session — the doubled header text hasn't been visually confirmed to
+fit the header row without wrapping/overlap.
+
 ## v2.0.12 — 2026-07-24 — Fix: sign-in database error (stale Supabase env var name)
 
 **Task:** Suite `CLAUDE.md` bug #1 ("The login on chart and training still fails with a database
