@@ -2,6 +2,25 @@
 
 Running log of changes to the Crypto Trading Micro-Learning course, per the workflow rules in `CLAUDE.md`.
 
+## v2.0.11 — 2026-07-24 — Roadmap: logo size doubled in header/footer
+
+**Task:** Suite roadmap item 2 ("Increase the logo size 2x for all projects"), clarified by the user as the
+project/studio logo image size, not journal retention or log verbosity. Applied identically across all 4
+CryptoPro projects (shared header/footer logo pattern, Suite workflow rules 14/17); full cross-project
+detail in Suite's own `memory/memory.md`.
+
+**Fix:** `src/css/course.css` — `.brand img` (header logo) `18×18px`/`border-radius:4px` →
+`36×36px`/`border-radius:8px`; `.site-footer .footer-logo-icon` (footer, also used for the Developer Studio
+logo) same doubling. No markup changes — both `client/src/components/Header.jsx` and `Footer.jsx` already
+reference these classes, so the course favicon and the VibeSoft Studio logo scale together. `#courseVersion`
+is set dynamically from `COURSE_VERSION` in `src/js/course.js` — no constant bump needed for a CSS-only
+change.
+
+**Verified:** visual diff of the CSS rules only; `course.css` is linked directly (`<link>` in
+`client/index.html`), not bundled by Vite, so no rebuild is required for this change to take effect. No
+browser render check this session — recommend a quick visual check that the larger logo doesn't crowd the
+header nav before considering this fully done.
+
 ## v2.0.10 — 2026-07-23 — Fix: footer Developer Studio name typo ("SoftVibe" → "VibeSoft")
 
 **Task:** user flagged the wrong studio name in the footer, starting from CryptoPro Trader. Suite's shared

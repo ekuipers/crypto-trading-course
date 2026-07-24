@@ -48,7 +48,7 @@
     gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
   .brand{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--text)}
   .brand-cp{color:var(--accent)}
-  .brand img{width:18px;height:18px;border-radius:4px;vertical-align:middle}
+  .brand img{width:36px;height:36px;border-radius:8px;vertical-align:middle}
   .header-right{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
   .themes{display:flex;align-items:center;gap:7px}
   .themes .tname{font-size:.74rem;color:var(--muted);min-width:52px;text-align:right}
@@ -81,7 +81,7 @@
   .site-footer{color:var(--muted);font-size:12px;padding:16px 24px;border-top:1px solid var(--line);
     display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;text-align:left}
   .site-footer .footer-name{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--text);font-size:13px}
-  .site-footer .footer-logo-icon{width:18px;height:18px;border-radius:4px;vertical-align:middle}
+  .site-footer .footer-logo-icon{width:36px;height:36px;border-radius:8px;vertical-align:middle}
   .site-footer .footer-studio{display:inline-flex;align-items:center;gap:6px}
   .site-footer .footer-sep{color:var(--line)}
   .footer-donate{color:#e0b45c;text-decoration:none}
