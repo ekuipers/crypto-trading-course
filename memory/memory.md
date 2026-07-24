@@ -2,6 +2,33 @@
 
 Running log of changes to the Crypto Trading Micro-Learning course, per the workflow rules in `CLAUDE.md`.
 
+## v2.0.12 — 2026-07-24 — Fix: sign-in database error (stale Supabase env var name)
+
+**Task:** Suite `CLAUDE.md` bug #1 ("The login on chart and training still fails with a database
+error").
+
+**Root cause:** `src/db.js`'s `CONN_VARS` only recognized `DBCRYPTOCHARTS_POSTGRES_URL[_NON_POOLING]`
+and the generic `POSTGRES_URL*`/`DATABASE_URL` names. This project's actual local `.env` only has
+`CRYPTOPROTRAINING_POSTGRES_URL[_NON_POOLING]` — Vercel's per-project Supabase integration issues
+this project its own prefixed vars, not the shared `DBCRYPTOCHARTS_*` name the code expected. None
+of `CONN_VARS`' entries matched, so `connString()` returned `null`, `dbEnabled()` was false, and
+every sign-in/register attempt hit the "database disabled" 503 path — a generic "database error" in
+the UI. Same bug class as CryptoPro Trader's `9cae1c7` fix and CryptoPro Charts' matching fix (same
+day) — each project's Supabase integration issues its own project-prefixed var name.
+
+**Verified same underlying DB, not a new one:** `CRYPTOPROTRAINING_POSTGRES_HOST` is identical to
+Charts' and Trader's host (`db.bgxjmpzfkxqwoyupqldj.supabase.co`) — the shared-accounts requirement
+(Suite workflow rule 18) still holds; only the var *names* differ per project.
+
+**Fix:** added `CRYPTOPROTRAINING_POSTGRES_URL`/`CRYPTOPROTRAINING_POSTGRES_URL_NON_POOLING` to
+`CONN_VARS` as the first (highest-priority) entries; kept `DBCRYPTOCHARTS_*`/generic as fallbacks
+for instant rollback. Updated `.env.example`, `README.md`, and `CLAUDE.md`'s sign-in sections to
+match.
+
+**Verified:** ran `node --env-file=.env` against the live Supabase project — `dbEnabled()` true,
+`db.init()` connected and confirmed tables ready. No local test suite exists for this project
+(`npm test` has no script configured) so no automated regression check was available.
+
 ## v2.0.11 — 2026-07-24 — Roadmap: logo size doubled in header/footer
 
 **Task:** Suite roadmap item 2 ("Increase the logo size 2x for all projects"), clarified by the user as the

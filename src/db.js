@@ -16,9 +16,13 @@ export const GUEST = '__guest__';
 export const SESSION_NAME = '__session__';
 
 // For accounts to actually be *shared* across the suite, this must resolve
-// to the exact same Supabase Postgres project CryptoPro Charts uses — hence
-// DBCRYPTOCHARTS_* takes priority. See .env.example.
+// to the exact same Supabase Postgres project CryptoPro Charts uses. Vercel's
+// per-project Supabase integration issues its own project-prefixed var names
+// (CRYPTOPROTRAINING_*), not a shared DBCRYPTOCHARTS_* name, so that prefix is
+// checked first; DBCRYPTOCHARTS_*/generic names are kept as fallback. See .env.example.
 const CONN_VARS = [
+  'CRYPTOPROTRAINING_POSTGRES_URL',
+  'CRYPTOPROTRAINING_POSTGRES_URL_NON_POOLING',
   'DBCRYPTOCHARTS_POSTGRES_URL',
   'DBCRYPTOCHARTS_POSTGRES_URL_NON_POOLING',
   'POSTGRES_URL',

@@ -13,6 +13,7 @@ Creator: [name removed]
 > title-in-description, etc.). Only rules specific to this project are listed below.
 
 1. Update version number in the footer with the lastest version in the change log.
+2. Always scan the Suite roadmap first
 
 ## Hosting & frontend
 
@@ -20,12 +21,10 @@ Creator: [name removed]
 - `client/` is its own npm project — root `npm run build` runs `npm --prefix client install && npm --prefix client run build` (same pattern as CryptoPro Trader).
 - No longer on GitHub Pages (static-only; `.github/workflows/static.yml` removed 2026-07-19) — needs a Node host (Vercel, matching Trader/Charts); **linking a new Vercel project is a manual step, not yet done.**
 - Header/footer redesigned to the Suite's slim utility-bar convention (Suite CLAUDE.md rule 17) — supersedes the v1.41.1 "intentional exception" that kept the old hero-banner header. Browser click-through **not yet verified**.
-- **Auth / SSO (2026-07-19):** `src/auth.js` + `src/db.js` + `src/totp.js` (ported from CryptoPro Charts/Suite) add a `👤 Sign in` header button — username/password + optional TOTP 2FA, accounts/sessions in Postgres, shared with the rest of the suite once `DBCRYPTOCHARTS_POSTGRES_URL[_NON_POOLING]` is set (see `.env.example`; not configured yet). Client: `AuthModal.jsx` + `src/js/auth.js` (classic script via `scriptLoader.js`'s `loadAuthScript()`). **2FA QR code (2026-07-22, Suite roadmap):** the "Enable 2FA" dialog now renders the setup `otpauthUri` as a scannable QR image, not just the raw secret — `src/js/qrcode-lib.js` (vendored `qrcode-generator`, MIT, no CDN) loads alongside `auth.js` in `loadAuthScript()`. Same change landed identically in Suite/Charts/Trader — details in Suite's `memory/memory.md` v2026-07-22.6. Course progress always writes to `localStorage` first; when signed in and the DB is configured it also syncs there (see next line) so it follows the account across devices/browsers.
+- **Auth / SSO (2026-07-19):** `src/auth.js` + `src/db.js` + `src/totp.js` (ported from CryptoPro Charts/Suite) add a `👤 Sign in` header button — username/password + optional TOTP 2FA, accounts/sessions in Postgres, shared with the rest of the suite via `CRYPTOPROTRAINING_POSTGRES_URL[_NON_POOLING]` (Vercel's per-project Supabase integration naming; `DBCRYPTOCHARTS_POSTGRES_URL[_NON_POOLING]` also accepted as a fallback — see `.env.example`). **Bug fixed 2026-07-24:** `src/db.js`'s `CONN_VARS` originally only recognized the old `DBCRYPTOCHARTS_*` name, not this project's actual deployed `CRYPTOPROTRAINING_*` vars, so `connString()` returned `null` and every sign-in/register attempt hit the 503 "database disabled" path — read as a generic "database error" (Suite `CLAUDE.md` bug #1). Same bug class as Trader's `9cae1c7` fix. Client: `AuthModal.jsx` + `src/js/auth.js` (classic script via `scriptLoader.js`'s `loadAuthScript()`). **2FA QR code (2026-07-22, Suite roadmap):** the "Enable 2FA" dialog now renders the setup `otpauthUri` as a scannable QR image, not just the raw secret — `src/js/qrcode-lib.js` (vendored `qrcode-generator`, MIT, no CDN) loads alongside `auth.js` in `loadAuthScript()`. Same change landed identically in Suite/Charts/Trader — details in Suite's `memory/memory.md` v2026-07-22.6. Course progress always writes to `localStorage` first; when signed in and the DB is configured it also syncs there (see next line) so it follows the account across devices/browsers.
 - **Progress sync (2026-07-21, Suite roadmap):** `src/js/course.js` mirrors theme, level filter, module-completion progress, and quiz results to Postgres (`layouts` table, one row per account via `/api/session` GET/PUT — same pattern CryptoPro Charts uses for its chart layouts). Server wins whenever it has data; `localStorage` is the offline/signed-out fallback.
 
 ## Roadmap
-
-
 
 ## Bugs
 
